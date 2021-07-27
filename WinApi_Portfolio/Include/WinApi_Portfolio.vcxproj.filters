@@ -16,6 +16,9 @@
     <Filter Include="01.Logic">
       <UniqueIdentifier>{d76cefde-86cf-4fe9-9773-e0982dc85547}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Logic\01.Timer">
+      <UniqueIdentifier>{a779a956-0572-46e3-aa4a-ed5d584111f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -23,6 +26,9 @@
     </ClCompile>
     <ClCompile Include="Logic\Logic.cpp">
       <Filter>01.Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Logic\Timer.cpp">
+      <Filter>01.Logic\01.Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Logic\Timer.h">
+      <Filter>01.Logic\01.Timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

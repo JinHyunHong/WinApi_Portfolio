@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include <iostream>
+#include <conio.h>
 #include "Defines.h"
 #include "Struct.h"
 #include "Flag.h"

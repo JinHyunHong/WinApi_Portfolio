@@ -24,9 +24,9 @@ public:
 
 public:
 	bool Init(HINSTANCE hInst);
-	int	 Update();
-	void Collision();
-	int  LateUpdate();
-	void Render();
+	int	 Update(float fDeltaTime);
+	void Collision(float fDeltaTime);
+	int  LateUpdate(float fDeltaTime);
+	void Render(float fDeltaTime);
 };
 

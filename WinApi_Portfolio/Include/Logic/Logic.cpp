@@ -1,4 +1,5 @@
 #include "Logic.h"
+#include "Timer.h"
 
 DEFINITION_SINGLE(CLogic);
 
@@ -11,7 +12,7 @@ CLogic::CLogic()
 
 CLogic::~CLogic()
 {
-
+    DESTROY_SINGLE(CTimer);
 }
 
 ATOM  CLogic::MyRegisterClass()
@@ -105,6 +106,13 @@ int CLogic::Run()
 
 void CLogic::Logic()
 {
+    GET_SINGLE(CTimer)->Update();
+    float fDeltaTime = GET_SINGLE(CTimer)->GetDeltaTime();
+
+    Update(fDeltaTime);
+    Collision(fDeltaTime);
+    LateUpdate(fDeltaTime);
+    Render(fDeltaTime);
 }
 
 bool CLogic::Init(HINSTANCE hInst)
@@ -119,23 +127,26 @@ bool CLogic::Init(HINSTANCE hInst)
 
     m_hDC = GetDC(m_hWnd);
 
+    if (!GET_SINGLE(CTimer)->Init(m_hWnd))
+        return false;
+
     return true;
 }
 
-int CLogic::Update()
+int CLogic::Update(float fDeltaTime)
 {
     return 0;
 }
 
-void CLogic::Collision()
+void CLogic::Collision(float fDeltaTime)
 {
 }
 
-int CLogic::LateUpdate()
+int CLogic::LateUpdate(float fDeltaTime)
 {
     return 0;
 }
 
-void CLogic::Render()
+void CLogic::Render(float fDeltaTime)
 {
 }

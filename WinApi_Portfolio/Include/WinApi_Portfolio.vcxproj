@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Logic\Logic.cpp" />
+    <ClCompile Include="Logic\Timer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +155,7 @@
     <ClInclude Include="Flag.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Logic\Logic.h" />
+    <ClInclude Include="Logic\Timer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Struct.h" />
   </ItemGroup>

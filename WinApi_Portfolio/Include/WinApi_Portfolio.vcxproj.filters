@@ -19,6 +19,9 @@
     <Filter Include="01.Logic\01.Timer">
       <UniqueIdentifier>{a779a956-0572-46e3-aa4a-ed5d584111f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Logic\02.FileManager">
+      <UniqueIdentifier>{893b9cd3-bcdd-48a3-8c59-846cad0bbda4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -29,6 +32,9 @@
     </ClCompile>
     <ClCompile Include="Logic\Timer.cpp">
       <Filter>01.Logic\01.Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Logic\FileManager.cpp">
+      <Filter>01.Logic\02.FileManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Logic\Timer.h">
       <Filter>01.Logic\01.Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Logic\FileManager.h">
+      <Filter>01.Logic\02.FileManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

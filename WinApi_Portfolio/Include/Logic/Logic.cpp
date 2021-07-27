@@ -1,5 +1,6 @@
 #include "Logic.h"
 #include "Timer.h"
+#include "FileManager.h"
 
 DEFINITION_SINGLE(CLogic);
 
@@ -13,6 +14,7 @@ CLogic::CLogic()
 CLogic::~CLogic()
 {
     DESTROY_SINGLE(CTimer);
+    DESTROY_SINGLE(CFileManager);
 }
 
 ATOM  CLogic::MyRegisterClass()
@@ -46,7 +48,7 @@ BOOL CLogic::InitInstance()
         return FALSE;
     }
 
-    RECT rc = { 0, 0, m_tRS.iWidth, m_tRS.iHeight };
+    RECT rc = { 0, 0, m_tClientRS.iWidth, m_tClientRS.iHeight };
     
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
@@ -118,7 +120,7 @@ void CLogic::Logic()
 bool CLogic::Init(HINSTANCE hInst)
 {
     m_hInst = hInst;
-    m_tRS = {1200, 800};
+    m_tClientRS = {1200, 800};
     m_bLoop = true;
     m_strWindowName = L"Game";
 
@@ -128,6 +130,9 @@ bool CLogic::Init(HINSTANCE hInst)
     m_hDC = GetDC(m_hWnd);
 
     if (!GET_SINGLE(CTimer)->Init(m_hWnd))
+        return false;
+
+    if (!GET_SINGLE(CFileManager)->Init())
         return false;
 
     return true;

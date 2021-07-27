@@ -27,3 +27,7 @@ public:\
 #define GET_SINGLE(Type) Type::GetInst()
 #define DEFINITION_SINGLE(Type)	Type* Type::m_pInst = NULL;
 #define DESTROY_SINGLE(Type) Type::DestroyInst()
+
+#define GET_WINDOW_HANDLE  CLogic::GetInst()->GetWindowHandle()
+
+#define BASE_PATH "BasePath"

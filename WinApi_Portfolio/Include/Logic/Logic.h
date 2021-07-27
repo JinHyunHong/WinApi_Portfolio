@@ -9,14 +9,30 @@ private:
 	HWND		m_hWnd;
 	HINSTANCE	m_hInst;
 	HDC			m_hDC;
-	static bool		m_bLoop;
+	static bool	m_bLoop;
 	wstring		m_strWindowName;
+	SCREENSIZE  m_tClientRS;
+
+public:
+	HWND	GetWindowHandle()	const
+	{
+		return m_hWnd;
+	}
+
+	HINSTANCE	GetInstaceHandle()	const
+	{
+		return m_hInst;
+	}
+
+	SCREENSIZE	GetClientRS()	const
+	{
+		return m_tClientRS;
+	}
 
 private:
 	ATOM MyRegisterClass();
 	BOOL InitInstance();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	SCREENSIZE m_tRS;
 
 public:
 	int Run();

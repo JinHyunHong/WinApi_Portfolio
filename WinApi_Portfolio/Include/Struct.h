@@ -5,6 +5,20 @@ typedef struct _tagScreenSize
 {
 	unsigned int iWidth;
 	unsigned int iHeight;
+
+	_tagScreenSize() :
+		iWidth(0),
+		iHeight(0)
+	{
+	}
+
+	_tagScreenSize(unsigned int _iWidth, unsigned _iHeight) :
+		iWidth(_iWidth),
+		iHeight(_iHeight)
+	{
+	}
+
+
 }SCREENSIZE, * PSCREENSIZE;
 
 typedef struct _tagPosition
@@ -107,7 +121,52 @@ typedef struct _tagPosition
 		return tPos;
 	}
 
-}POSITION, * PPOSITION;
+}_SIZE, *_PSIZE, POSITION, * PPOSITION;
+
+
+typedef struct _tagRectangle
+{
+	float l;
+	float t;
+	float r;
+	float b;
+
+	_tagRectangle() :
+		l(0.f),
+		t(0.f),
+		r(0.f),
+		b(0.f)
+	{
+	}
+}RECTANGLE, *PRECTANGLE;
+
+typedef struct _tagSphere
+{
+	float x;
+	float y;
+	float fRadius;
+
+	_tagSphere() :
+		fRadius(0.f),
+		x(0.f),
+		y(0.f)
+	{
+	}
+}SPHERE, *PSPHERE;
+
+typedef struct _tagPixel
+{
+	unsigned int r;
+	unsigned int g;
+	unsigned int b;
+
+	_tagPixel() :
+		r(0),
+		g(0),
+		b(0)
+	{
+	}
+}PIXEL, *PPIXEL;
 
 
 

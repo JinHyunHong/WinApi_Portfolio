@@ -40,6 +40,9 @@
     <Filter Include="01.Logic\06.Camera">
       <UniqueIdentifier>{ed7730f5-1b75-4856-b7fe-7389f87bb1ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Object\01.GameObj\01.MoveObj">
+      <UniqueIdentifier>{59f7f970-b0e4-4b87-b99a-33377a38411c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="Logic\Camera.cpp">
       <Filter>01.Logic\06.Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\MoveObj.cpp">
+      <Filter>02.Object\01.GameObj\01.MoveObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Logic\Camera.h">
       <Filter>01.Logic\06.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\MoveObj.h">
+      <Filter>02.Object\01.GameObj\01.MoveObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

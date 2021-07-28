@@ -7,6 +7,12 @@ CGameObj::CGameObj()
     DEFINITION_REFERENCE_COUNT();
 }
 
+CGameObj::CGameObj(const CGameObj& GameObj)
+{
+    m_strTag = GameObj.m_strTag;
+    m_tSize = GameObj.m_tSize;
+}
+
 CGameObj* CGameObj::FindGameObj(const string& strTag)
 {
     list<CGameObj*>::iterator iter;
@@ -68,6 +74,6 @@ int CGameObj::LateUpdate(float fDeltaTime)
     return 0;
 }
 
-void CGameObj::Render(float fDeltaTime)
+void CGameObj::Render(HDC hDC, float fDeltaTime)
 {
 }

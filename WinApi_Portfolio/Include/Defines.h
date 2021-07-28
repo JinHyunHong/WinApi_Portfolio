@@ -51,3 +51,6 @@ public:\
 		}
 
 #define DEFINITION_REFERENCE_COUNT() m_iRef = 1;
+
+
+#define GRAVITY 9.8f

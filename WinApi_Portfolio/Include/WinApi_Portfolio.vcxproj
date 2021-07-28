@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameObject\GameObj.cpp" />
+    <ClCompile Include="GameObject\MoveObj.cpp" />
     <ClCompile Include="Logic\Camera.cpp" />
     <ClCompile Include="Logic\FileManager.cpp" />
     <ClCompile Include="Logic\InputManager.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Flag.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject\GameObj.h" />
+    <ClInclude Include="GameObject\MoveObj.h" />
     <ClInclude Include="Logic\Camera.h" />
     <ClInclude Include="Logic\FileManager.h" />
     <ClInclude Include="Logic\InputManager.h" />

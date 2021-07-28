@@ -139,7 +139,7 @@ bool CLogic::Init(HINSTANCE hInst)
     if (!GET_SINGLE(CTimer)->Init(m_hWnd))
         return false;
 
-    if (!GET_SINGLE(CCamera)->Init(m_tClientRS))
+    if (!GET_SINGLE(CCamera)->Init(m_tClientRS, SCREENSIZE(1920, 1080)))
         return false;
 
     if (!GET_SINGLE(CInputManager)->Init())

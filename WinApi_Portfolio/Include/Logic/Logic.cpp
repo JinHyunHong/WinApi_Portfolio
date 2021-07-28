@@ -1,12 +1,17 @@
 #include "Logic.h"
 #include "Timer.h"
 #include "FileManager.h"
+#include "InputManager.h"
+#include "Camera.h"
 
 DEFINITION_SINGLE(CLogic);
 
 bool CLogic::m_bLoop;
 
-CLogic::CLogic()
+CLogic::CLogic()    :
+    m_hDC(NULL),
+    m_hWnd(NULL),
+    m_hInst(NULL)
 {
 
 }
@@ -14,6 +19,8 @@ CLogic::CLogic()
 CLogic::~CLogic()
 {
     DESTROY_SINGLE(CTimer);
+    DESTROY_SINGLE(CCamera);
+    DESTROY_SINGLE(CInputManager);
     DESTROY_SINGLE(CFileManager);
 }
 
@@ -22,7 +29,6 @@ ATOM  CLogic::MyRegisterClass()
     WNDCLASSEXW wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX);
-
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = CLogic::WndProc;
     wcex.cbClsExtra = 0;
@@ -48,7 +54,7 @@ BOOL CLogic::InitInstance()
         return FALSE;
     }
 
-    RECT rc = { 0, 0, m_tClientRS.iWidth, m_tClientRS.iHeight };
+    RECT rc = { 0, 0, (LONG)m_tClientRS.iWidth, (LONG)m_tClientRS.iHeight };
     
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
@@ -111,6 +117,7 @@ void CLogic::Logic()
     GET_SINGLE(CTimer)->Update();
     float fDeltaTime = GET_SINGLE(CTimer)->GetDeltaTime();
 
+    Input(fDeltaTime);
     Update(fDeltaTime);
     Collision(fDeltaTime);
     LateUpdate(fDeltaTime);
@@ -132,10 +139,21 @@ bool CLogic::Init(HINSTANCE hInst)
     if (!GET_SINGLE(CTimer)->Init(m_hWnd))
         return false;
 
+    if (!GET_SINGLE(CCamera)->Init(m_tClientRS))
+        return false;
+
+    if (!GET_SINGLE(CInputManager)->Init())
+        return false;
+
     if (!GET_SINGLE(CFileManager)->Init())
         return false;
 
     return true;
+}
+
+void CLogic::Input(float fDeltaTime)
+{
+    GET_SINGLE(CInputManager)->Update(fDeltaTime);
 }
 
 int CLogic::Update(float fDeltaTime)

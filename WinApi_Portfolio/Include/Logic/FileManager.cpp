@@ -9,7 +9,6 @@ CFileManager::CFileManager()
 
 CFileManager::~CFileManager()
 {
-	Safe_Delete_Map(m_mapPath);
 }
 
 bool CFileManager::Init()

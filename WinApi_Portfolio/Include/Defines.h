@@ -3,7 +3,7 @@
 
 #define SAFE_DELETE(p)	if(p)	{delete p; p = NULL;}
 #define SAFE_DELETE_ARRAY(p)	if(p)	{delete[] p; p = NULL;}
-#define SAFE_RELEASE(p)			if(p)	{p->Release(); p = NULL;}
+#define SAFE_RELEASE(p)			if(p)	{p->ReleaseRef(); p = NULL;}
 
 
 #define DECLARE_SINGLE(Type)\
@@ -31,3 +31,23 @@ public:\
 #define GET_WINDOW_HANDLE  CLogic::GetInst()->GetWindowHandle()
 
 #define BASE_PATH "BasePath"
+
+#define DECLARE_REFERENCE_COUNT()\
+private:\
+		int		m_iRef;\
+public:\
+		void AddRef()\
+		{\
+			++m_iRef;\
+		}\
+		void ReleaseRef()\
+		{\
+			--m_iRef;\
+			if(m_iRef == 0)\
+			{\
+				delete this;\
+				return;\
+			}\
+		}
+
+#define DEFINITION_REFERENCE_COUNT() m_iRef = 1;

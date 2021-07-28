@@ -12,19 +12,21 @@
 #include "Flag.h"
 #include <string>
 #include "resource.h"
+#include <math.h>
 
 using namespace std;
 
 
-template<typename T>
+
+template <typename T>
 void Safe_Delete_Map(T& p)
 {
-	typename T::iterator iter; 
+	typename T::iterator iter;
 	typename T::iterator iterEnd = p.end();
 
 	for (iter = p.begin(); iter != iterEnd; ++iter)
 	{
-		SAFE_DELETE(iter->Second);
+		SAFE_DELETE(iter->second);
 	}
 
 	p.clear();

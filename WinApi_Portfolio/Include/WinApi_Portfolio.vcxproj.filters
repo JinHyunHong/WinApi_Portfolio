@@ -22,6 +22,24 @@
     <Filter Include="01.Logic\02.FileManager">
       <UniqueIdentifier>{893b9cd3-bcdd-48a3-8c59-846cad0bbda4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Logic\03.InputManager">
+      <UniqueIdentifier>{59aa7802-7258-4e12-ac8c-c620caa547ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Logic\04.ResourcesManager">
+      <UniqueIdentifier>{cff1fc59-337f-4931-942a-eb3ad108e237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object">
+      <UniqueIdentifier>{2c649d9f-294e-44a3-b50a-3bd97e40f9a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\01.GameObj">
+      <UniqueIdentifier>{f79e14bb-e6fb-46b0-befc-7f2665d79ef4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Logic\05.Math">
+      <UniqueIdentifier>{150914bb-875a-40be-9ba4-7af13bd740f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Logic\06.Camera">
+      <UniqueIdentifier>{ed7730f5-1b75-4856-b7fe-7389f87bb1ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -35,6 +53,21 @@
     </ClCompile>
     <ClCompile Include="Logic\FileManager.cpp">
       <Filter>01.Logic\02.FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Logic\InputManager.cpp">
+      <Filter>01.Logic\03.InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Logic\ResourcesManager.cpp">
+      <Filter>01.Logic\04.ResourcesManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\GameObj.cpp">
+      <Filter>02.Object\01.GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Logic\Math.cpp">
+      <Filter>01.Logic\05.Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Logic\Camera.cpp">
+      <Filter>01.Logic\06.Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +94,21 @@
     </ClInclude>
     <ClInclude Include="Logic\FileManager.h">
       <Filter>01.Logic\02.FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Logic\InputManager.h">
+      <Filter>01.Logic\03.InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Logic\ResourcesManager.h">
+      <Filter>01.Logic\04.ResourcesManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GameObj.h">
+      <Filter>02.Object\01.GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Logic\Math.h">
+      <Filter>01.Logic\05.Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Logic\Camera.h">
+      <Filter>01.Logic\06.Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

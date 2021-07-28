@@ -146,8 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\GameObj.cpp" />
+    <ClCompile Include="Logic\Camera.cpp" />
     <ClCompile Include="Logic\FileManager.cpp" />
+    <ClCompile Include="Logic\InputManager.cpp" />
     <ClCompile Include="Logic\Logic.cpp" />
+    <ClCompile Include="Logic\Math.cpp" />
+    <ClCompile Include="Logic\ResourcesManager.cpp" />
     <ClCompile Include="Logic\Timer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -155,8 +160,13 @@
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject\GameObj.h" />
+    <ClInclude Include="Logic\Camera.h" />
     <ClInclude Include="Logic\FileManager.h" />
+    <ClInclude Include="Logic\InputManager.h" />
     <ClInclude Include="Logic\Logic.h" />
+    <ClInclude Include="Logic\Math.h" />
+    <ClInclude Include="Logic\ResourcesManager.h" />
     <ClInclude Include="Logic\Timer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Struct.h" />

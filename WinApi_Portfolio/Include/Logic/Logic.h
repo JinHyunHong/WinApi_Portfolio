@@ -40,6 +40,7 @@ public:
 
 public:
 	bool Init(HINSTANCE hInst);
+	void Input(float fDeltaTime);
 	int	 Update(float fDeltaTime);
 	void Collision(float fDeltaTime);
 	int  LateUpdate(float fDeltaTime);

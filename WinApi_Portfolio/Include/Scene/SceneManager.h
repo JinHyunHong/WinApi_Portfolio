@@ -17,15 +17,17 @@ public:
 		if (!pScene->Init())
 		{
 			SAFE_DELETE(pScene);
-			return;
+			return NULL;
 		}
 
-		switch (SCENE_TRANSITION)
-		{
+		switch (eType)
+		{		
 		case ST_CURRENT:
+			SAFE_DELETE(m_pScene[ST_CURRENT]);
 			m_pScene[ST_CURRENT] = pScene;
 			break;		
 		case ST_NEXT:
+			SAFE_DELETE(m_pScene[ST_CURRENT]);
 			m_pScene[ST_NEXT] = pScene;
 			break;
 		}

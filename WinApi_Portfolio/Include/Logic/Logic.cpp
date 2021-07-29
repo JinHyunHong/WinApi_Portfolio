@@ -4,6 +4,8 @@
 #include "InputManager.h"
 #include "Camera.h"
 #include "../Scene/SceneManager.h"
+#include "../Texture/Texture.h"
+#include "ResourcesManager.h"
 
 DEFINITION_SINGLE(CLogic);
 
@@ -23,6 +25,7 @@ CLogic::~CLogic()
     DESTROY_SINGLE(CCamera);
     DESTROY_SINGLE(CInputManager);
     DESTROY_SINGLE(CFileManager);
+    DESTROY_SINGLE(CResourcesManager);
     DESTROY_SINGLE(CSceneManager);
 }
 
@@ -129,7 +132,7 @@ void CLogic::Logic()
 bool CLogic::Init(HINSTANCE hInst)
 {
     m_hInst = hInst;
-    m_tClientRS = {1200, 800};
+    m_tClientRS = {1280, 720};
     m_bLoop = true;
     m_strWindowName = L"Game";
 
@@ -150,6 +153,9 @@ bool CLogic::Init(HINSTANCE hInst)
     if (!GET_SINGLE(CFileManager)->Init())
         return false;
 
+    if (!GET_SINGLE(CResourcesManager)->Init(hInst, m_hDC))
+        return false;
+
     if (!GET_SINGLE(CSceneManager)->Init())
         return false;
 
@@ -163,6 +169,14 @@ void CLogic::Input(float fDeltaTime)
 
 int CLogic::Update(float fDeltaTime)
 {
+    CTexture* pBackBuffer = GET_SINGLE(CResourcesManager)->GetBackBuffer();
+
+    GET_SINGLE(CSceneManager)->Render(pBackBuffer->GetDC(), fDeltaTime);
+
+    BitBlt(m_hDC, 0, 0, m_tClientRS.iHeight, m_tClientRS.iHeight, pBackBuffer->GetDC(), 0, 0, SRCCOPY);
+
+    SAFE_RELEASE(pBackBuffer);
+
     return 0;
 }
 

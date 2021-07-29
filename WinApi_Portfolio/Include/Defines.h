@@ -31,6 +31,7 @@ public:\
 #define GET_WINDOW_HANDLE  CLogic::GetInst()->GetWindowHandle()
 
 #define BASE_PATH "BasePath"
+#define TEXTURE_PATH "TexturePath"
 
 #define DECLARE_REFERENCE_COUNT()\
 private:\

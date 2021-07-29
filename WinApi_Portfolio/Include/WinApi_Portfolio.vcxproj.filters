@@ -52,6 +52,9 @@
     <Filter Include="02.Object\02.UI">
       <UniqueIdentifier>{a6b1fa3e-1884-44f1-a82f-d44cec33e533}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Texture">
+      <UniqueIdentifier>{0ca9da48-9669-4bf0-888a-baec07f481e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -95,6 +98,12 @@
     </ClCompile>
     <ClCompile Include="UI\UI.cpp">
       <Filter>02.Object\02.UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>02.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\Texture.cpp">
+      <Filter>04.Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +161,12 @@
     <ClInclude Include="UI\UI.h">
       <Filter>02.Object\02.UI</Filter>
     </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>02.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\Texture.h">
+      <Filter>04.Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinApi_Portfolio.rc">
@@ -162,5 +177,8 @@
     <Image Include="icon1.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

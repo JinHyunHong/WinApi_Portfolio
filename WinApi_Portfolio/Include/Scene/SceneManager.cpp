@@ -48,6 +48,7 @@ CLayer* CSceneManager::CreateSceneLayer(SCENE_TRANSITION eType, const string& st
 
 bool CSceneManager::Init()
 {
+	CreateScene<CScene>(ST_CURRENT);
 	// 씬을 여기서 만들어준다.
 	return true;
 }

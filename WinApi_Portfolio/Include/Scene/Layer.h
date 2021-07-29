@@ -9,17 +9,21 @@ private:
 
 private:
 	CLayer();
+	CLayer(const CLayer& layer);
+
+// 전역 매크로를 사용하기 위해
+public:
 	~CLayer();
 
 private:
 	string					 m_strTag;
 	int						 m_iZOrder;
 	class CScene*			 m_pScene;
-	list<class CGameObj*>	 m_ObjList;
+	list<class CObj*>		 m_ObjList;
 	bool					 m_bLife;
 
 public:
-	void AddObj(class CGameObj* pGameObj);
+	void AddObj(class CObj* pObj);
 	void EraseObj(const string& strTag);
 	void EraseObj();
 
@@ -66,10 +70,10 @@ public:
 
 public:
 	bool Init();
-	void Input(float fDeltaTime);
-	int Update(float fDeltaTime);
-	int LateUpdate(float fDeltaTime);
-	void Collision(float fDeltaTime);
-	void Render(HDC hDC, float fDeltaTime);
+	virtual void Input(float fDeltaTime);
+	virtual int Update(float fDeltaTime);
+	virtual int LateUpdate(float fDeltaTime);
+	virtual void Collision(float fDeltaTime);
+	virtual void Render(HDC hDC, float fDeltaTime);
 };
 

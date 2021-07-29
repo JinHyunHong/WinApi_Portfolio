@@ -27,6 +27,8 @@ bool CFileManager::Init()
 		wmemset(&strBasePath[i], 0, 2);
 	}
 
+	CreatePath(TEXTURE_PATH, L"Texture\\");
+
 	return true;
 }
 

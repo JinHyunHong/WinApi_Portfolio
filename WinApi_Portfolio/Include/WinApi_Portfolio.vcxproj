@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Obj.cpp" />
     <ClCompile Include="GameObject\GameObj.cpp" />
     <ClCompile Include="GameObject\MoveObj.cpp" />
     <ClCompile Include="Logic\Camera.cpp" />
@@ -159,9 +160,11 @@
     <ClCompile Include="Scene\Layer.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Obj.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="Game.h" />
@@ -179,6 +182,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +190,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

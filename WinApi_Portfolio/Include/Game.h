@@ -40,7 +40,7 @@ void Safe_Release_Map(T& p)
 
 	for (iter = p.begin(); iter != iterEnd; ++iter)
 	{
-		SAFE_RELEASE(iter->Second);
+		SAFE_RELEASE(iter->second);
 	}
 
 	p.clear();

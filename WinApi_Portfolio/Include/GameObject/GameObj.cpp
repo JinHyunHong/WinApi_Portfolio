@@ -2,16 +2,13 @@
 
 list<CGameObj*> CGameObj::m_ObjList;
 
-CGameObj::CGameObj()    :
-    m_bLife(true)
+CGameObj::CGameObj()
 {
-    DEFINITION_REFERENCE_COUNT();
 }
 
-CGameObj::CGameObj(const CGameObj& GameObj)
+CGameObj::CGameObj(const CGameObj& GameObj) :
+    CObj(GameObj)
 {
-    m_strTag = GameObj.m_strTag;
-    m_tSize = GameObj.m_tSize;
 }
 
 CGameObj* CGameObj::FindGameObj(const string& strTag)
@@ -59,22 +56,27 @@ bool CGameObj::Init()
 
 void CGameObj::Input(float fDeltaTime)
 {
+    CObj::Input(fDeltaTime);
 }
 
 int CGameObj::Update(float fDeltaTime)
 {
+    CObj::Update(fDeltaTime);
     return 0;
 }
 
 void CGameObj::Collision(float fDeltaTime)
 {
+    CObj::Collision(fDeltaTime);
 }
 
 int CGameObj::LateUpdate(float fDeltaTime)
 {
+    CObj::LateUpdate(fDeltaTime);
     return 0;
 }
 
 void CGameObj::Render(HDC hDC, float fDeltaTime)
 {
+    CObj::Render(hDC, fDeltaTime);
 }

@@ -10,7 +10,7 @@ private:
 
 protected:
 	CScene();
-	virtual ~CScene() = 0;
+	virtual ~CScene();
 
 protected:
 	list<class CLayer*> m_LayerList;
@@ -23,7 +23,7 @@ public:
 		if (!pLayer->Init())
 		{
 			SAFE_DELETE(pLayer);
-			return;
+			return NULL;
 		}
 
 		pLayer->SetTag(strTag);
@@ -36,7 +36,7 @@ public:
 	CLayer* FindLayer(const string& strTag);
 
 private:
-	bool LayerSort(const CLayer* pLayerSrc, const CLayer* pLayerDest);
+	static bool LayerSort(const CLayer* pLayerSrc, const CLayer* pLayerDest);
 
 public:
 	virtual bool Init();

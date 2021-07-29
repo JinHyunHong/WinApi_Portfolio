@@ -1,8 +1,14 @@
 #include "Layer.h"
-#include "../GameObject/GameObj.h"
+#include "../Obj.h"
 
 CLayer::CLayer()	:
-	m_iZOrder(0)
+	m_iZOrder(0),
+	m_bLife(true),
+	m_pScene(NULL)
+{
+}
+
+CLayer::CLayer(const CLayer& layer)
 {
 }
 
@@ -11,16 +17,17 @@ CLayer::~CLayer()
 	Safe_Release_VecList(m_ObjList);
 }
 
-void CLayer::AddObj(CGameObj* pGameObj)
+
+void CLayer::AddObj(CObj* pObj)
 {
-	pGameObj->AddRef();
-	m_ObjList.push_back(pGameObj);
+	pObj->AddRef();
+	m_ObjList.push_back(pObj);
 }
 
 void CLayer::EraseObj(const string& strTag)
 {
-	list<class CGameObj*>::iterator iter;
-	list<class CGameObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CObj*>::iterator iter;
+	list<class CObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -45,8 +52,8 @@ void CLayer::Input(float fDeltaTime)
 
 int CLayer::Update(float fDeltaTime)
 {
-	list<CGameObj*>::iterator iter;
-	list<CGameObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CObj*>::iterator iter;
+	list<class CObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -66,8 +73,8 @@ int CLayer::Update(float fDeltaTime)
 
 int CLayer::LateUpdate(float fDeltaTime)
 {
-	list<CGameObj*>::iterator iter;
-	list<CGameObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CObj*>::iterator iter;
+	list<class CObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -86,8 +93,8 @@ int CLayer::LateUpdate(float fDeltaTime)
 
 void CLayer::Collision(float fDeltaTime)
 {
-	list<CGameObj*>::iterator iter;
-	list<CGameObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CObj*>::iterator iter;
+	list<class CObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -105,8 +112,8 @@ void CLayer::Collision(float fDeltaTime)
 
 void CLayer::Render(HDC hDC, float fDeltaTime)
 {
-	list<CGameObj*>::iterator iter;
-	list<CGameObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CObj*>::iterator iter;
+	list<class CObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{

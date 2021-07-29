@@ -7,3 +7,10 @@ enum DIR
 	DIR_NONE,
 	DIR_FRONT
 };
+
+enum SCENE_TRANSITION
+{
+	ST_CURRENT,
+	ST_NEXT,
+	ST_END
+};

@@ -156,6 +156,10 @@
     <ClCompile Include="Logic\ResourcesManager.cpp" />
     <ClCompile Include="Logic\Timer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene\Layer.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defines.h" />
@@ -171,7 +175,11 @@
     <ClInclude Include="Logic\ResourcesManager.h" />
     <ClInclude Include="Logic\Timer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene\Layer.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinApi_Portfolio.rc" />

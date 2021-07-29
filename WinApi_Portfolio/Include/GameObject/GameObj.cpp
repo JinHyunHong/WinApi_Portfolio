@@ -2,7 +2,8 @@
 
 list<CGameObj*> CGameObj::m_ObjList;
 
-CGameObj::CGameObj()
+CGameObj::CGameObj()    :
+    m_bLife(true)
 {
     DEFINITION_REFERENCE_COUNT();
 }

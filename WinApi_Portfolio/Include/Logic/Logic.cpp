@@ -3,6 +3,7 @@
 #include "FileManager.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "../Scene/SceneManager.h"
 
 DEFINITION_SINGLE(CLogic);
 
@@ -22,6 +23,7 @@ CLogic::~CLogic()
     DESTROY_SINGLE(CCamera);
     DESTROY_SINGLE(CInputManager);
     DESTROY_SINGLE(CFileManager);
+    DESTROY_SINGLE(CSceneManager);
 }
 
 ATOM  CLogic::MyRegisterClass()
@@ -146,6 +148,9 @@ bool CLogic::Init(HINSTANCE hInst)
         return false;
 
     if (!GET_SINGLE(CFileManager)->Init())
+        return false;
+
+    if (!GET_SINGLE(CSceneManager)->Init())
         return false;
 
     return true;

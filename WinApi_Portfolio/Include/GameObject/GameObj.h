@@ -16,6 +16,7 @@ protected:
 	POSITION				m_tPos;
 	POSITION				m_tPivot;
 	_SIZE					m_tSize;
+	bool					m_bLife;
 
 public:
 	string GetTag()		const
@@ -76,13 +77,23 @@ public:
 		m_tSize.y = y;
 	}
 
+	bool GetLife()	const
+	{
+		return m_bLife;
+	}
+
+	void Die(bool bLife)
+	{
+		m_bLife = bLife;
+	}
+
 
 private:
 	static list<CGameObj*> m_ObjList;
 
 public:
 	template<typename T>
-	static T* CreateGameObj(const string& strTag)
+	static T* CreateGameObj(const string& strTag, class CLayer* pLayer)
 	{
 		T* pGameObj = new T;
 
@@ -94,6 +105,7 @@ public:
 
 		pGameObj->SetTag(strTag);
 		m_ObjList.push_back(pGameObj);
+		pLayer->AddObj(pGameObj);
 		return pGameObj;
 	}
 

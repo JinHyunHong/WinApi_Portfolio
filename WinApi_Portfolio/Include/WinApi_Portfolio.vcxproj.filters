@@ -43,6 +43,15 @@
     <Filter Include="02.Object\01.GameObj\01.MoveObj">
       <UniqueIdentifier>{59f7f970-b0e4-4b87-b99a-33377a38411c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.Scene">
+      <UniqueIdentifier>{49877a70-218f-45d7-8498-79f2a8abe35a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\01.Layer">
+      <UniqueIdentifier>{6739f39f-8ebd-410c-b0eb-30b780a83644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\02.UI">
+      <UniqueIdentifier>{a6b1fa3e-1884-44f1-a82f-d44cec33e533}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,6 +83,18 @@
     </ClCompile>
     <ClCompile Include="GameObject\MoveObj.cpp">
       <Filter>02.Object\01.GameObj\01.MoveObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>03.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>03.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Layer.cpp">
+      <Filter>03.Scene\01.Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UI.cpp">
+      <Filter>02.Object\02.UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +139,18 @@
     </ClInclude>
     <ClInclude Include="GameObject\MoveObj.h">
       <Filter>02.Object\01.GameObj\01.MoveObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>03.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>03.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Layer.h">
+      <Filter>03.Scene\01.Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UI.h">
+      <Filter>02.Object\02.UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

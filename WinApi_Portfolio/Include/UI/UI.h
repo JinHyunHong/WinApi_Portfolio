@@ -10,7 +10,7 @@ class CUI	:
 protected:
 	CUI();
 	CUI(const CUI& ui);
-	virtual ~CUI() = 0;
+	virtual ~CUI();
 
 
 private:

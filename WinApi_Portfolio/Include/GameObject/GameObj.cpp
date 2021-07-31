@@ -11,6 +11,10 @@ CGameObj::CGameObj(const CGameObj& GameObj) :
 {
 }
 
+CGameObj::~CGameObj()
+{
+}
+
 CGameObj* CGameObj::FindGameObj(const string& strTag)
 {
     list<CGameObj*>::iterator iter;

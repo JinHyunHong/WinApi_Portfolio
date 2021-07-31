@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="GameObject\GameObj.cpp" />
     <ClCompile Include="GameObject\MoveObj.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Flag.h" />

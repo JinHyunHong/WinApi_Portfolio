@@ -6,7 +6,7 @@ class CMoveObj :
 protected:
 	CMoveObj();
 	CMoveObj(const CMoveObj& Obj);
-	virtual ~CMoveObj() = 0;
+	virtual ~CMoveObj();
 
 protected:
 	float m_fSpeed;
@@ -18,6 +18,12 @@ protected:
 	float m_fGravityTime;
 	bool  m_bPhysics;
 	float m_fAngle;
+
+public:
+	void SetSpeed(float fSpeed)
+	{
+		m_fSpeed = fSpeed;
+	}
 
 protected:
 	void Jump();

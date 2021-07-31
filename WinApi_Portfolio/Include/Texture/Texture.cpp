@@ -24,6 +24,7 @@ CTexture::~CTexture()
 
 void CTexture::SetColorKey(unsigned char r, unsigned char g, unsigned char b)
 {
+    m_bColorKeyEnable = true;
     m_tColorKey = RGB(r, g, b);
 }
 

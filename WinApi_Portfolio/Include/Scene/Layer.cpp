@@ -20,8 +20,11 @@ CLayer::~CLayer()
 
 void CLayer::AddObj(CObj* pObj)
 {
-	pObj->AddRef();
-	m_ObjList.push_back(pObj);
+	if (pObj)
+	{
+		pObj->AddRef();
+		m_ObjList.push_back(pObj);
+	}
 }
 
 void CLayer::EraseObj(const string& strTag)
@@ -48,6 +51,21 @@ bool CLayer::Init()
 
 void CLayer::Input(float fDeltaTime)
 {
+	list<class CObj*>::iterator iter;
+	list<class CObj*>::iterator iterEnd = m_ObjList.end();
+
+	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
+	{
+		if (!(*iter)->GetLife())
+		{
+			SAFE_RELEASE((*iter));
+			iter = m_ObjList.erase(iter);
+			iterEnd = m_ObjList.end();
+			continue;
+		}
+
+		(*iter)->Input(fDeltaTime);
+	}
 }
 
 int CLayer::Update(float fDeltaTime)
@@ -57,7 +75,7 @@ int CLayer::Update(float fDeltaTime)
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
-		if ((*iter)->GetLife() == false)
+		if (!(*iter)->GetLife())
 		{
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
@@ -78,7 +96,7 @@ int CLayer::LateUpdate(float fDeltaTime)
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
-		if ((*iter)->GetLife() == false)
+		if (!(*iter)->GetLife())
 		{
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
@@ -98,7 +116,7 @@ void CLayer::Collision(float fDeltaTime)
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
-		if ((*iter)->GetLife() == false)
+		if (!(*iter)->GetLife())
 		{
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
@@ -117,7 +135,7 @@ void CLayer::Render(HDC hDC, float fDeltaTime)
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
-		if ((*iter)->GetLife() == false)
+		if (!(*iter)->GetLife())
 		{
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);

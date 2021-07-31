@@ -21,6 +21,10 @@ CMoveObj::CMoveObj(const CMoveObj& Obj) :
 	m_bPhysics = Obj.m_bPhysics;
 }
 
+CMoveObj::~CMoveObj()
+{
+}
+
 void CMoveObj::Jump()
 {
 	if (!m_bFalling)

@@ -15,7 +15,11 @@ CInputManager::~CInputManager()
 
 bool CInputManager::Init()
 {
-	CreateKey(VK_LBUTTON, "Attack", 'A');
+	CreateKey("MoveLeft", VK_LEFT);
+	CreateKey("MoveRight", VK_RIGHT);
+	CreateKey("MoveDown", VK_DOWN);	
+	CreateKey("Jump", VK_SPACE);
+
 	return true;
 }
 

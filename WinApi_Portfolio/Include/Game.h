@@ -14,8 +14,9 @@
 #include "resource.h"
 #include <math.h>
 
-using namespace std;
+#pragma comment(lib, "msimg32")
 
+using namespace std;
 
 
 template <typename T>

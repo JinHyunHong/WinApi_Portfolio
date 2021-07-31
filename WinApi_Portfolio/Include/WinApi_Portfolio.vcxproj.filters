@@ -55,6 +55,9 @@
     <Filter Include="04.Texture">
       <UniqueIdentifier>{0ca9da48-9669-4bf0-888a-baec07f481e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Object\01.GameObj\01.MoveObj\01.Player">
+      <UniqueIdentifier>{3a36562e-2ed8-44ec-b19b-d1c68a86dc48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -104,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="Texture\Texture.cpp">
       <Filter>04.Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Player.cpp">
+      <Filter>02.Object\01.GameObj\01.MoveObj\01.Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="Texture\Texture.h">
       <Filter>04.Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Player.h">
+      <Filter>02.Object\01.GameObj\01.MoveObj\01.Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

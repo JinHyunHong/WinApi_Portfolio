@@ -32,6 +32,35 @@ public:
 	void Update(float fDeltaTime);
 
 public:
+	bool GetKeyDown(const string& strKey)	const
+	{
+		PKEYINFO pKeyInfo = FindKey(strKey);
+
+		if(pKeyInfo)
+			return pKeyInfo->bDown;
+
+		return false;
+	}
+	bool GetKeyPress(const string& strKey)	const
+	{
+		PKEYINFO pKeyInfo = FindKey(strKey);
+
+		if (pKeyInfo)
+			return pKeyInfo->bPress;
+
+		return false;
+	}
+	bool GetKeyUp(const string& strKey)	const
+	{
+		PKEYINFO pKeyInfo = FindKey(strKey);
+
+		if (pKeyInfo)
+			return pKeyInfo->bUp;
+
+		return false;
+	}
+
+public:
 	PKEYINFO FindKey(const string& strKey)	const;
 
 public:

@@ -132,7 +132,7 @@ void CLogic::Logic()
 bool CLogic::Init(HINSTANCE hInst)
 {
     m_hInst = hInst;
-    m_tClientRS = {1280, 720};
+    m_tClientRS = {1000, 720};
     m_bLoop = true;
     m_strWindowName = L"Game";
 
@@ -165,30 +165,33 @@ bool CLogic::Init(HINSTANCE hInst)
 void CLogic::Input(float fDeltaTime)
 {
     GET_SINGLE(CInputManager)->Update(fDeltaTime);
+    GET_SINGLE(CSceneManager)->Input(fDeltaTime);
 }
 
 int CLogic::Update(float fDeltaTime)
 {
-    CTexture* pBackBuffer = GET_SINGLE(CResourcesManager)->GetBackBuffer();
-
-    GET_SINGLE(CSceneManager)->Render(pBackBuffer->GetDC(), fDeltaTime);
-
-    BitBlt(m_hDC, 0, 0, m_tClientRS.iHeight, m_tClientRS.iHeight, pBackBuffer->GetDC(), 0, 0, SRCCOPY);
-
-    SAFE_RELEASE(pBackBuffer);
-
+    GET_SINGLE(CSceneManager)->Update(fDeltaTime);
     return 0;
 }
 
 void CLogic::Collision(float fDeltaTime)
 {
+    GET_SINGLE(CSceneManager)->Collision(fDeltaTime);
 }
 
 int CLogic::LateUpdate(float fDeltaTime)
 {
+    GET_SINGLE(CSceneManager)->LateUpdate(fDeltaTime);
     return 0;
 }
 
 void CLogic::Render(float fDeltaTime)
 {
+    CTexture* pBackBuffer = GET_SINGLE(CResourcesManager)->GetBackBuffer();
+
+    GET_SINGLE(CSceneManager)->Render(pBackBuffer->GetDC(), fDeltaTime);
+
+    BitBlt(m_hDC, 0, 0, m_tClientRS.iWidth, m_tClientRS.iHeight, pBackBuffer->GetDC(), 0, 0, SRCCOPY);
+
+    SAFE_RELEASE(pBackBuffer);
 }

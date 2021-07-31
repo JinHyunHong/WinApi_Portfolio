@@ -10,7 +10,7 @@ class CGameObj	:
 protected:
 	CGameObj();
 	CGameObj(const CGameObj& GameObj);
-	virtual ~CGameObj() = 0;
+	virtual ~CGameObj();
 
 private:
 	static list<CGameObj*> m_ObjList;

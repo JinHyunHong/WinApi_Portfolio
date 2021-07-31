@@ -55,3 +55,8 @@ public:\
 
 
 #define GRAVITY 9.8f
+
+
+#define KEYDOWN(key)	GET_SINGLE(CInputManager)->GetKeyDown(key)
+#define KEYPRESS(key)	GET_SINGLE(CInputManager)->GetKeyPress(key)
+#define KEYUP(key)	GET_SINGLE(CInputManager)->GetKeyUp(key)

@@ -11,6 +11,10 @@ CUI::CUI(const CUI& ui) :
 {
 }
 
+CUI::~CUI()
+{
+}
+
 CUI* CUI::FindUIObj(const string& strTag)
 {
     list<CUI*>::iterator iter;

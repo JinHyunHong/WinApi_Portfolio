@@ -7,7 +7,7 @@ CGameObj::CGameObj()
 }
 
 CGameObj::CGameObj(const CGameObj& GameObj) :
-    CObj(GameObj)
+    CGraphicObj(GameObj)
 {
 }
 
@@ -60,27 +60,27 @@ bool CGameObj::Init()
 
 void CGameObj::Input(float fDeltaTime)
 {
-    CObj::Input(fDeltaTime);
+    CGraphicObj::Input(fDeltaTime);
 }
 
 int CGameObj::Update(float fDeltaTime)
 {
-    CObj::Update(fDeltaTime);
+    CGraphicObj::Update(fDeltaTime);
     return 0;
 }
 
 void CGameObj::Collision(float fDeltaTime)
 {
-    CObj::Collision(fDeltaTime);
+    CGraphicObj::Collision(fDeltaTime);
 }
 
 int CGameObj::LateUpdate(float fDeltaTime)
 {
-    CObj::LateUpdate(fDeltaTime);
+    CGraphicObj::LateUpdate(fDeltaTime);
     return 0;
 }
 
 void CGameObj::Render(HDC hDC, float fDeltaTime)
 {
-    CObj::Render(hDC, fDeltaTime);
+    CGraphicObj::Render(hDC, fDeltaTime);
 }

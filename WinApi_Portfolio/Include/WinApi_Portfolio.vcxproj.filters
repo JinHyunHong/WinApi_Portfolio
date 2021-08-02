@@ -58,6 +58,12 @@
     <Filter Include="02.Object\01.GameObj\01.MoveObj\01.Player">
       <UniqueIdentifier>{3a36562e-2ed8-44ec-b19b-d1c68a86dc48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Object\02.UI\UIPanel">
+      <UniqueIdentifier>{d5b1df34-95bc-4884-90dc-97214b8a9d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03.Collider">
+      <UniqueIdentifier>{b4b745ea-ba53-4187-8ca0-7b94ef4d66f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +116,15 @@
     </ClCompile>
     <ClCompile Include="GameObject\Player.cpp">
       <Filter>02.Object\01.GameObj\01.MoveObj\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIPanel.cpp">
+      <Filter>02.Object\02.UI\UIPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\GraphicObj.cpp">
+      <Filter>02.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\Collider.cpp">
+      <Filter>02.Object\03.Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +190,15 @@
     </ClInclude>
     <ClInclude Include="GameObject\Player.h">
       <Filter>02.Object\01.GameObj\01.MoveObj\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIPanel.h">
+      <Filter>02.Object\02.UI\UIPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GraphicObj.h">
+      <Filter>02.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\Collider.h">
+      <Filter>02.Object\03.Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

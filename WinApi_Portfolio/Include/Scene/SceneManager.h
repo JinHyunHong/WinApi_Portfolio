@@ -31,6 +31,8 @@ public:
 			m_pScene[ST_NEXT] = pScene;
 			break;
 		}
+
+		return pScene;
 	}
 
 	void ChangeScene();

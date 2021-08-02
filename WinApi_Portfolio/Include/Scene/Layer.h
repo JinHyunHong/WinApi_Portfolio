@@ -16,14 +16,14 @@ public:
 	~CLayer();
 
 private:
-	string					 m_strTag;
-	int						 m_iZOrder;
-	class CScene*			 m_pScene;
-	list<class CObj*>		 m_ObjList;
-	bool					 m_bLife;
+	string							 m_strTag;
+	int								 m_iZOrder;
+	class CScene*					 m_pScene;
+	list<class CGraphicObj*>		 m_ObjList;
+	bool							 m_bLife;
 
 public:
-	void AddObj(class CObj* pObj);
+	void AddObj(class CGraphicObj* pGrapicObj);
 	void EraseObj(const string& strTag);
 	void EraseObj();
 

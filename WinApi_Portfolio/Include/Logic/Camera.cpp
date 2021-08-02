@@ -3,7 +3,8 @@
 
 DEFINITION_SINGLE(CCamera);
 
-CCamera::CCamera()
+CCamera::CCamera()	:
+	m_pTargetObj(NULL)
 {
 
 }
@@ -43,7 +44,7 @@ void CCamera::Scroll(float x, float y)
 		m_tPos.y = m_tWorldRS.iHeight - m_tClientRS.iHeight;
 }
 
-void CCamera::Update()
+void CCamera::Update(float fDeltaTime)
 {
 	POSITION tPos = m_pTargetObj->GetPos();
 	POSITION tSize = m_pTargetObj->GetSize();

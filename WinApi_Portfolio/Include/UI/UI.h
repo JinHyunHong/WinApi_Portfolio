@@ -2,10 +2,10 @@
 
 #include "../Game.h"
 #include "../Scene/Layer.h"
-#include "../Obj.h"
+#include "../GameObject/GraphicObj.h"
 
 class CUI	:
-	public CObj
+	public CGraphicObj
 {
 protected:
 	CUI();

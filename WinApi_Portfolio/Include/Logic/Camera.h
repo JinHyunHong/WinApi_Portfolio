@@ -17,7 +17,7 @@ public:
 	bool Init(SCREENSIZE tClientRS,
 		SCREENSIZE tWorldRS);
 	void Scroll(float x, float y);
-	void Update();
+	void Update(float fDeltaTime);
 
 public:
 	POSITION GetPos()		const

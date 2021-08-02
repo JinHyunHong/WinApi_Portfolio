@@ -17,7 +17,6 @@ protected:
 	POSITION				m_tPivot;
 	_SIZE					m_tSize;
 	bool					m_bLife;
-	class CTexture*			m_pTexture;
 
 public:
 	string GetTag()		const
@@ -88,11 +87,6 @@ public:
 		m_bLife = bLife;
 	}
 
-public:
-	void SetTexture(CTexture* pTex);
-	void SetTexture(const string& strKey, const wchar_t* pFileName, const string& strPathKey = TEXTURE_PATH);
-	void SetColorKey(unsigned int r, unsigned int g, unsigned int b);
-	void SetColorKey(COLORREF rgb);
 
 public:
 	virtual bool Init();

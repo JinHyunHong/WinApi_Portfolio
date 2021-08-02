@@ -146,6 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Collider\Collider.cpp" />
+    <ClCompile Include="GameObject\GraphicObj.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="GameObject\GameObj.cpp" />
@@ -163,8 +165,11 @@
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="UI\UI.cpp" />
+    <ClCompile Include="UI\UIPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collider\Collider.h" />
+    <ClInclude Include="GameObject\GraphicObj.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Defines.h" />
@@ -186,6 +191,7 @@
     <ClInclude Include="Struct.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="UI\UI.h" />
+    <ClInclude Include="UI\UIPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinApi_Portfolio.rc" />

@@ -7,7 +7,7 @@ CUI::CUI()
 }
 
 CUI::CUI(const CUI& ui) :
-    CObj(ui)
+    CGraphicObj(ui)
 {
 }
 
@@ -55,32 +55,32 @@ void CUI::DeleteUIObj()
 
 bool CUI::Init()
 {
-    return false;
+    return true;
 }
 
 void CUI::Input(float fDeltaTime)
 {
-    CObj::Input(fDeltaTime);
+    CGraphicObj::Input(fDeltaTime);
 }
 
 int CUI::Update(float fDeltaTime)
 {
-    CObj::Update(fDeltaTime);
+    CGraphicObj::Update(fDeltaTime);
     return 0;
 }
 
 void CUI::Collision(float fDeltaTime)
 {
-    CObj::Collision(fDeltaTime);
+    CGraphicObj::Collision(fDeltaTime);
 }
 
 int CUI::LateUpdate(float fDeltaTime)
 {
-    CObj::LateUpdate(fDeltaTime);
+    CGraphicObj::LateUpdate(fDeltaTime);
     return 0;
 }
 
 void CUI::Render(HDC hDC, float fDeltaTime)
 {
-    CObj::Render(hDC, fDeltaTime);
+    CGraphicObj::Render(hDC, fDeltaTime);
 }

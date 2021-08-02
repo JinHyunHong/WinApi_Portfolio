@@ -1,5 +1,5 @@
 #include "Layer.h"
-#include "../Obj.h"
+#include "../GameObject/GraphicObj.h"
 
 CLayer::CLayer()	:
 	m_iZOrder(0),
@@ -18,7 +18,7 @@ CLayer::~CLayer()
 }
 
 
-void CLayer::AddObj(CObj* pObj)
+void CLayer::AddObj(CGraphicObj* pObj)
 {
 	if (pObj)
 	{
@@ -29,8 +29,8 @@ void CLayer::AddObj(CObj* pObj)
 
 void CLayer::EraseObj(const string& strTag)
 {
-	list<class CObj*>::iterator iter;
-	list<class CObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CGraphicObj*>::iterator iter;
+	list<class CGraphicObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -51,8 +51,8 @@ bool CLayer::Init()
 
 void CLayer::Input(float fDeltaTime)
 {
-	list<class CObj*>::iterator iter;
-	list<class CObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CGraphicObj*>::iterator iter;
+	list<class CGraphicObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -70,8 +70,8 @@ void CLayer::Input(float fDeltaTime)
 
 int CLayer::Update(float fDeltaTime)
 {
-	list<class CObj*>::iterator iter;
-	list<class CObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CGraphicObj*>::iterator iter;
+	list<class CGraphicObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -91,8 +91,8 @@ int CLayer::Update(float fDeltaTime)
 
 int CLayer::LateUpdate(float fDeltaTime)
 {
-	list<class CObj*>::iterator iter;
-	list<class CObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CGraphicObj*>::iterator iter;
+	list<class CGraphicObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -111,8 +111,8 @@ int CLayer::LateUpdate(float fDeltaTime)
 
 void CLayer::Collision(float fDeltaTime)
 {
-	list<class CObj*>::iterator iter;
-	list<class CObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CGraphicObj*>::iterator iter;
+	list<class CGraphicObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{
@@ -130,8 +130,8 @@ void CLayer::Collision(float fDeltaTime)
 
 void CLayer::Render(HDC hDC, float fDeltaTime)
 {
-	list<class CObj*>::iterator iter;
-	list<class CObj*>::iterator iterEnd = m_ObjList.end();
+	list<class CGraphicObj*>::iterator iter;
+	list<class CGraphicObj*>::iterator iterEnd = m_ObjList.end();
 
 	for (iter = m_ObjList.begin(); iter != iterEnd; ++iter)
 	{

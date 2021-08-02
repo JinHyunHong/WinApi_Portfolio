@@ -46,8 +46,8 @@ typedef struct _tagPosition
 
 	void operator =(POINT tPos)
 	{
-		x = tPos.x;
-		y = tPos.y;
+		x = (float)tPos.x;
+		y = (float)tPos.y;
 	}
 
 	void operator +=(_tagPosition tPos)
@@ -142,14 +142,11 @@ typedef struct _tagRectangle
 
 typedef struct _tagSphere
 {
-	float x;
-	float y;
+	POSITION tCenter;
 	float fRadius;
 
 	_tagSphere() :
-		fRadius(0.f),
-		x(0.f),
-		y(0.f)
+		fRadius(0.f)
 	{
 	}
 }SPHERE, *PSPHERE;

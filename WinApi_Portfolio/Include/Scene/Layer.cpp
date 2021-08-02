@@ -1,5 +1,6 @@
 #include "Layer.h"
 #include "../GameObject/GraphicObj.h"
+#include "../Collider/ColliderManager.h"
 
 CLayer::CLayer()	:
 	m_iZOrder(0),
@@ -124,7 +125,8 @@ void CLayer::Collision(float fDeltaTime)
 			continue;
 		}
 
-		(*iter)->Collision(fDeltaTime);
+		else
+			GET_SINGLE(CColliderManager)->AddObj(*iter);
 	}
 }
 

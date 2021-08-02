@@ -96,7 +96,7 @@ int CCollider::Update(float fDeltaTime)
 	return 0;
 }
 
-void CCollider::Collision(CCollider* pDest)
+bool CCollider::Collision(CCollider* pDest)
 {
 }
 

@@ -6,6 +6,7 @@
 #include "../Scene/SceneManager.h"
 #include "../Texture/Texture.h"
 #include "ResourcesManager.h"
+#include "../Collider/ColliderManager.h"
 
 DEFINITION_SINGLE(CLogic);
 
@@ -26,7 +27,8 @@ CLogic::~CLogic()
     DESTROY_SINGLE(CInputManager);
     DESTROY_SINGLE(CFileManager);
     DESTROY_SINGLE(CResourcesManager);
-    DESTROY_SINGLE(CSceneManager);
+    DESTROY_SINGLE(CSceneManager); 
+    DESTROY_SINGLE(CColliderManager);
 }
 
 ATOM  CLogic::MyRegisterClass()
@@ -178,6 +180,7 @@ int CLogic::Update(float fDeltaTime)
 void CLogic::Collision(float fDeltaTime)
 {
     GET_SINGLE(CSceneManager)->Collision(fDeltaTime);
+    GET_SINGLE(CColliderManager)->Collision(fDeltaTime);
 }
 
 int CLogic::LateUpdate(float fDeltaTime)

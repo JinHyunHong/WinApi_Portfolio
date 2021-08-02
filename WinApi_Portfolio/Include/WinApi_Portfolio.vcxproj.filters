@@ -138,6 +138,9 @@
     <ClCompile Include="Collider\ColliderPixel.cpp">
       <Filter>02.Object\03.Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Collider\ColliderManager.cpp">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -222,6 +225,9 @@
       <Filter>02.Object\03.Collider</Filter>
     </ClInclude>
     <ClInclude Include="Collider\ColliderPixel.h">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\ColliderManager.h">
       <Filter>02.Object\03.Collider</Filter>
     </ClInclude>
   </ItemGroup>

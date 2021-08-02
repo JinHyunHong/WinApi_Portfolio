@@ -73,6 +73,54 @@ public:
 	void SetColorKey(unsigned int r, unsigned int g, unsigned int b);
 	void SetColorKey(COLORREF rgb);
 
+
+public:
+	const list<CCollider*>& GetColliderList()
+	{
+		return m_ColliderList;
+	}
+
+	bool GetCollisonEmpty()	const
+	{
+		return m_ColliderList.empty();
+	}
+
+	CCollider* GetCollider(const string& strTag);
+
+	template<typename T>
+	void AddColliderFunction(const string& strTag, COLLIDER_STATE eState, T* pObj,
+		void(T::* pFunc)(CCollider*, CCollider*, float))
+	{
+		list<CCollider*>::iterator iter;
+		list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+		for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+		{
+			if ((*iter)->GetTag() == strTag)
+			{
+				(*iter)->AddFunction(eState, pObj, pFunc);
+				break;
+			}
+		}
+	}
+
+	template<typename T>
+	T* AddCollider(const string& strTag)
+	{
+		T* pColl = new T;
+
+		if (!pColl->Init())
+		{
+			SAFE_RELEASE(pColl);
+			return NULL;
+		}
+
+		pColl->SetTag(strTag);
+		m_ColliderList.push_back(pColl);
+
+		return pColl;
+	}
+
 public:
 	virtual bool Init();
 	virtual void Input(float fDeltaTime);

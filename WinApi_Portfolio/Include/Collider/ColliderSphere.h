@@ -41,7 +41,7 @@ public:
 	virtual bool Init();
 	virtual void Input(float fDeltaTime);
 	virtual int	 Update(float fDeltaTime);
-	virtual void Collision(CCollider* pDest);
+	virtual bool Collision(CCollider* pDest);
 	virtual int  LateUpdate(float fDeltaTime);
 	virtual void Render(HDC hDC, float fDeltaTime);
 };

@@ -26,12 +26,28 @@ bool CGraphicObj::Init()
 	return true;
 }
 
+CCollider* CGraphicObj::GetCollider(const string& strTag) 
+{
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+	{
+		if ((*iter)->GetTag() == strTag)
+		{
+			return (*iter);
+		}
+	}
+
+	return NULL;
+}
+
 void CGraphicObj::Input(float fDeltaTime)
 {
 	CObj::Input(fDeltaTime);
 
-	list<class CCollider*>::iterator iter;
-	list<class CCollider*>::iterator iterEnd = m_ColliderList.end();
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
 	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
 	{
@@ -51,8 +67,8 @@ int CGraphicObj::Update(float fDeltaTime)
 {
 	CObj::Update(fDeltaTime);
 
-	list<class CCollider*>::iterator iter;
-	list<class CCollider*>::iterator iterEnd = m_ColliderList.end();
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
 	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
 	{
@@ -71,31 +87,14 @@ int CGraphicObj::Update(float fDeltaTime)
 
 void CGraphicObj::Collision(float fDeltaTime)
 {
-	CObj::Collision(fDeltaTime);
-
-	list<class CCollider*>::iterator iter;
-	list<class CCollider*>::iterator iterEnd = m_ColliderList.end();
-
-	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
-	{
-		if (!(*iter)->GetLife())
-		{
-			SAFE_RELEASE((*iter));
-			iter = m_ColliderList.erase(iter);
-			iterEnd = m_ColliderList.end();
-			continue;
-		}
-
-		(*iter)->Collision(fDeltaTime);
-	}
 }
 
 int CGraphicObj::LateUpdate(float fDeltaTime)
 {
 	CObj::LateUpdate(fDeltaTime);
 
-	list<class CCollider*>::iterator iter;
-	list<class CCollider*>::iterator iterEnd = m_ColliderList.end();
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
 	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
 	{
@@ -116,8 +115,8 @@ void CGraphicObj::Render(HDC hDC, float fDeltaTime)
 {
 	CObj::Render(hDC, fDeltaTime);
 
-	list<class CCollider*>::iterator iter;
-	list<class CCollider*>::iterator iterEnd = m_ColliderList.end();
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
 	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
 	{

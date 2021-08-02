@@ -1,6 +1,9 @@
 #include "ColliderRect.h"
 #include "../Logic/Camera.h"
 #include "../Logic/Math.h"
+#include "ColliderPoint.h"
+#include "ColliderPixel.h"
+#include "ColliderSphere.h"
 
 CColliderRect::CColliderRect()
 {
@@ -33,19 +36,22 @@ int CColliderRect::Update(float fDeltaTime)
 	return 0;
 }
 
-void CColliderRect::Collision(CCollider* pDest)
+bool CColliderRect::Collision(CCollider* pDest)
 {
 	switch (pDest->GetColliderType())
 	{
 	case CT_POINT:
-		break;
+		return CMath::RectToPoint(m_tWorldInfo, ((CColliderPoint*)pDest)->GetPos());
 	case CT_RECT:
-		break;
+		return CMath::RectToRect(m_tWorldInfo, ((CColliderRect*)pDest)->GetWorldInfo());
 	case CT_SPHERE:
-		break;
+		return CMath::RectToSphere(m_tWorldInfo, ((CColliderSphere*)pDest)->GetWorldInfo());
 	case CT_PIXEL:
-		break;
+		return CMath::RectToPixel(m_tWorldInfo, ((CColliderPixel*)pDest)->GetPixel(), ((CColliderPixel*)pDest)->GetWidth(),
+			((CColliderPixel*)pDest)->GetHeight());
 	}
+
+	return false;
 }
 
 int CColliderRect::LateUpdate(float fDeltaTime)

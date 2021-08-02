@@ -13,6 +13,7 @@
 #include <string>
 #include "resource.h"
 #include <math.h>
+#include <functional>
 
 #pragma comment(lib, "msimg32")
 

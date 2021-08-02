@@ -147,6 +147,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collider\Collider.cpp" />
+    <ClCompile Include="Collider\ColliderPixel.cpp" />
+    <ClCompile Include="Collider\ColliderPoint.cpp" />
+    <ClCompile Include="Collider\ColliderRect.cpp" />
+    <ClCompile Include="Collider\ColliderSphere.cpp" />
     <ClCompile Include="GameObject\GraphicObj.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="Obj.cpp" />
@@ -169,6 +173,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider\Collider.h" />
+    <ClInclude Include="Collider\ColliderPixel.h" />
+    <ClInclude Include="Collider\ColliderPoint.h" />
+    <ClInclude Include="Collider\ColliderRect.h" />
+    <ClInclude Include="Collider\ColliderSphere.h" />
     <ClInclude Include="GameObject\GraphicObj.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="Obj.h" />

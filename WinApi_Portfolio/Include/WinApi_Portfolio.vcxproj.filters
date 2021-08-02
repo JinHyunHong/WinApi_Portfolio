@@ -126,6 +126,18 @@
     <ClCompile Include="Collider\Collider.cpp">
       <Filter>02.Object\03.Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Collider\ColliderRect.cpp">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\ColliderSphere.cpp">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\ColliderPoint.cpp">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\ColliderPixel.cpp">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -198,6 +210,18 @@
       <Filter>02.Object</Filter>
     </ClInclude>
     <ClInclude Include="Collider\Collider.h">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\ColliderRect.h">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\ColliderSphere.h">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\ColliderPoint.h">
+      <Filter>02.Object\03.Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\ColliderPixel.h">
       <Filter>02.Object\03.Collider</Filter>
     </ClInclude>
   </ItemGroup>

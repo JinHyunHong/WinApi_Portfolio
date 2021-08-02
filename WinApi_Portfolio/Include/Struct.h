@@ -89,6 +89,14 @@ typedef struct _tagPosition
 		return tPos;
 	}
 
+	_tagPosition operator +(float fPos[2])
+	{
+		_tagPosition tPos;
+		tPos.x = x + fPos[0];
+		tPos.y = y + fPos[1];
+		return tPos;
+	}
+
 	_tagPosition operator -(_tagPosition _tPos)
 	{
 		_tagPosition tPos;
@@ -110,6 +118,14 @@ typedef struct _tagPosition
 		_tagPosition tPos;
 		tPos.x = x * _tPos.x;
 		tPos.y = y * _tPos.y;
+		return tPos;
+	}
+
+	_tagPosition operator -(float fPos[2])
+	{
+		_tagPosition tPos;
+		tPos.x = x - fPos[0];
+		tPos.y = y - fPos[1];
 		return tPos;
 	}
 

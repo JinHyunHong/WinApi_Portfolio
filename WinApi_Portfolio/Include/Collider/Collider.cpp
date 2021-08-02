@@ -13,7 +13,15 @@ CCollider::CCollider(const CCollider& collider)
 
 CCollider::~CCollider()
 {
-	Safe_Release_VecList(m_ColliderList);
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+	{
+		(*iter)->EraseCollider(this);
+	}
+
+	EraseCollider();
 }
 
 void CCollider::AddCollider(CCollider* pColl)
@@ -22,21 +30,19 @@ void CCollider::AddCollider(CCollider* pColl)
 	m_ColliderList.push_back(pColl);
 }
 
-CCollider* CCollider::FindCollider(const string& strTag)
+bool CCollider::CheckColliderList(CCollider* pColl)
 {
 	list<CCollider*>::iterator iter;
 	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
 	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
 	{
-		if ((*iter)->GetTag() == strTag)
+		if ((*iter) == pColl)
 		{
-			(*iter)->AddRef();
-
-			return *iter;
+			return true;
 		}
 	}
-	return NULL;
+	return false;
 }
 
 bool CCollider::EraseCollider(const string& strTag)
@@ -47,6 +53,22 @@ bool CCollider::EraseCollider(const string& strTag)
 	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
 	{
 		if ((*iter)->GetTag() == strTag)
+		{
+			SAFE_RELEASE((*iter));
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CCollider::EraseCollider(CCollider* pColl)
+{
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+	{
+		if ((*iter) == pColl)
 		{
 			SAFE_RELEASE((*iter));
 			return true;
@@ -74,7 +96,7 @@ int CCollider::Update(float fDeltaTime)
 	return 0;
 }
 
-void CCollider::Collision(float fDeltaTime)
+void CCollider::Collision(CCollider* pDest)
 {
 }
 

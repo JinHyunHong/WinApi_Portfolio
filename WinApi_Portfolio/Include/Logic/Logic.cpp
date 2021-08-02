@@ -22,13 +22,15 @@ CLogic::CLogic()    :
 
 CLogic::~CLogic()
 {
+    DESTROY_SINGLE(CSceneManager);
+    DESTROY_SINGLE(CColliderManager);
     DESTROY_SINGLE(CTimer);
     DESTROY_SINGLE(CCamera);
     DESTROY_SINGLE(CInputManager);
     DESTROY_SINGLE(CFileManager);
     DESTROY_SINGLE(CResourcesManager);
-    DESTROY_SINGLE(CSceneManager); 
-    DESTROY_SINGLE(CColliderManager);
+
+    ReleaseDC(m_hWnd, m_hDC);
 }
 
 ATOM  CLogic::MyRegisterClass()

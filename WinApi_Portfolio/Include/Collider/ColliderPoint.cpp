@@ -1,5 +1,6 @@
 #include "ColliderPoint.h"
 #include "../Logic/Math.h"
+#include "../GameObject/GraphicObj.h"
 #include "ColliderRect.h"
 #include "ColliderPixel.h"
 #include "ColliderSphere.h"

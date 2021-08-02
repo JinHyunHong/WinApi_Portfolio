@@ -1,4 +1,5 @@
 #include "Collider.h"
+#include "../GameObject/GraphicObj.h"
 
 CCollider::CCollider()	:
 	m_eType(CT_NONE),
@@ -22,6 +23,12 @@ CCollider::~CCollider()
 	}
 
 	EraseCollider();
+}
+
+void CCollider::SetObj(CGraphicObj* pObj)
+{
+	m_pObj = pObj;
+	pObj->AddRef();
 }
 
 void CCollider::AddCollider(CCollider* pColl)
@@ -98,6 +105,7 @@ int CCollider::Update(float fDeltaTime)
 
 bool CCollider::Collision(CCollider* pDest)
 {
+	return false;
 }
 
 int CCollider::LateUpdate(float fDeltaTime)

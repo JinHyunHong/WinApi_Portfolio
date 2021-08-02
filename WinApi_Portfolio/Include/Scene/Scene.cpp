@@ -5,6 +5,7 @@
 #include "../UI/UI.h"
 #include "../UI/UIPanel.h"
 #include "../Logic/Camera.h"
+#include "../Collider/ColliderRect.h"
 
 CScene::CScene()
 {
@@ -49,6 +50,10 @@ bool CScene::Init()
 	pObj->SetSize(100.f, 100.f);
 	pObj->SetPivot(0.5f, 0.5f);
 	GET_SINGLE(CCamera)->SetTarget(pObj);
+
+	CColliderRect* pRC = pObj->AddCollider<CColliderRect>("Hong");
+	pRC->SetInfo(-35.f, -35.f, 35.f, 35.f);
+
 
 	pLayer = FindLayer("UI");
 	CreateLayer("BackGround", INT_MAX - 2);

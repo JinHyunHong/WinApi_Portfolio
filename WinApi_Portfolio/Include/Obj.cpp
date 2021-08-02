@@ -1,7 +1,6 @@
 #include "Obj.h"
 
 
-
 CObj::CObj()	:
 	m_bLife(true)
 {
@@ -11,7 +10,6 @@ CObj::CObj()	:
 CObj::CObj(const CObj& obj)
 {
 	m_strTag = obj.m_strTag;
-	m_tSize = obj.m_tSize;
 }
 
 CObj::~CObj()

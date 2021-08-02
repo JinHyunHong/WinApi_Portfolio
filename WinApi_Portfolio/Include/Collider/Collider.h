@@ -1,22 +1,24 @@
 #pragma once
 #include "../Obj.h"
 #include "../Game.h"
-#include "../GameObject/GraphicObj.h"
 
 class CCollider :
     public CObj
 {
+private:
+	friend class CGraphicObj;
+
 protected:
 	CCollider();
 	CCollider(const CCollider& collider);
-	virtual ~CCollider();
+	virtual ~CCollider() = 0;
 
 protected:
 	COLLIDER_TYPE		m_eType;
 	class CGraphicObj*	m_pObj;
 	// 나와 충돌하고 있는 콜라이더 목록
 	list<CCollider*>	m_ColliderList;
-	list<function<void(CCollider*, CCollider*, float)>> m_FunList[CT_END];
+	list<function<void(CCollider*, CCollider*, float)>> m_FunList[CS_END];
 
 public:
 	void AddFunction(COLLIDER_STATE eState,
@@ -63,11 +65,7 @@ public:
 		return m_eType;
 	}
 
-	void SetObj(CGraphicObj* pObj)
-	{
-		m_pObj = pObj;
-		pObj->AddRef();
-	}
+	void SetObj(CGraphicObj* pObj);
 
 	CGraphicObj* GetObj()	const
 	{

@@ -6,6 +6,9 @@
 class CGraphicObj :
     public CObj
 {
+private:
+	friend class CScene;
+
 protected:
 	CGraphicObj();
 	CGraphicObj(const CGraphicObj& graphicobj);
@@ -116,6 +119,7 @@ public:
 		}
 
 		pColl->SetTag(strTag);
+		pColl->SetObj(this);
 		m_ColliderList.push_back(pColl);
 
 		return pColl;

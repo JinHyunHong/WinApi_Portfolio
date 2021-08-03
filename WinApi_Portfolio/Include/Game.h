@@ -7,17 +7,19 @@
 #include <list>
 #include <unordered_map>
 #include <vector>
-#include "Defines.h"
-#include "Struct.h"
-#include "Flag.h"
 #include <string>
-#include "resource.h"
 #include <math.h>
 #include <functional>
 
 #pragma comment(lib, "msimg32")
 
 using namespace std;
+
+
+#include "resource.h"
+#include "Defines.h"
+#include "Flag.h"
+#include "Struct.h"
 
 
 template <typename T>

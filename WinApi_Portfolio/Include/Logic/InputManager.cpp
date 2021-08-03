@@ -38,7 +38,7 @@ bool CInputManager::Init()
 	CreateKey("Jump", VK_SPACE);
 	CreateKey("MouseLButton", VK_LBUTTON);
 	
-	GetCursorPos(&m_tMousePos);
+	//GetCursorPos(&m_tMousePos);
 
 	// 마우스 생성
 	m_pMouse = CUI::CreateUIObj<CMouse>("Mouse");

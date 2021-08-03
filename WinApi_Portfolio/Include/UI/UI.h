@@ -29,7 +29,12 @@ public:
 
 		pUIObj->SetTag(strTag);
 		m_ObjList.push_back(pUIObj);
-		pLayer->AddObj(pUIObj);
+
+		if (pLayer)
+		{
+			pLayer->AddObj(pUIObj);
+		}
+
 		return pUIObj;
 	}
 

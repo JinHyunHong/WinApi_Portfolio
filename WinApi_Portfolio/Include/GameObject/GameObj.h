@@ -28,7 +28,12 @@ public:
 
 		pGameObj->SetTag(strTag);
 		m_ObjList.push_back(pGameObj);
-		pLayer->AddObj(pGameObj);
+
+		if (pLayer)
+		{
+			pLayer->AddObj(pGameObj);
+		}
+
 		return pGameObj;
 	}
 

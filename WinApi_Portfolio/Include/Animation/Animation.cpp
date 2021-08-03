@@ -229,7 +229,11 @@ int CAnimation::Update(float fDeltaTime)
 			++m_pCurClip->iFrameY;
 
 			if (m_pCurClip->eType == AT_FRAME)
+			{
 				m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
+				m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(),
+					(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
+			}
 
 
 			if (m_pCurClip->iFrameY - m_pCurClip->iStartY == m_pCurClip->iLengthY)
@@ -256,7 +260,12 @@ int CAnimation::Update(float fDeltaTime)
 		else
 		{
 			if (m_pCurClip->eType == AT_FRAME)
+			{
 				m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
+				m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(), 
+					(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
+			}
+				
 		}
 	}
 

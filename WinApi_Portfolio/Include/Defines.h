@@ -32,6 +32,7 @@ public:\
 
 #define BASE_PATH "BasePath"
 #define TEXTURE_PATH "TexturePath"
+#define CHARACTER_PATH "CharacterPath"
 
 #define DECLARE_REFERENCE_COUNT()\
 private:\

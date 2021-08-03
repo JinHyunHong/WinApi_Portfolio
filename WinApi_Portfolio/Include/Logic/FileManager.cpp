@@ -28,6 +28,7 @@ bool CFileManager::Init()
 	}
 
 	CreatePath(TEXTURE_PATH, L"Texture\\");
+	CreatePath(CHARACTER_PATH, L"Texture\\Character\\");
 
 	return true;
 }

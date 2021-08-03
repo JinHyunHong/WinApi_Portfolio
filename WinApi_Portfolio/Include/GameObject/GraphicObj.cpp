@@ -85,6 +85,10 @@ int CGraphicObj::Update(float fDeltaTime)
 
 		(*iter)->Update(fDeltaTime);
 	}
+
+	if (m_pAnimation)
+		m_pAnimation->Update(fDeltaTime);
+
 	return 0;
 }
 
@@ -157,6 +161,9 @@ void CGraphicObj::SetTexture(CTexture* pTex)
 {
 	SAFE_RELEASE(m_pTexture);
 	m_pTexture = pTex;
+
+	if (m_pTexture)
+		m_pTexture->AddRef();
 }
 
 

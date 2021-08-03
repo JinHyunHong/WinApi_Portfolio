@@ -26,6 +26,19 @@ class CInputManager
 private:
 	unordered_map<string, PKEYINFO> m_mapKey;
 	PKEYINFO						m_pKeyInfo;
+	POINT							m_tMousePos;
+	POINT							m_tMouseMove;
+	class CMouse*					m_pMouse;
+
+public:
+	class CMouse* GetMouse()	const
+	{
+		return m_pMouse;
+	}
+
+	POSITION GetMouseClientPos()	const;
+	POSITION GetMouseWorldPos()	const;
+	POSITION GetMouseMove()	const;
 
 public:
 	bool Init();

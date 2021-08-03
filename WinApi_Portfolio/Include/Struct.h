@@ -181,5 +181,27 @@ typedef struct _tagPixel
 	}
 }PIXEL, *PPIXEL;
 
+typedef struct _tagAnimationClip
+{
+	ANIMATION_TYPE			eType;
+	ANIMATION_OPTION		eOption;
+	vector<class CTexture*> vecTexture;
+	float					fAnimationTime;
+	float					fAnimationLimitTime;
+	float					fAnimationFrameTime;
+	int						iFrameX;
+	int						iFrameY;
+	int						iFrameMaxX;
+	int						iFrameMaxY;
+	int						iStartX;
+	int						iStartY;
+	int						iLengthX;
+	int						iLengthY;
+	float					fOptionTime;
+	float					fOptionLimitTime;
+	_SIZE					tFrameSize;
+
+}ANIMATIONCLIP, * PANIMATIONCLIP;
+
 
 

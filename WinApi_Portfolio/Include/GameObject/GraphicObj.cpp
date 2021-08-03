@@ -2,10 +2,12 @@
 #include "../Texture/Texture.h"
 #include "../Logic/Camera.h"
 #include "../Logic/ResourcesManager.h"
+#include "../Animation/Animation.h"
 
 
 CGraphicObj::CGraphicObj()	:
-	m_pTexture(NULL)
+	m_pTexture(NULL),
+	m_pAnimation(NULL)
 {
 }
 
@@ -18,7 +20,8 @@ CGraphicObj::CGraphicObj(const CGraphicObj& graphicobj)	:
 CGraphicObj::~CGraphicObj()
 {
 	Safe_Release_VecList(m_ColliderList);
-	SAFE_RELEASE(m_pTexture);
+	SAFE_RELEASE(m_pTexture); 
+	SAFE_RELEASE(m_pAnimation);
 }
 
 bool CGraphicObj::Init()
@@ -173,4 +176,52 @@ void CGraphicObj::SetColorKey(unsigned int r, unsigned int g, unsigned int b)
 void CGraphicObj::SetColorKey(COLORREF rgb)
 {
 	m_pTexture->SetColorKey(rgb);
+}
+
+CAnimation* CGraphicObj::CreateAnimation(const string& strTag)
+{
+	SAFE_RELEASE(m_pAnimation);
+
+	m_pAnimation = new CAnimation;
+
+	m_pAnimation->SetTag(strTag);
+	m_pAnimation->SetObj(this);
+
+	if (!m_pAnimation->Init())
+	{
+		SAFE_RELEASE(m_pAnimation);
+		return NULL;
+	}
+
+	m_pAnimation->AddRef();
+
+	return m_pAnimation;
+}
+
+bool CGraphicObj::AddAnimationClip(const string& strName, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float fAnimationLimitTime, int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY, float fOptionLimitTime, const string& strTexKey, const wchar_t* pFileName, const string& strPathKey)
+{
+	if (!m_pAnimation)
+		return false;
+
+	m_pAnimation->AddClip(strName, eType, eOption, fAnimationLimitTime, iFrameMaxX, iFrameMaxY, iStartX, iStartY, iLengthX,
+		iLengthY, fOptionLimitTime, strTexKey, pFileName, strPathKey);
+
+	return true;
+}
+
+bool CGraphicObj::AddAnimationClip(const string& strName, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float fAnimationLimitTime, int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY, float fOptionLimitTime, const string& strTexKey, const vector<wstring>& vecFileName, const string& strPathKey)
+{
+	if (!m_pAnimation)
+		return false;
+
+	m_pAnimation->AddClip(strName, eType, eOption, fAnimationLimitTime, iFrameMaxX, iFrameMaxY, iStartX, iStartY, iLengthX,
+		iLengthY, fOptionLimitTime, strTexKey, vecFileName, strPathKey);
+
+	return true;
+}
+
+void CGraphicObj::SetAnimationClipColorKey(const string& strClip, unsigned char r, unsigned char g, unsigned char b)
+{
+	if (m_pAnimation)
+		m_pAnimation->SetClipColorKey(strClip, r, g, b);
 }

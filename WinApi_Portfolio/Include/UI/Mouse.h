@@ -1,20 +1,31 @@
 #pragma once
-#include "MoveObj.h"
-
-class CPlayer :
-    public CMoveObj
+#include "UI.h"
+class CMouse :
+    public CUI
 {
 private:
-	friend class CGameObj;
 	friend class CScene;
+	friend class CUI;
 
 private:
-	float fHP;
+	CMouse();
+	CMouse(const CMouse& mouse);
+	virtual ~CMouse();
 
 private:
-	CPlayer();
-	CPlayer(const CPlayer& player);
-	~CPlayer();
+	POSITION m_tMove;
+	POSITION m_tWorldPos;
+
+public:
+	POSITION GetMove()	const
+	{
+		return m_tMove;
+	}
+
+	POSITION GetWorldPos()	const
+	{
+		return m_tWorldPos;
+	}
 
 public:
 	virtual bool Init();

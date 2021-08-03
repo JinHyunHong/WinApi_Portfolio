@@ -64,6 +64,18 @@
     <Filter Include="02.Object\03.Collider">
       <UniqueIdentifier>{b4b745ea-ba53-4187-8ca0-7b94ef4d66f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Object\04.Animation">
+      <UniqueIdentifier>{dbe0e7b5-9b48-4697-9523-de4141de7638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\02.UI\UIButton">
+      <UniqueIdentifier>{fe09b9f6-4e90-4006-ac1d-d3faebe6b836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\02.UI\Mouse">
+      <UniqueIdentifier>{d621cc10-d950-4891-8bb3-3762948c6f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\01.GameScene">
+      <UniqueIdentifier>{0216dac1-1d6b-4ac8-b096-c2a03b964090}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,6 +152,18 @@
     </ClCompile>
     <ClCompile Include="Collider\ColliderManager.cpp">
       <Filter>02.Object\03.Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Animation.cpp">
+      <Filter>02.Object\04.Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIButton.cpp">
+      <Filter>02.Object\02.UI\UIButton</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Mouse.cpp">
+      <Filter>02.Object\02.UI\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene.cpp">
+      <Filter>03.Scene\01.GameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +253,18 @@
     </ClInclude>
     <ClInclude Include="Collider\ColliderManager.h">
       <Filter>02.Object\03.Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Animation.h">
+      <Filter>02.Object\04.Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIButton.h">
+      <Filter>02.Object\02.UI\UIButton</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Mouse.h">
+      <Filter>02.Object\02.UI\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameScene.h">
+      <Filter>03.Scene\01.GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

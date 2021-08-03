@@ -1,6 +1,5 @@
 #pragma once
 #include "../Obj.h"
-#include "../Game.h"
 #include "../Collider/Collider.h"
 
 class CGraphicObj :
@@ -20,6 +19,8 @@ protected:
 	POSITION				m_tPos;
 	POSITION				m_tPivot;
 	_SIZE					m_tSize;
+	class CAnimation*		m_pAnimation;
+	_SIZE					m_tImageOffset;
 
 public:
 	POSITION GetPos()		const
@@ -70,11 +71,33 @@ public:
 		m_tSize.y = y;
 	}
 
+	void ImageOffset(const _SIZE& tOffset)
+	{
+		m_tImageOffset = tOffset;
+	}
+
+	void SetImageOffset(float x, float y)
+	{
+		m_tImageOffset.x = x;
+		m_tImageOffset.y = y;
+	}
+
 public:
 	void SetTexture(class CTexture* pTex);
 	void SetTexture(const string& strKey, const wchar_t* pFileName, const string& strPathKey = TEXTURE_PATH);
 	void SetColorKey(unsigned int r, unsigned int g, unsigned int b);
 	void SetColorKey(COLORREF rgb);
+
+
+public:
+	class CAnimation* CreateAnimation(const string& strTag);
+	bool AddAnimationClip(const string& strName, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float fAnimationLimitTime,
+		int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY, float fOptionLimitTime, const string& strTexKey,
+		const wchar_t* pFileName, const string& strPathKey = TEXTURE_PATH);
+	bool AddAnimationClip(const string& strName, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float fAnimationLimitTime,
+		int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY, float fOptionLimitTime, const string& strTexKey,
+		const vector<wstring>& vecFileName, const string& strPathKey = TEXTURE_PATH);
+	void SetAnimationClipColorKey(const string& strClip, unsigned char r, unsigned char g, unsigned char b);
 
 
 public:

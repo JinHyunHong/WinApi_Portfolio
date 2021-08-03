@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Game.h"
 #include "../Scene/Layer.h"
 #include "../GameObject/GraphicObj.h"
 
@@ -18,7 +17,7 @@ private:
 
 public:
 	template<typename T>
-	static T* CreateUIObj(const string& strTag, class CLayer* pLayer)
+	static T* CreateUIObj(const string& strTag, class CLayer* pLayer = NULL)
 	{
 		T* pUIObj = new T;
 

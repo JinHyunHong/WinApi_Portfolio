@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Collider\Collider.cpp" />
     <ClCompile Include="Collider\ColliderManager.cpp" />
     <ClCompile Include="Collider\ColliderPixel.cpp" />
@@ -165,14 +166,18 @@
     <ClCompile Include="Logic\ResourcesManager.cpp" />
     <ClCompile Include="Logic\Timer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="Scene\Layer.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
+    <ClCompile Include="UI\Mouse.cpp" />
     <ClCompile Include="UI\UI.cpp" />
+    <ClCompile Include="UI\UIButton.cpp" />
     <ClCompile Include="UI\UIPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Collider\Collider.h" />
     <ClInclude Include="Collider\ColliderManager.h" />
     <ClInclude Include="Collider\ColliderPixel.h" />
@@ -195,12 +200,15 @@
     <ClInclude Include="Logic\ResourcesManager.h" />
     <ClInclude Include="Logic\Timer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="Texture\Texture.h" />
+    <ClInclude Include="UI\Mouse.h" />
     <ClInclude Include="UI\UI.h" />
+    <ClInclude Include="UI\UIButton.h" />
     <ClInclude Include="UI\UIPanel.h" />
   </ItemGroup>
   <ItemGroup>

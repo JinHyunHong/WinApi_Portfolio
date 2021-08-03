@@ -1,6 +1,5 @@
 #pragma once
 #include "../Obj.h"
-#include "../Game.h"
 
 class CCollider :
     public CObj

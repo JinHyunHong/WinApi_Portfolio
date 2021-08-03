@@ -60,3 +60,5 @@ public:\
 #define KEYDOWN(key)	GET_SINGLE(CInputManager)->GetKeyDown(key)
 #define KEYPRESS(key)	GET_SINGLE(CInputManager)->GetKeyPress(key)
 #define KEYUP(key)	GET_SINGLE(CInputManager)->GetKeyUp(key)
+
+#define WINDOWHANDLE GET_SINGLE(CLogic)->GetWindowHandle()

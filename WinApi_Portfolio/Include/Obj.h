@@ -31,9 +31,9 @@ public:
 		return m_bLife;
 	}
 
-	void Die(bool bLife)
+	void Die()
 	{
-		m_bLife = bLife;
+		m_bLife = false;
 	}
 
 public:

@@ -4,7 +4,9 @@
 #include "ColliderPoint.h"
 #include "ColliderRect.h"
 
-CColliderPixel::CColliderPixel()
+CColliderPixel::CColliderPixel()	:
+	m_iWidth(0),
+	m_iHeight(0)
 {
 }
 

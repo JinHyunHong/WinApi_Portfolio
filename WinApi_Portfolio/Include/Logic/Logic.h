@@ -3,7 +3,7 @@
 
 class CLogic
 {
-	DECLARE_SINGLE(CLogic)
+	DECLARE_SINGLE(CLogic);
 
 private:
 	HWND		m_hWnd;

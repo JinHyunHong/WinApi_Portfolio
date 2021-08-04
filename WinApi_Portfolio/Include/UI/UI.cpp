@@ -1,4 +1,6 @@
 #include "UI.h"
+#include "../Texture/Texture.h"
+#include "../Animation/Animation.h"
 
 list<CUI*> CUI::m_ObjList;
 
@@ -82,5 +84,37 @@ int CUI::LateUpdate(float fDeltaTime)
 
 void CUI::Render(HDC hDC, float fDeltaTime)
 {
-    CGraphicObj::Render(hDC, fDeltaTime);
+    list<CCollider*>::iterator iter;
+    list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+    for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+    {
+        if (!(*iter)->GetLife())
+        {
+            SAFE_RELEASE((*iter));
+            iter = m_ColliderList.erase(iter);
+            iterEnd = m_ColliderList.end();
+            continue;
+        }
+
+        (*iter)->Render(hDC, fDeltaTime);
+    }
+
+    if (m_pTexture)
+    {
+        POSITION tPos = m_tPos - m_tSize * m_tPivot;
+        
+
+        if (m_pTexture->GetColorKeyEnable())
+        {
+            TransparentBlt(hDC, tPos.x, tPos.y, m_tSize.x, m_tSize.y,
+                m_pTexture->GetDC(), m_tImageOffset.x, m_tImageOffset.y, m_tSize.x, m_tSize.y, m_pTexture->GetColorKey());
+        }
+
+        else
+        {
+            BitBlt(hDC, tPos.x, tPos.y, m_tSize.x,
+                m_tSize.y, m_pTexture->GetDC(), m_tImageOffset.x, m_tImageOffset.y, SRCCOPY);
+        }
+    }
 }

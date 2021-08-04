@@ -33,6 +33,7 @@ public:\
 #define BASE_PATH "BasePath"
 #define TEXTURE_PATH "TexturePath"
 #define CHARACTER_PATH "CharacterPath"
+#define UI_PATH "UIPath"
 
 #define DECLARE_REFERENCE_COUNT()\
 private:\
@@ -63,3 +64,5 @@ public:\
 #define KEYUP(key)	GET_SINGLE(CInputManager)->GetKeyUp(key)
 
 #define WINDOWHANDLE GET_SINGLE(CLogic)->GetWindowHandle()
+#define WINDOWHEIGHT GET_SINGLE(CLogic)->GetClientRS().iHeight
+#define WINDOWWIDTH GET_SINGLE(CLogic)->GetClientRS().iWidth

@@ -187,7 +187,11 @@ void CAnimation::ChangeClip(const string& strClip)
 		m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[0]);
 
 	else if (m_pCurClip->eType == AT_FRAME)
+	{
 		m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
+		m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(),
+			(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
+	}
 }
 
 void CAnimation::ReturnClip()

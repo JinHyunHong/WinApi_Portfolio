@@ -1,12 +1,14 @@
 #include "UIPanel.h"
 
-CUIPanel::CUIPanel()
+CUIPanel::CUIPanel() :
+	m_bStageBack(false)
 {
 }
 
 CUIPanel::CUIPanel(const CUIPanel& ui)	:
 	CUI(ui)
 {
+	m_bStageBack = ui.m_bStageBack;
 }
 
 CUIPanel::~CUIPanel()
@@ -42,5 +44,13 @@ int CUIPanel::LateUpdate(float fDeltaTime)
 
 void CUIPanel::Render(HDC hDC, float fDeltaTime)
 {
-	CUI::Render(hDC, fDeltaTime);
+	if (!m_bStageBack)
+	{
+		CUI::Render(hDC, fDeltaTime);
+	}
+
+	else
+	{
+		CGraphicObj::Render(hDC, fDeltaTime);
+	}
 }

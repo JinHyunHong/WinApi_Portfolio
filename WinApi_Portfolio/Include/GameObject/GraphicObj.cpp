@@ -146,13 +146,13 @@ void CGraphicObj::Render(HDC hDC, float fDeltaTime)
 		if (m_pTexture->GetColorKeyEnable())
 		{
 			TransparentBlt(hDC, tPos.x, tPos.y, m_tSize.x, m_tSize.y,
-				m_pTexture->GetDC(), 0, 0, m_tSize.x, m_tSize.y, m_pTexture->GetColorKey());
+				m_pTexture->GetDC(), m_tImageOffset.x, m_tImageOffset.y, m_tSize.x, m_tSize.y, m_pTexture->GetColorKey());
 		}
 
 		else
 		{
 			BitBlt(hDC, tPos.x, tPos.y, m_tSize.x,
-				m_tSize.y, m_pTexture->GetDC(), 0, 0, SRCCOPY);
+				m_tSize.y, m_pTexture->GetDC(), m_tImageOffset.x, m_tImageOffset.y, SRCCOPY);
 		}
 	}
 }

@@ -13,7 +13,9 @@ protected:
 
 
 private:
-	static list<CUI*> m_ObjList;
+	static list<CUI*>   m_ObjList;
+	vector<PUITEXTINFO> m_vecText;
+	HFONT				m_hOldFont;
 
 public:
 	template<typename T>
@@ -41,6 +43,13 @@ public:
 	static CUI* FindUIObj(const string& strTag);
 	static bool DeleteUIObj(const string& strTag);
 	static void DeleteUIObj();
+
+public:
+	PUITEXTINFO FindUIText(const string& strText);
+	void AddUIText(const string& strText, const POSITION& pos, const string& strFontName,
+		unsigned int r, unsigned int g, unsigned int b, int iMode = TRANSPARENT, unsigned int iFormat = DT_CENTER);
+	void AddUIText(const string& strText, float x, float y, const string& strFontName,
+		unsigned int r, unsigned int g, unsigned int b, int iMode = TRANSPARENT, unsigned int iFormat = DT_CENTER);
 
 public:
 	virtual bool Init();

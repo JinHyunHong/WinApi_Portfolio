@@ -12,6 +12,7 @@ private:
 	static bool	m_bLoop;
 	wstring		m_strWindowName;
 	SCREENSIZE  m_tClientRS;
+	SCREENSIZE  m_tWorldRS;
 
 public:
 	HWND	GetWindowHandle()	const
@@ -27,6 +28,11 @@ public:
 	SCREENSIZE	GetClientRS()	const
 	{
 		return m_tClientRS;
+	}
+
+	SCREENSIZE	GetWorldRS()	const
+	{
+		return m_tWorldRS;
 	}
 
 private:

@@ -29,7 +29,10 @@ bool CFileManager::Init()
 
 	CreatePath(TEXTURE_PATH, L"Texture\\");
 	CreatePath(CHARACTER_PATH, L"Texture\\Character\\");
+	CreatePath(ENEMY_PATH, L"Texture\\Character\\Enemy\\");
+	CreatePath(PLAYER_PATH, L"Texture\\Character\\Player\\");
 	CreatePath(UI_PATH, L"Texture\\UI\\");
+	CreatePath(FONT_PATH, L"Texture\\Font\\");
 
 	return true;
 }

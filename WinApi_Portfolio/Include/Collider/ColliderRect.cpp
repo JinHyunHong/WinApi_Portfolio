@@ -83,6 +83,8 @@ void CColliderRect::Render(HDC hDC, float fDeltaTime)
 	tRC.t -= tPos.y;
 	tRC.b -= tPos.y;
 
+	SelectObject(hDC, GetStockObject(WHITE_PEN));
+
 	MoveToEx(hDC, tRC.l, tRC.t, NULL);
 	LineTo(hDC, tRC.l, tRC.b);	
 	LineTo(hDC, tRC.r, tRC.b);	

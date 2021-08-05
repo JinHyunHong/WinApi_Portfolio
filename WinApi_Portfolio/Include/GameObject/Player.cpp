@@ -3,8 +3,8 @@
 #include "../Collider/ColliderRect.h"
 #include "../Animation/Animation.h"
 
-CPlayer::CPlayer()	:
-	fHP(100.f)
+CPlayer::CPlayer() :
+	m_fHP(0.f)
 {
 }
 
@@ -26,7 +26,7 @@ bool CPlayer::Init()
 	SetImageOffset(0.f, 0.f);
 
 	CColliderRect* pRC = AddCollider<CColliderRect>("Default");
-	pRC->SetInfo(-35.f, -35.f, 35.f, 35.f);
+	pRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
 
 	CreateAnimation("Player");
 
@@ -35,11 +35,11 @@ bool CPlayer::Init()
 	for (int i = 0; i <= 5; ++i)
 	{
 		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Benimaru_Nikaido\\Player\\Idle\\%d.bmp", i);
+		wsprintf(strFileName, L"Benimaru_Nikaido\\Idle\\%d.bmp", i);
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip("Idle", AT_FRAME, AO_LOOP, 1.2f, 6, 1, 0, 0, 6, 1, 0.f, "PlayerIdle", vecFileName, CHARACTER_PATH);
+	AddAnimationClip("Idle", AT_FRAME, AO_LOOP, 1.2f, 6, 1, 0, 0, 6, 1, 0.f, "PlayerIdle", vecFileName, PLAYER_PATH);
 	SetAnimationClipColorKey("Idle", 8, 16, 33);
 
 	vecFileName.clear();
@@ -47,11 +47,11 @@ bool CPlayer::Init()
 	for (int i = 1; i <= 5; ++i)
 	{
 		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Benimaru_Nikaido\\Player\\Walk\\Front\\%d.bmp", i);
+		wsprintf(strFileName, L"Benimaru_Nikaido\\Walk\\Front\\%d.bmp", i);
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip("WalkFront", AT_FRAME, AO_ONCE_RETURN, 0.6f, 5, 1, 0, 0, 5, 1, 0.f, "PlayerWalkFront", vecFileName, CHARACTER_PATH);
+	AddAnimationClip("WalkFront", AT_FRAME, AO_ONCE_RETURN, 0.6f, 5, 1, 0, 0, 5, 1, 0.f, "PlayerWalkFront", vecFileName, PLAYER_PATH);
 	SetAnimationClipColorKey("WalkFront", 8, 16, 33);
 
 	vecFileName.clear();
@@ -59,11 +59,11 @@ bool CPlayer::Init()
 	for (int i = 0; i <= 5; ++i)
 	{
 		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Benimaru_Nikaido\\Player\\Walk\\Back\\%d.bmp", i);
+		wsprintf(strFileName, L"Benimaru_Nikaido\\Walk\\Back\\%d.bmp", i);
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip("WalkBack", AT_FRAME, AO_ONCE_RETURN, 0.6f, 6, 1, 0, 0, 6, 1, 0.f, "PlayerWalkBack", vecFileName, CHARACTER_PATH);
+	AddAnimationClip("WalkBack", AT_FRAME, AO_ONCE_RETURN, 0.6f, 6, 1, 0, 0, 6, 1, 0.f, "PlayerWalkBack", vecFileName, PLAYER_PATH);
 	SetAnimationClipColorKey("WalkBack", 8, 16, 33);
 
 
@@ -82,12 +82,22 @@ void CPlayer::Input(float fDeltaTime)
 		m_pAnimation->SetDefaultClip("Idle");
 	}
 
+	if (KEYUP("MoveLeft"))
+	{
+		m_pAnimation->SetDefaultClip("Idle");
+	}
+
 
 	if (KEYPRESS("MoveRight"))
 	{
 		m_eDir = DIR_FRONT;
 		MoveToXSpeed(fDeltaTime);
 		m_pAnimation->ChangeClip("WalkFront");
+		m_pAnimation->SetDefaultClip("Idle");
+	}
+
+	if (KEYUP("MoveRight"))
+	{
 		m_pAnimation->SetDefaultClip("Idle");
 	}
 }

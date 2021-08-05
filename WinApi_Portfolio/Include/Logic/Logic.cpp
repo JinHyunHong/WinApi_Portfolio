@@ -137,6 +137,7 @@ bool CLogic::Init(HINSTANCE hInst)
 {
     m_hInst = hInst;
     m_tClientRS = {1100, 700};
+    m_tWorldRS = { 2100, 700 };
     m_bLoop = true;
     m_strWindowName = L"Game";
 
@@ -148,7 +149,7 @@ bool CLogic::Init(HINSTANCE hInst)
     if (!GET_SINGLE(CTimer)->Init(m_hWnd))
         return false;
 
-    if (!GET_SINGLE(CCamera)->Init(m_tClientRS, SCREENSIZE(1920, 700)))
+    if (!GET_SINGLE(CCamera)->Init(m_tClientRS, m_tWorldRS))
         return false;
 
     if (!GET_SINGLE(CInputManager)->Init())

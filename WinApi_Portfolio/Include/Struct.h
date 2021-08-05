@@ -203,5 +203,28 @@ typedef struct _tagAnimationClip
 
 }ANIMATIONCLIP, * PANIMATIONCLIP;
 
+typedef struct _tagUiTextInfo
+{
+	string			strText;
+	POSITION		tPos;
+	string			strFontName;
+	unsigned int	r;
+	unsigned int    g;
+	unsigned int    b;
+	int				iMode;
+	unsigned int    iFormat;
+
+	_tagUiTextInfo()	:
+		strText(""),
+		strFontName(""),
+		r(0),
+		g(0),
+		b(0),
+		iMode(TRANSPARENT),
+		iFormat(DT_CENTER)
+	{
+	}
+}UITEXTINFO, * PUITEXTINFO;
+
 
 

@@ -76,6 +76,9 @@
     <Filter Include="03.Scene\01.GameScene">
       <UniqueIdentifier>{0216dac1-1d6b-4ac8-b096-c2a03b964090}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Object\01.GameObj\01.MoveObj\02.Enemy">
+      <UniqueIdentifier>{bdeed57b-369f-4ba3-87e8-be729c35d8a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="Scene\GameScene.cpp">
       <Filter>03.Scene\01.GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Enemy.cpp">
+      <Filter>02.Object\01.GameObj\01.MoveObj\02.Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="Scene\GameScene.h">
       <Filter>03.Scene\01.GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Enemy.h">
+      <Filter>02.Object\01.GameObj\01.MoveObj\02.Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

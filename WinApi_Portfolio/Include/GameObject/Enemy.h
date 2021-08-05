@@ -1,7 +1,6 @@
 #pragma once
 #include "MoveObj.h"
-
-class CPlayer :
+class CEnemy :
     public CMoveObj
 {
 private:
@@ -12,9 +11,9 @@ private:
 	float m_fHP;
 
 private:
-	CPlayer();
-	CPlayer(const CPlayer& player);
-	~CPlayer();
+	CEnemy();
+	CEnemy(const CEnemy& enemy);
+	~CEnemy();
 
 public:
 	virtual bool Init();

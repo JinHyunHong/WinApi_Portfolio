@@ -1,12 +1,16 @@
 #include "GameScene.h"
 #include "../GameObject/GameObj.h"
 #include "../GameObject/Player.h"
+#include "../GameObject/Enemy.h"
 #include "../UI/UI.h"
 #include "../UI/UIPanel.h"
 #include "../Logic/Camera.h"
 #include "../Logic/Logic.h"
 
-CGameScene::CGameScene()
+CGameScene::CGameScene()	:
+	m_iSecondLimit(60),
+	m_iSecond(0),
+	m_fDeltaSumTime(0.f)
 {
 }
 
@@ -18,10 +22,13 @@ bool CGameScene::Init()
 {
 	CScene::Init();
 
+	m_iSecond = m_iSecondLimit;
+
 	CLayer* pLayer = FindLayer("GameObject");
-	CPlayer* pObj = CGameObj::CreateGameObj<CPlayer>("ObjectTest", pLayer);
+	CPlayer* pObj = CGameObj::CreateGameObj<CPlayer>("PlayerObj", pLayer);
 	GET_SINGLE(CCamera)->SetTarget(pObj);
 
+	CEnemy* pEnemy = CGameObj::CreateGameObj<CEnemy>("EnemyObj", pLayer);
 
 	pLayer = FindLayer("UI");
 
@@ -57,6 +64,8 @@ bool CGameScene::Init()
 	pPlyaerBlueHPBack->SetColorKey(0, 0, 0);
 	pPlyaerBlueHPBack->SetSize(483.f, 36.f);
 	pPlyaerBlueHPBack->SetPos(104.f, 37.f);
+	pPlyaerBlueHPBack->AddUIText("CHALLENGER !", -30.f, -15.f, "KOFMainFont23", 43, 74, 225);
+	pPlyaerBlueHPBack->AddUIText("BENIMARU N.", 30.f, 30.f, "KOFMainFont17", 43, 74, 225, TRANSPARENT, DT_LEFT);
 
 	CUIPanel* pPlyaerBlueHP = CUI::CreateUIObj<CUIPanel>("PlyaerBlueHP", pLayer);
 	pPlyaerBlueHP->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
@@ -68,13 +77,15 @@ bool CGameScene::Init()
 	pPlyaerRedHPBack->SetTexture("PlyaerHPBack", L"HPBack.bmp", UI_PATH);
 	pPlyaerRedHPBack->SetColorKey(0, 0, 0);
 	pPlyaerRedHPBack->SetSize(483.f, 36.f);
-	pPlyaerRedHPBack->SetPos(WINDOWWIDTH - 60.f - pPlyaerRedHPBack->GetSize().x, 37.f);
+	pPlyaerRedHPBack->SetPos(WINDOWWIDTH - 20.f - pPlyaerRedHPBack->GetSize().x, 37.f);
+	pPlyaerRedHPBack->AddUIText("CHALLENGER !", -30.f, -15.f, "KOFMainFont23", 209, 27, 58);
+	pPlyaerRedHPBack->AddUIText("KYO", -110.f, 30.f, "KOFMainFont17", 209, 27, 58, TRANSPARENT, DT_RIGHT);
 
 	CUIPanel* pPlyaerRedHP = CUI::CreateUIObj<CUIPanel>("PlyaerRedHP", pLayer);
 	pPlyaerRedHP->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
 	pPlyaerRedHP->SetColorKey(0, 0, 0);
 	pPlyaerRedHP->SetSize(483.f, 36.f);
-	pPlyaerRedHP->SetPos(WINDOWWIDTH - 60.f - pPlyaerRedHP->GetSize().x, 37.f);
+	pPlyaerRedHP->SetPos(WINDOWWIDTH - 20.f - pPlyaerRedHP->GetSize().x, 37.f);
 
 	CUIPanel* pPlyaerBlueFace = CUI::CreateUIObj<CUIPanel>("PlyaerBlueFace", pLayer);
 	pPlyaerBlueFace->SetTexture("PlyaerImage", L"PlayerImage.bmp", UI_PATH);
@@ -90,5 +101,52 @@ bool CGameScene::Init()
 	pPlyaerRedFace->SetSize(90.f, 90.f);
 	pPlyaerRedFace->SetPos(WINDOWWIDTH - 120, 13);
 
+	m_pTimerPanel[0] = CUI::CreateUIObj<CUIPanel>("TimerLeft", pLayer);
+	m_pTimerPanel[0]->SetTexture("Timer", L"Timer.bmp", UI_PATH);
+	m_pTimerPanel[0]->SetImageOffset(251.f, 49.f);
+	m_pTimerPanel[0]->SetColorKey(200, 191, 231);
+	m_pTimerPanel[0]->SetSize(39.f, 65.f);
+	m_pTimerPanel[0]->SetPos(WINDOWWIDTH / 2 - 30, 23);
+
+	m_pTimerPanel[1] = CUI::CreateUIObj<CUIPanel>("TimerRight", pLayer);
+	m_pTimerPanel[1]->SetTexture("Timer", L"Timer.bmp", UI_PATH);
+	m_pTimerPanel[1]->SetImageOffset(13.f, 49.f);
+	m_pTimerPanel[1]->SetColorKey(200, 191, 231);
+	m_pTimerPanel[1]->SetSize(39.f, 65.f);
+	m_pTimerPanel[1]->SetPos(WINDOWWIDTH / 2 + 10, 23);
+
 	return true;
+}
+
+int CGameScene::Update(float fDeltaTime)
+{
+	CScene::Update(fDeltaTime);
+
+	m_fDeltaSumTime += fDeltaTime;
+
+
+	if (m_fDeltaSumTime >= 1)
+	{
+		m_fDeltaSumTime -= 1;
+
+		--m_iSecond;
+
+		if (!m_iSecond == 0)
+		{
+			int iShare = m_iSecond / 10;
+			int iRemain = m_iSecond % 10;
+
+
+			m_pTimerPanel[0]->SetImageOffset(13.f + m_pTimerPanel[0]->GetSize().x * iShare, 49.f);
+			m_pTimerPanel[1]->SetImageOffset(13.f + m_pTimerPanel[1]->GetSize().x * iRemain, 49.f);
+		}
+
+		else
+		{
+		}
+	}
+
+
+
+	return 0;
 }

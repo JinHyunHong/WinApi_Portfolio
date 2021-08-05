@@ -10,7 +10,15 @@ protected:
 	CGameScene();
 	~CGameScene();
 
+private:
+	int	  m_iSecondLimit;
+	int	  m_iSecond;
+	float m_fDeltaSumTime;
+	class CUIPanel* m_pTimerPanel[TIMER_MAX_PANEL];
+
+
 public:
 	virtual bool Init();
+	virtual int Update(float fDeltaTime);
 };
 

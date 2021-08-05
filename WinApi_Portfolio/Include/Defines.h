@@ -34,6 +34,9 @@ public:\
 #define TEXTURE_PATH "TexturePath"
 #define CHARACTER_PATH "CharacterPath"
 #define UI_PATH "UIPath"
+#define FONT_PATH "FontPath"
+#define ENEMY_PATH "EnemyPath"
+#define PLAYER_PATH "PlayerPath"
 
 #define DECLARE_REFERENCE_COUNT()\
 private:\
@@ -66,3 +69,7 @@ public:\
 #define WINDOWHANDLE GET_SINGLE(CLogic)->GetWindowHandle()
 #define WINDOWHEIGHT GET_SINGLE(CLogic)->GetClientRS().iHeight
 #define WINDOWWIDTH GET_SINGLE(CLogic)->GetClientRS().iWidth
+#define WORLDHEIGHT GET_SINGLE(CLogic)->GetWorldRS().iHeight
+#define WORLDWIDTH GET_SINGLE(CLogic)->GetWorldRS().iWidth
+
+#define TIMER_MAX_PANEL 2

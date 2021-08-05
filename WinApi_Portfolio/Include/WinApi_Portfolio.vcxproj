@@ -153,6 +153,7 @@
     <ClCompile Include="Collider\ColliderPoint.cpp" />
     <ClCompile Include="Collider\ColliderRect.cpp" />
     <ClCompile Include="Collider\ColliderSphere.cpp" />
+    <ClCompile Include="GameObject\Enemy.cpp" />
     <ClCompile Include="GameObject\GraphicObj.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="Obj.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Collider\ColliderPoint.h" />
     <ClInclude Include="Collider\ColliderRect.h" />
     <ClInclude Include="Collider\ColliderSphere.h" />
+    <ClInclude Include="GameObject\Enemy.h" />
     <ClInclude Include="GameObject\GraphicObj.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="Obj.h" />

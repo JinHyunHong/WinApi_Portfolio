@@ -6,6 +6,7 @@ class CCollider :
 {
 private:
 	friend class CGraphicObj;
+	friend class CColliderManager;
 
 protected:
 	CCollider();
@@ -13,11 +14,12 @@ protected:
 	virtual ~CCollider() = 0;
 
 protected:
-	COLLIDER_TYPE		m_eType;
-	class CGraphicObj*	m_pObj;
+	COLLIDER_TYPE										m_eType;
+	class CGraphicObj*									m_pObj;
 	// 나와 충돌하고 있는 콜라이더 목록
-	list<CCollider*>	m_ColliderList;
+	list<CCollider*>									m_ColliderList;
 	list<function<void(CCollider*, CCollider*, float)>> m_FunList[CS_END];
+	bool												m_bCollision;
 
 public:
 	void AddFunction(COLLIDER_STATE eState,
@@ -69,6 +71,11 @@ public:
 	CGraphicObj* GetObj()	const
 	{
 		return m_pObj;
+	}
+
+	bool GetCollision()	const
+	{
+		return m_bCollision;
 	}
 
 public:

@@ -82,7 +82,6 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 	strPath += "Kemco Pixel Bold.ttf";
 	AddFontResourceA(strPath.c_str());
 
-	AddFont("KOFMainFont10", 10, 10, 0, 0, 0, 0, 0, 0, ANSI_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, "KOF '96 - '99 Big Font");
 	AddFont("KOFMainFont17", 15, 17, 0, 0, 0, 0, 0, 0, ANSI_CHARSET, 0, 0, 0, 0, "Kemco Pixel");
 	AddFont("KOFMainFont23", 21, 23, 0, 0, 0, 0, 0, 0, ANSI_CHARSET, 0, 0, 0, 0, "Kemco Pixel");
 

@@ -35,8 +35,8 @@ public:\
 #define CHARACTER_PATH "CharacterPath"
 #define UI_PATH "UIPath"
 #define FONT_PATH "FontPath"
-#define ENEMY_PATH "EnemyPath"
-#define PLAYER_PATH "PlayerPath"
+#define BENIMARU_PATH "BenimaruPath"
+#define KYO_PATH "KyoPath"
 
 #define DECLARE_REFERENCE_COUNT()\
 private:\

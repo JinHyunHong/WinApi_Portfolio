@@ -5,6 +5,7 @@ class CColliderPixel :
 {
 private:
 	friend class CGraphicObj;
+	friend class CColliderManager;
 
 private:
 	CColliderPixel();

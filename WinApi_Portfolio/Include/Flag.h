@@ -3,9 +3,9 @@
 
 enum DIR
 {
-	DIR_BACK = -1,
+	DIR_LEFT = -1,
 	DIR_NONE,
-	DIR_FRONT
+	DIR_RIGHT
 };
 
 enum SCENE_TRANSITION

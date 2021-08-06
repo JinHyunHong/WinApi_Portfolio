@@ -5,6 +5,7 @@ class CColliderSphere :
 {
 private:
 	friend class CGraphicObj;
+	friend class CColliderManager;
 
 private:
 	CColliderSphere();

@@ -3,7 +3,8 @@
 
 CCollider::CCollider()	:
 	m_eType(CT_NONE),
-	m_pObj(NULL)
+	m_pObj(NULL),
+	m_bCollision(false)
 {
 }
 

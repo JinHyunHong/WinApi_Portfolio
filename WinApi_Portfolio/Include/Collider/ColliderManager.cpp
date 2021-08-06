@@ -1,5 +1,6 @@
 #include "ColliderManager.h"
 #include "../GameObject/GraphicObj.h"
+#include "Collider.h"
 
 DEFINITION_SINGLE(CColliderManager);
 
@@ -39,8 +40,9 @@ void CColliderManager::Collision(float fDeltaTime)
 	{
 		list<CGraphicObj*>::iterator iter1 = iter;
 		++iter1;
+		list<CGraphicObj*>::iterator iter1End = m_ColliderList.end();
 
-		for (; iter1 != iterEnd; ++iter1)
+		for (; iter1 != iter1End; ++iter1)
 		{
 			Collision(*iter, *iter1, fDeltaTime);
 		}
@@ -67,8 +69,19 @@ bool CColliderManager::Collision(CGraphicObj* pSrc, CGraphicObj* pDest, float fD
 	{
 		for (DestIter = DestList.begin(); DestIter != DestIterEnd; ++DestIter)
 		{
+			(*SrcIter)->m_bCollision = false;
+			(*DestIter)->m_bCollision = false;
+		}
+	}
+
+	for (SrcIter = SrcList.begin(); SrcIter != SrcIterEnd; ++SrcIter)
+	{
+		for (DestIter = DestList.begin(); DestIter != DestIterEnd; ++DestIter)
+		{
 			if ((*SrcIter)->Collision(*DestIter))
 			{
+				(*SrcIter)->m_bCollision = true;
+				(*DestIter)->m_bCollision = true;
 				bCollision = true;
 
 				if (!(*SrcIter)->CheckColliderList(*DestIter))

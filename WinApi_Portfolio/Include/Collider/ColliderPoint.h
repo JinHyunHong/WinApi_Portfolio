@@ -5,6 +5,7 @@ class CColliderPoint :
 {
 private:
 	friend class CGraphicObj;
+	friend class CColliderManager;
 
 private:
 	CColliderPoint();

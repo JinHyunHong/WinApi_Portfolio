@@ -43,16 +43,24 @@ bool CEnemy::Init()
 	for (int i = 0; i <= 5; ++i)
 	{
 		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Kyo_Kusanagi\\Idle\\%d.bmp", i);
+		wsprintf(strFileName, L"Right\\Idle\\%d.bmp", i);
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip("EnemyIdle", AT_FRAME, AO_LOOP, 1.2f, 6, 1, 0, 0, 6, 1, 0.f, "EnemyIdle", vecFileName, ENEMY_PATH);
-	SetAnimationClipColorKey("EnemyIdle", 8, 8, 66);
-
-	m_pAnimation->SetDefaultClip("EnemyIdle");
+	AddAnimationClip("EnemyRightIdle", AT_FRAME, AO_LOOP, 1.2f, 6, 1, 0, 0, 6, 1, 0.f, "EnemyRightIdle", vecFileName, KYO_PATH);
+	SetAnimationClipColorKey("EnemyRightIdle", 8, 8, 66);
 
 	vecFileName.clear();
+
+	for (int i = 0; i <= 2; ++i)
+	{
+		wchar_t strFileName[MAX_PATH] = {};
+		wsprintf(strFileName, L"Right\\Walk\\Front\\%d.bmp", i);
+		vecFileName.push_back(strFileName);
+	}
+
+	AddAnimationClip("EnemyRightWalkFront", AT_FRAME, AO_ONCE_RETURN, 0.3f, 3, 1, 0, 0, 3, 1, 0.f, "EnemyRightWalkFront", vecFileName, KYO_PATH);
+	SetAnimationClipColorKey("EnemyRightWalkFront", 8, 8, 66);
 
 	return true;
 }
@@ -65,6 +73,43 @@ void CEnemy::Input(float fDeltaTime)
 int CEnemy::Update(float fDeltaTime)
 {
 	CMoveObj::Update(fDeltaTime);
+
+
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	int bCollision = false;
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+	{
+		if ((*iter)->GetCollision())
+		{
+			bCollision = true;
+			m_pAnimation->SetDefaultClip("EnemyRightIdle");
+		}
+	}
+
+	// 패트롤 상태
+	if (!bCollision)
+	{
+		POSITION tPos = m_tPos + m_tSize * m_tPivot;
+
+		if (tPos.x <= 0)
+		{
+			m_eDir = DIR_RIGHT;
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("EnemyRightWalkFront");
+
+		}
+
+		else if(tPos.x >= WORLDWIDTH)
+		{
+			m_eDir = DIR_LEFT;
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("EnemyRightWalkFront");
+		}
+	}
+
+
 	return 0;
 }
 

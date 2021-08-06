@@ -5,6 +5,7 @@ class CColliderRect :
 {
 private:
 	friend class CGraphicObj;
+	friend class CColliderManager;
 
 private:
 	CColliderRect();

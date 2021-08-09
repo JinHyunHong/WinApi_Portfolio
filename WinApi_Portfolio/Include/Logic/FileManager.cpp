@@ -34,6 +34,9 @@ bool CFileManager::Init()
 	CreatePath(BENIMARU_PATH, L"Texture\\Character\\Benimaru_Nikaido\\");
 	CreatePath(KYO_PATH, L"Texture\\Character\\Kyo_Kusanagi\\");
 
+
+
+
 	return true;
 }
 

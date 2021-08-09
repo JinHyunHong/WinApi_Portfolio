@@ -3,9 +3,15 @@
 
 enum DIR
 {
-	DIR_LEFT = -1,
+	DIR_BACK = -1,
 	DIR_NONE,
-	DIR_RIGHT
+	DIR_FRONT
+};
+
+enum CHARACTER_DIR
+{
+	CD_LEFT,
+	CD_RIGHT
 };
 
 enum SCENE_TRANSITION
@@ -53,4 +59,11 @@ enum BUTTON_STATE
 	BS_ON,
 	BS_CLICK,
 	BS_OUT
+};
+
+enum WORLD_CHARACTER_TYPE
+{
+	WCT_BENIMARU,
+	WCT_KYO,
+	WCT_END
 };

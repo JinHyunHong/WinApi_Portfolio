@@ -57,7 +57,7 @@ bool CColliderManager::Collision(CGraphicObj* pSrc, CGraphicObj* pDest, float fD
 	bool bCollision = false;
 
 	const list<CCollider*>& SrcList = pSrc->GetColliderList();	
-	const list<CCollider*>& DestList = pSrc->GetColliderList();
+	const list<CCollider*>& DestList = pDest->GetColliderList();
 
 	list<CCollider*>::const_iterator SrcIter;
 	list<CCollider*>::const_iterator SrcIterEnd = SrcList.end();

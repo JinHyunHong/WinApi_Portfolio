@@ -29,11 +29,10 @@ CAnimation::CAnimation(const CAnimation& anim)
 		{
 			pClip->vecTexture[i]->AddRef();
 		}
+
+		m_mapClip.insert(make_pair(iter->first, iter->second));
 	}
 
-	m_pCurClip = NULL;
-
-	m_strCurClip = "";
 	SetCurrentClip(anim.m_strCurClip);
 }
 
@@ -183,14 +182,18 @@ void CAnimation::ChangeClip(const string& strClip)
 
 	m_pCurClip = FindClip(strClip);
 
-	if (m_pCurClip->eType == AT_ATLAS)
-		m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[0]);
 
-	else if (m_pCurClip->eType == AT_FRAME)
+	if (m_pGraphicObj)
 	{
-		m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
-		m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(),
-			(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
+		if (m_pCurClip->eType == AT_ATLAS)
+			m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[0]);
+
+		else if (m_pCurClip->eType == AT_FRAME)
+		{
+			m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
+			m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(),
+				(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
+		}
 	}
 }
 
@@ -216,62 +219,70 @@ bool CAnimation::Init()
 
 int CAnimation::Update(float fDeltaTime)
 {
-	m_bMotionEnd = false;
-
-	m_pCurClip->fAnimationTime += fDeltaTime;
-
-	while (m_pCurClip->fAnimationTime >= m_pCurClip->fAnimationFrameTime)
+	if (m_pGraphicObj)
 	{
-		m_pCurClip->fAnimationTime -= m_pCurClip->fAnimationFrameTime;
+		m_bMotionEnd = false;
 
-		++m_pCurClip->iFrameX;
+		m_pCurClip->fAnimationTime += fDeltaTime;
 
-
-		if (m_pCurClip->iFrameX - m_pCurClip->iStartX == m_pCurClip->iLengthX)
+		while (m_pCurClip->fAnimationTime >= m_pCurClip->fAnimationFrameTime)
 		{
-			m_pCurClip->iFrameX = m_pCurClip->iStartX;
-			++m_pCurClip->iFrameY;
+			m_pCurClip->fAnimationTime -= m_pCurClip->fAnimationFrameTime;
 
-			if (m_pCurClip->eType == AT_FRAME)
+			++m_pCurClip->iFrameX;
+
+
+			if (m_pCurClip->iFrameX - m_pCurClip->iStartX == m_pCurClip->iLengthX)
 			{
-				m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
-				m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(),
-					(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
-			}
+				m_pCurClip->iFrameX = m_pCurClip->iStartX;
+				++m_pCurClip->iFrameY;
 
-
-			if (m_pCurClip->iFrameY - m_pCurClip->iStartY == m_pCurClip->iLengthY)
-			{
-				m_pCurClip->iFrameY = m_pCurClip->iStartY;
-				m_bMotionEnd = true;
-
-				switch (m_pCurClip->eOption)
+				if (m_pCurClip->eType == AT_FRAME)
 				{
-				case AO_ONCE_RETURN:
-					ChangeClip(m_strDefaultClip);
-					break;
-				case AO_ONCE_DESTROY:
-					m_pGraphicObj->Die();
-					break;
-				case AO_TIME_RETURN:
-					break;
-				case AO_TIME_DESTROY:
-					break;
+					m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
+					m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(),
+						(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
+				}
+
+
+				if (m_pCurClip->iFrameY - m_pCurClip->iStartY == m_pCurClip->iLengthY)
+				{
+					m_pCurClip->iFrameY = m_pCurClip->iStartY;
+					m_bMotionEnd = true;
+
+					switch (m_pCurClip->eOption)
+					{
+					case AO_ONCE_RETURN:
+						ChangeClip(m_strDefaultClip);
+						break;
+					case AO_ONCE_DESTROY:
+						m_pGraphicObj->Die();
+						break;
+					case AO_TIME_RETURN:
+						break;
+					case AO_TIME_DESTROY:
+						break;
+					}
 				}
 			}
-		}
 
-		else
-		{
-			if (m_pCurClip->eType == AT_FRAME)
+			else
 			{
-				m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
-				m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(), 
-					(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
+				if (m_pCurClip->eType == AT_FRAME)
+				{
+					m_pGraphicObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
+					m_pGraphicObj->SetSize(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetWidth(),
+						(m_pCurClip->vecTexture[m_pCurClip->iFrameX]->GetHeight()));
+				}
+
 			}
-				
 		}
 	}
 
 	return 0;
+}
+
+CAnimation* CAnimation::Clone()
+{
+	return new CAnimation(*this);
 }

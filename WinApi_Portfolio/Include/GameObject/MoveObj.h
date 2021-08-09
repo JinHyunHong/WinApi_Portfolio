@@ -10,15 +10,16 @@ protected:
 	virtual ~CMoveObj();
 
 protected:
-	float m_fSpeed;
-	float m_fForce;
-	float m_fForceOrigin;
-	bool  m_bJump;
-	bool  m_bFalling;
-	DIR	  m_eDir;
-	float m_fGravityTime;
-	bool  m_bPhysics;
-	float m_fAngle;
+	float         m_fSpeed;
+	float         m_fForce;
+	float         m_fForceOrigin;
+	bool          m_bJump;
+	bool          m_bFalling;
+	DIR			  m_eDir;
+	float		  m_fGravityTime;
+	bool		  m_bPhysics;
+	float		  m_fAngle;
+	CHARACTER_DIR m_eCharacterDir;
 
 public:
 	void SetSpeed(float fSpeed)

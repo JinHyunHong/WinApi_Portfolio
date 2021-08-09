@@ -2,6 +2,8 @@
 #include "../Logic/InputManager.h"
 #include "../Collider/ColliderRect.h"
 #include "../Animation/Animation.h"
+#include "../Logic/Logic.h"
+#include "../Logic/ResourcesManager.h"
 
 CPlayer::CPlayer() :
 	m_fHP(0.f)
@@ -25,46 +27,16 @@ bool CPlayer::Init()
 	SetPivot(0.5f, 0.5f);
 	SetImageOffset(0.f, 0.f);
 
+	m_eDir = DIR_FRONT;
+	m_eCharacterDir = CD_RIGHT;
+
 	CColliderRect* pRC = AddCollider<CColliderRect>("Default");
 	pRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
 
-	CreateAnimation("Player");
+	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(WCT_BENIMARU)->Clone();
+	m_pAnimation->SetObj(this);
+	m_pAnimation->SetCurrentClip("LeftIdle");
 
-	vector<wstring> vecFileName;
-
-	for (int i = 0; i <= 5; ++i)
-	{
-		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Left\\Idle\\%d.bmp", i);
-		vecFileName.push_back(strFileName);
-	}
-
-	AddAnimationClip("LeftIdle", AT_FRAME, AO_LOOP, 1.2f, 6, 1, 0, 0, 6, 1, 0.f, "PlayerLeftIdle", vecFileName, BENIMARU_PATH);
-	SetAnimationClipColorKey("LeftIdle", 8, 16, 33);
-
-	vecFileName.clear();
-
-	for (int i = 1; i <= 5; ++i)
-	{
-		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Left\\Walk\\Front\\%d.bmp", i);
-		vecFileName.push_back(strFileName);
-	}
-
-	AddAnimationClip("LeftWalkFront", AT_FRAME, AO_ONCE_RETURN, 0.6f, 5, 1, 0, 0, 5, 1, 0.f, "PlayerLeftWalkFront", vecFileName, BENIMARU_PATH);
-	SetAnimationClipColorKey("LeftWalkFront", 8, 16, 33);
-
-	vecFileName.clear();
-
-	for (int i = 0; i <= 5; ++i)
-	{
-		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Left\\Walk\\Back\\%d.bmp", i);
-		vecFileName.push_back(strFileName);
-	}
-
-	AddAnimationClip("LeftWalkBack", AT_FRAME, AO_ONCE_RETURN, 0.6f, 6, 1, 0, 0, 6, 1, 0.f, "PlayerLeftWalkBack", vecFileName, BENIMARU_PATH);
-	SetAnimationClipColorKey("LeftWalkBack", 8, 16, 33);
 
 
 	return true;
@@ -74,32 +46,85 @@ void CPlayer::Input(float fDeltaTime)
 {
 	CMoveObj::Input(fDeltaTime);
 
-	if (KEYPRESS("MoveLeft"))
+	POSITION tPos = m_tPos - m_tSize * m_tPivot;
+
+	if (tPos.x >= WORLDWIDTH - m_tSize.x)
 	{
-		m_eDir = DIR_LEFT;
-		MoveToXSpeed(fDeltaTime);
-		m_pAnimation->ChangeClip("LeftWalkBack");
-		m_pAnimation->SetDefaultClip("LeftIdle");
+		m_eCharacterDir = (m_eCharacterDir == CD_LEFT) ? CD_RIGHT : CD_LEFT;
+	}
+
+	else if (tPos.x <= 0)
+	{
+		m_eCharacterDir = (m_eCharacterDir == CD_RIGHT) ? CD_LEFT : CD_RIGHT;
+	}
+
+	if (KEYPRESS("MoveLeft") && !(tPos.x <= 0))
+	{
+		m_eDir = DIR_BACK;
+
+		if (m_eCharacterDir == CD_RIGHT)
+		{
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("RightWalkBack");
+			m_pAnimation->SetDefaultClip("RightIdle");
+		}
+
+		else if (m_eCharacterDir == CD_LEFT)
+		{
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("LeftWalkBack");
+			m_pAnimation->SetDefaultClip("LeftIdle");
+		}
+
 	}
 
 	if (KEYUP("MoveLeft"))
 	{
-		m_pAnimation->SetDefaultClip("LeftIdle");
+		if (m_eCharacterDir == CD_RIGHT)
+		{
+			m_pAnimation->SetDefaultClip("RightIdle");
+		}
+		else if (m_eCharacterDir == CD_LEFT)
+		{
+			m_pAnimation->SetDefaultClip("LeftIdle");
+		}
 	}
 
 
-	if (KEYPRESS("MoveRight"))
+
+	if (KEYPRESS("MoveRight") && !(tPos.x >= WORLDWIDTH - m_tSize.x))
 	{
-		m_eDir = DIR_RIGHT;
-		MoveToXSpeed(fDeltaTime);
-		m_pAnimation->ChangeClip("LeftWalkFront");
-		m_pAnimation->SetDefaultClip("LeftIdle");
+		m_eDir = DIR_FRONT;
+
+		if (m_eCharacterDir == CD_RIGHT)
+		{
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("RightWalkFront");
+			m_pAnimation->SetDefaultClip("RightIdle");
+		}
+
+		else if (m_eCharacterDir == CD_LEFT)
+		{
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("LeftWalkFront");
+			m_pAnimation->SetDefaultClip("LeftIdle");
+		}
 	}
 
 	if (KEYUP("MoveRight"))
 	{
-		m_pAnimation->SetDefaultClip("LeftIdle");
+		if (m_eCharacterDir == CD_RIGHT)
+		{
+			m_pAnimation->SetDefaultClip("RightIdle");
+		}
+		else if (m_eCharacterDir == CD_LEFT)
+		{
+			m_pAnimation->SetDefaultClip("LeftIdle");
+		}
 	}
+	
+
+
 }
 
 int CPlayer::Update(float fDeltaTime)

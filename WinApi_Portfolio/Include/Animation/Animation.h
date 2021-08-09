@@ -6,6 +6,7 @@ class CAnimation	:
 {
 private:
 	friend class CGraphicObj;
+	friend class CResourcesManager;
 
 private:
 	CAnimation();
@@ -55,5 +56,6 @@ private:
 public:
 	bool Init();
 	virtual int	Update(float fDeltaTime);
+	CAnimation* Clone();
 };
 

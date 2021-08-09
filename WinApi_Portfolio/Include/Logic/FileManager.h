@@ -19,6 +19,5 @@ public:
 		const char* pBasePath = BASE_PATH);
 	const wchar_t* FindPath(const string& strKey);
 	const char* FindPathMultiByte(const string& strKey);
-
 };
 

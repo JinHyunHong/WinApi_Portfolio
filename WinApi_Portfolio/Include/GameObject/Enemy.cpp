@@ -2,6 +2,7 @@
 #include "../Collider/ColliderRect.h"
 #include "../Animation/Animation.h"
 #include "../Logic/Logic.h"
+#include "../Logic/ResourcesManager.h"
 
 CEnemy::CEnemy()	:
 	m_fHP(0.f)
@@ -24,6 +25,8 @@ bool CEnemy::Init()
 	SetPos(WORLDWIDTH - m_tSize.x - 200, 500.f);
 	SetPivot(0.5f, 0.5f);
 	SetImageOffset(0.f, 0.f);
+	m_eDir = DIR_FRONT;
+	m_eCharacterDir = CD_LEFT;
 
 	CColliderRect* pDefalutRC = AddCollider<CColliderRect>("Default");
 	pDefalutRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
@@ -36,31 +39,11 @@ bool CEnemy::Init()
 	pRightRC->SetInfo(pDefalutRC->GetInfo().r, pDefalutRC->GetInfo().t, 
 		pDefalutRC->GetInfo().r + m_tSize.x, pDefalutRC->GetInfo().b);
 
-	CreateAnimation("Enemy");
 
-	vector<wstring> vecFileName;
+	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(WCT_KYO)->Clone();
+	m_pAnimation->SetObj(this);
+	m_pAnimation->SetCurrentClip("LeftIdle");
 
-	for (int i = 0; i <= 5; ++i)
-	{
-		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Right\\Idle\\%d.bmp", i);
-		vecFileName.push_back(strFileName);
-	}
-
-	AddAnimationClip("EnemyRightIdle", AT_FRAME, AO_LOOP, 1.2f, 6, 1, 0, 0, 6, 1, 0.f, "EnemyRightIdle", vecFileName, KYO_PATH);
-	SetAnimationClipColorKey("EnemyRightIdle", 8, 8, 66);
-
-	vecFileName.clear();
-
-	for (int i = 0; i <= 2; ++i)
-	{
-		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Right\\Walk\\Front\\%d.bmp", i);
-		vecFileName.push_back(strFileName);
-	}
-
-	AddAnimationClip("EnemyRightWalkFront", AT_FRAME, AO_ONCE_RETURN, 0.3f, 3, 1, 0, 0, 3, 1, 0.f, "EnemyRightWalkFront", vecFileName, KYO_PATH);
-	SetAnimationClipColorKey("EnemyRightWalkFront", 8, 8, 66);
 
 	return true;
 }
@@ -68,12 +51,6 @@ bool CEnemy::Init()
 void CEnemy::Input(float fDeltaTime)
 {
 	CMoveObj::Input(fDeltaTime);
-}
-
-int CEnemy::Update(float fDeltaTime)
-{
-	CMoveObj::Update(fDeltaTime);
-
 
 	list<CCollider*>::iterator iter;
 	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
@@ -84,30 +61,62 @@ int CEnemy::Update(float fDeltaTime)
 		if ((*iter)->GetCollision())
 		{
 			bCollision = true;
-			m_pAnimation->SetDefaultClip("EnemyRightIdle");
 		}
+	}
+
+
+	if (m_eCharacterDir == CD_LEFT)
+	{
+		m_pAnimation->SetDefaultClip("RightIdle");
+	}
+
+	else
+	{
+		m_pAnimation->SetDefaultClip("LeftIdle");
 	}
 
 	// 패트롤 상태
 	if (!bCollision)
 	{
-		POSITION tPos = m_tPos + m_tSize * m_tPivot;
+		POSITION tPos = m_tPos - m_tSize * m_tPivot;
+
 
 		if (tPos.x <= 0)
 		{
-			m_eDir = DIR_RIGHT;
-			MoveToXSpeed(fDeltaTime);
-			m_pAnimation->ChangeClip("EnemyRightWalkFront");
-
+			m_eCharacterDir = CD_RIGHT;
 		}
 
-		else if(tPos.x >= WORLDWIDTH)
+		else if (tPos.x >= WORLDWIDTH - m_tSize.x)
 		{
-			m_eDir = DIR_LEFT;
-			MoveToXSpeed(fDeltaTime);
-			m_pAnimation->ChangeClip("EnemyRightWalkFront");
+			m_eCharacterDir = CD_LEFT;
 		}
+
+
+		if (m_eCharacterDir == CD_RIGHT)
+		{
+			m_eDir = DIR_FRONT;
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("LeftWalkFront");
+
+		}
+
+		else
+		{
+			m_eDir = DIR_BACK;
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("RightWalkFront");
+
+		}
+
 	}
+
+}
+
+int CEnemy::Update(float fDeltaTime)
+{
+	CMoveObj::Update(fDeltaTime);
+
+
 
 
 	return 0;

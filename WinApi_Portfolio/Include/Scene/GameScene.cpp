@@ -101,6 +101,17 @@ bool CGameScene::Init()
 	pPlyaerRedFace->SetSize(90.f, 90.f);
 	pPlyaerRedFace->SetPos(WINDOWWIDTH - 120, 13);
 
+	CUIPanel* pPlyaerGuageBackBar = CUI::CreateUIObj<CUIPanel>("PlyaerGuageBackBar", pLayer);
+	pPlyaerGuageBackBar->SetTexture("PlyaerGuageBackBar", L"PlayerGuageBackBar.bmp", UI_PATH);
+	pPlyaerGuageBackBar->SetSize(247.f, 30.f);
+	pPlyaerGuageBackBar->SetPos(30.f, WINDOWHEIGHT - pPlyaerGuageBackBar->GetSize().y - 20);
+
+	CUIPanel* pEnemyGuageBackBar = CUI::CreateUIObj<CUIPanel>("EnemyGuageBackBar", pLayer);
+	pEnemyGuageBackBar->SetTexture("EnemyGuageBackBar", L"EnemyGuageBackBar.bmp", UI_PATH);
+	pEnemyGuageBackBar->SetSize(266.f, 34.f);
+	pEnemyGuageBackBar->SetPos(WINDOWWIDTH - pEnemyGuageBackBar->GetSize().x - 30, 
+		WINDOWHEIGHT - pPlyaerGuageBackBar->GetSize().y - 20);
+
 	m_pTimerPanel[0] = CUI::CreateUIObj<CUIPanel>("TimerLeft", pLayer);
 	m_pTimerPanel[0]->SetTexture("Timer", L"Timer.bmp", UI_PATH);
 	m_pTimerPanel[0]->SetImageOffset(251.f, 49.f);
@@ -129,10 +140,10 @@ int CGameScene::Update(float fDeltaTime)
 	{
 		m_fDeltaSumTime -= 1;
 
-		--m_iSecond;
-
 		if (!m_iSecond == 0)
 		{
+			--m_iSecond;
+
 			int iShare = m_iSecond / 10;
 			int iRemain = m_iSecond % 10;
 
@@ -143,6 +154,8 @@ int CGameScene::Update(float fDeltaTime)
 
 		else
 		{
+			m_pTimerPanel[0]->SetImageOffset(13.f, 49.f);
+			m_pTimerPanel[1]->SetImageOffset(13.f, 49.f);
 		}
 	}
 

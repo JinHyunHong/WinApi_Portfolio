@@ -9,7 +9,8 @@ private:
 	friend class CScene;
 
 private:
-	float m_fHP;
+	float	m_fHP;
+	bool	m_bSit;
 
 private:
 	CPlayer();

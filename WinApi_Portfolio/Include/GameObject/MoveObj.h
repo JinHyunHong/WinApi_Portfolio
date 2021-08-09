@@ -27,6 +27,11 @@ public:
 		m_fSpeed = fSpeed;
 	}
 
+	void SetCharacterDir(CHARACTER_DIR eCharacterDir)
+	{
+		m_eCharacterDir = eCharacterDir;
+	}
+
 protected:
 	void Jump();
 	void MoveToX(float x);

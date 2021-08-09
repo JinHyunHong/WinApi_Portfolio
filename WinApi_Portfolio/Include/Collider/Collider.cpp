@@ -53,6 +53,21 @@ bool CCollider::CheckColliderList(CCollider* pColl)
 	return false;
 }
 
+CCollider* CCollider::CheckColliderList(const string& strTag)
+{
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+	{
+		if ((*iter)->GetTag() == strTag)
+		{
+			return *iter;
+		}
+	}
+	return NULL;
+}
+
 bool CCollider::EraseCollider(const string& strTag)
 {
 	list<CCollider*>::iterator iter;
@@ -63,6 +78,7 @@ bool CCollider::EraseCollider(const string& strTag)
 		if ((*iter)->GetTag() == strTag)
 		{
 			SAFE_RELEASE((*iter));
+			m_ColliderList.erase(iter);
 			return true;
 		}
 	}
@@ -79,6 +95,7 @@ bool CCollider::EraseCollider(CCollider* pColl)
 		if ((*iter) == pColl)
 		{
 			SAFE_RELEASE((*iter));
+			m_ColliderList.erase(iter);
 			return true;
 		}
 	}

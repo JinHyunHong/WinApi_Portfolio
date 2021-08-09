@@ -139,7 +139,7 @@ bool CLogic::Init(HINSTANCE hInst)
     m_tClientRS = {1100, 700};
     m_tWorldRS = { 2100, 700 };
     m_bLoop = true;
-    m_strWindowName = L"Game";
+    m_strWindowName = L"KOF";
 
     MyRegisterClass();
     InitInstance();

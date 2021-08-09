@@ -22,7 +22,7 @@ bool CEnemy::Init()
 {
 	SetSpeed(400.f);
 	SetSize(200.f, 300.f);
-	SetPos(WORLDWIDTH - m_tSize.x - 200, 500.f);
+	SetPos(WORLDWIDTH - m_tSize.x - 200, 480.f);
 	SetPivot(0.5f, 0.5f);
 	SetImageOffset(0.f, 0.f);
 	m_eDir = DIR_FRONT;
@@ -42,7 +42,6 @@ bool CEnemy::Init()
 
 	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(WCT_KYO)->Clone();
 	m_pAnimation->SetObj(this);
-	m_pAnimation->SetCurrentClip("LeftIdle");
 
 
 	return true;
@@ -51,6 +50,20 @@ bool CEnemy::Init()
 void CEnemy::Input(float fDeltaTime)
 {
 	CMoveObj::Input(fDeltaTime);
+
+
+	POSITION tPos = m_tPos - m_tSize * m_tPivot;
+
+
+	if (tPos.x <= 0)
+	{
+		m_eCharacterDir = CD_LEFT;
+	}
+
+	else if (tPos.x >= WORLDWIDTH - m_tSize.x)
+	{
+		m_eCharacterDir = CD_RIGHT;
+	}
 
 	list<CCollider*>::iterator iter;
 	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
@@ -61,54 +74,58 @@ void CEnemy::Input(float fDeltaTime)
 		if ((*iter)->GetCollision())
 		{
 			bCollision = true;
+
+			CMoveObj* pDestObj = (CMoveObj*)(*iter)->CheckColliderList("PlayerBody")->GetObj();
+
+			if ((*iter)->GetTag() == "LeftSight")
+			{
+				m_eCharacterDir = CD_RIGHT;
+
+				if (pDestObj)
+				{
+					m_pAnimation->SetDefaultClip("RightIdle");
+					pDestObj->SetCharacterDir(CD_LEFT);
+					break;
+				}
+			}
+			
+			else if ((*iter)->GetTag() == "RightSight")
+			{
+				m_eCharacterDir = CD_LEFT;
+
+				if (pDestObj)
+				{
+					m_pAnimation->SetDefaultClip("LeftIdle");
+					pDestObj->SetCharacterDir(CD_RIGHT);
+					break;
+				}
+			}
+
 		}
-	}
-
-
-	if (m_eCharacterDir == CD_LEFT)
-	{
-		m_pAnimation->SetDefaultClip("RightIdle");
-	}
-
-	else
-	{
-		m_pAnimation->SetDefaultClip("LeftIdle");
 	}
 
 	// 패트롤 상태
 	if (!bCollision)
 	{
-		POSITION tPos = m_tPos - m_tSize * m_tPivot;
-
-
-		if (tPos.x <= 0)
-		{
-			m_eCharacterDir = CD_RIGHT;
-		}
-
-		else if (tPos.x >= WORLDWIDTH - m_tSize.x)
-		{
-			m_eCharacterDir = CD_LEFT;
-		}
-
-
 		if (m_eCharacterDir == CD_RIGHT)
-		{
-			m_eDir = DIR_FRONT;
-			MoveToXSpeed(fDeltaTime);
-			m_pAnimation->ChangeClip("LeftWalkFront");
-
-		}
-
-		else
 		{
 			m_eDir = DIR_BACK;
 			MoveToXSpeed(fDeltaTime);
 			m_pAnimation->ChangeClip("RightWalkFront");
+			m_pAnimation->SetDefaultClip("RightIdle");
+		}
+
+		else
+		{
+			m_eDir = DIR_FRONT;
+			MoveToXSpeed(fDeltaTime);
+			m_pAnimation->ChangeClip("LeftWalkFront");
+			m_pAnimation->SetDefaultClip("LeftIdle");
 
 		}
 
 	}
+
 
 }
 

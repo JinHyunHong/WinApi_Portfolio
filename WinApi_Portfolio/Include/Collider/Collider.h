@@ -78,9 +78,17 @@ public:
 		return m_bCollision;
 	}
 
+	list<CCollider*>* GetColliderList()
+	{
+		return &m_ColliderList;
+	}
+
+
+
 public:
 	void AddCollider(CCollider* pColl);
 	bool CheckColliderList(CCollider* pColl);
+	CCollider* CheckColliderList(const string& strTag);
 	bool EraseCollider(CCollider* pColl);
 	bool EraseCollider(const string& strTag);
 	void EraseCollider();

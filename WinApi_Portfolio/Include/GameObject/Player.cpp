@@ -6,7 +6,8 @@
 #include "../Logic/ResourcesManager.h"
 
 CPlayer::CPlayer() :
-	m_fHP(0.f)
+	m_fHP(0.f),
+	m_bSit(false)
 {
 }
 
@@ -21,7 +22,7 @@ CPlayer::~CPlayer()
 
 bool CPlayer::Init()
 {
-	SetPos(50.f, 500.f);
+	SetPos(50.f, 480.f);
 	SetSpeed(400.f);
 	SetSize(166.f, 291.f);
 	SetPivot(0.5f, 0.5f);
@@ -30,7 +31,7 @@ bool CPlayer::Init()
 	m_eDir = DIR_FRONT;
 	m_eCharacterDir = CD_RIGHT;
 
-	CColliderRect* pRC = AddCollider<CColliderRect>("Default");
+	CColliderRect* pRC = AddCollider<CColliderRect>("PlayerBody");
 	pRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
 
 	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(WCT_BENIMARU)->Clone();
@@ -48,81 +49,192 @@ void CPlayer::Input(float fDeltaTime)
 
 	POSITION tPos = m_tPos - m_tSize * m_tPivot;
 
-	if (tPos.x >= WORLDWIDTH - m_tSize.x)
+	if (tPos.x >= WORLDWIDTH - m_tSize.x - 20)
 	{
-		m_eCharacterDir = (m_eCharacterDir == CD_LEFT) ? CD_RIGHT : CD_LEFT;
+		m_eCharacterDir = CD_RIGHT;
 	}
 
-	else if (tPos.x <= 0)
+	else if (tPos.x <= 20)
 	{
-		m_eCharacterDir = (m_eCharacterDir == CD_RIGHT) ? CD_LEFT : CD_RIGHT;
+		m_eCharacterDir = CD_LEFT;
 	}
 
-	if (KEYPRESS("MoveLeft") && !(tPos.x <= 0))
+	if (!m_bSit)
 	{
-		m_eDir = DIR_BACK;
+		if (KEYPRESS("MoveLeft") && !(tPos.x <= 0))
+		{
+			m_eDir = DIR_BACK;
+
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("RightWalkBack");
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("LeftWalkBack");
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+
+		}
+
+		if (KEYUP("MoveLeft"))
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+		}
+
+
+
+		if (KEYPRESS("MoveRight") && !(tPos.x >= WORLDWIDTH - m_tSize.x))
+		{
+			m_eDir = DIR_FRONT;
+
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("RightWalkFront");
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("LeftWalkFront");
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+		}
+
+		if (KEYUP("MoveRight"))
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+		}
+
+		if (KEYDOWN("Attack1"))
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("RightAttack1");
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("LeftAttack1");
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+		}
+
+		if (KEYDOWN("Attack2"))
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("RightAttack2");
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("LeftAttack2");
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+		}
+
+		if (KEYDOWN("Attack3"))
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("RightAttack3");
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("LeftAttack3");
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+		}
+
+		if (KEYDOWN("Attack4"))
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("RightAttack4");
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				MoveToXSpeed(fDeltaTime);
+				m_pAnimation->ChangeClip("LeftAttack4");
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+		}
+	}
+
+	if (KEYDOWN("SitAttack2"))
+	{
+		m_bSit = true;
 
 		if (m_eCharacterDir == CD_RIGHT)
 		{
-			MoveToXSpeed(fDeltaTime);
-			m_pAnimation->ChangeClip("RightWalkBack");
-			m_pAnimation->SetDefaultClip("RightIdle");
+			m_pAnimation->ChangeClip("RightSitAttack2");
+			m_pAnimation->SetDefaultClip("RightSit");
 		}
-
 		else if (m_eCharacterDir == CD_LEFT)
 		{
-			MoveToXSpeed(fDeltaTime);
-			m_pAnimation->ChangeClip("LeftWalkBack");
-			m_pAnimation->SetDefaultClip("LeftIdle");
+			m_pAnimation->ChangeClip("LeftSitAttack2");
+			m_pAnimation->SetDefaultClip("LeftSit");
 		}
-
 	}
 
-	if (KEYUP("MoveLeft"))
+
+	if (KEYPRESS("Sit"))
 	{
+		m_bSit = true;
 		if (m_eCharacterDir == CD_RIGHT)
 		{
-			m_pAnimation->SetDefaultClip("RightIdle");
+			m_pAnimation->ChangeClip("RightSit");
+			m_pAnimation->SetDefaultClip("RightSit");
 		}
 		else if (m_eCharacterDir == CD_LEFT)
 		{
-			m_pAnimation->SetDefaultClip("LeftIdle");
+			m_pAnimation->ChangeClip("LeftSit");
+			m_pAnimation->SetDefaultClip("LeftSit");
 		}
 	}
 
 
 
-	if (KEYPRESS("MoveRight") && !(tPos.x >= WORLDWIDTH - m_tSize.x))
+
+	if (KEYUP("Sit"))
 	{
-		m_eDir = DIR_FRONT;
-
-		if (m_eCharacterDir == CD_RIGHT)
-		{
-			MoveToXSpeed(fDeltaTime);
-			m_pAnimation->ChangeClip("RightWalkFront");
-			m_pAnimation->SetDefaultClip("RightIdle");
-		}
-
-		else if (m_eCharacterDir == CD_LEFT)
-		{
-			MoveToXSpeed(fDeltaTime);
-			m_pAnimation->ChangeClip("LeftWalkFront");
-			m_pAnimation->SetDefaultClip("LeftIdle");
-		}
+		m_bSit = false;
 	}
 
-	if (KEYUP("MoveRight"))
-	{
-		if (m_eCharacterDir == CD_RIGHT)
-		{
-			m_pAnimation->SetDefaultClip("RightIdle");
-		}
-		else if (m_eCharacterDir == CD_LEFT)
-		{
-			m_pAnimation->SetDefaultClip("LeftIdle");
-		}
-	}
-	
 
 
 }

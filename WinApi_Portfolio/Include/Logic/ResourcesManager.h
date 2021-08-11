@@ -14,7 +14,7 @@ private:
 	unordered_map<string, HFONT>										  m_mapFont;
 	// 캐릭터 선택시 오브젝트에 해당 캐릭터 애니메이션 데이터 복제
 	// 각 캐릭터 스프라이트의 애니메이션 정보를 가지고 있는다.
-	class CAnimation*													  m_AnimationList[WCT_END];
+	class CAnimation*													  m_AnimationList[RT_END];
 
 public:
 	CTexture* GetBackBuffer()	const;
@@ -25,15 +25,15 @@ public:
 	bool EraseTexture(const string& strKey);
 
 public:
-	CAnimation* CreateAnimation(WORLD_CHARACTER_TYPE eAnimationType);
-	CAnimation* GetAnimation(WORLD_CHARACTER_TYPE eAnimationType);
-	bool AddAnimationClip(WORLD_CHARACTER_TYPE eAnimationType, const string& strKey, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float fAnimationLimitTime,
+	CAnimation* CreateAnimation(RESOURCES_TYPE eAnimationType);
+	CAnimation* GetAnimation(RESOURCES_TYPE eAnimationType);
+	bool AddAnimationClip(RESOURCES_TYPE eAnimationType, const string& strKey, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float fAnimationLimitTime,
 		int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY, float fOptionLimitTime,
 		const string& strTexKey, const wchar_t* pFileName, const string& strPathKey = TEXTURE_PATH);
-	bool AddAnimationClip(WORLD_CHARACTER_TYPE eAnimationType, const string& strKey, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float fAnimationLimitTime,
+	bool AddAnimationClip(RESOURCES_TYPE eAnimationType, const string& strKey, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float fAnimationLimitTime,
 		int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY, float fOptionLimitTime,
 		const string& strTexKey, const vector<wstring>& vecFileName, const string& strPathKey = TEXTURE_PATH);
-	bool SetAniamtionColorKey(WORLD_CHARACTER_TYPE eAnimationType, const string& strClip, unsigned char r, unsigned char g, unsigned char b);
+	bool SetAniamtionColorKey(RESOURCES_TYPE eAnimationType, const string& strClip, unsigned char r, unsigned char g, unsigned char b);
 
 
 public:

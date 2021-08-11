@@ -32,6 +32,16 @@ public:
 		m_eCharacterDir = eCharacterDir;
 	}
 
+	float GetSpeed()	const
+	{
+		return m_fSpeed;
+	}
+
+	CHARACTER_DIR GetCharacterDir()	const
+	{
+		return m_eCharacterDir;
+	}
+
 protected:
 	void Jump();
 	void MoveToX(float x);

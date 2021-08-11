@@ -46,7 +46,8 @@ bool CColliderPoint::Collision(CCollider* pDest)
 		return CMath::RectToPoint(((CColliderRect*)pDest)->GetWorldInfo(), m_tPos);
 	case CT_PIXEL:
 		return CMath::PointToPixel(m_tPos, ((CColliderPixel*)pDest)->GetPixel(), ((CColliderPixel*)pDest)->GetWidth(),
-			((CColliderPixel*)pDest)->GetHeight());
+			((CColliderPixel*)pDest)->GetHeight(), ((CColliderPixel*)pDest)->GetCollRGB().r, ((CColliderPixel*)pDest)->GetCollRGB().g,
+			((CColliderPixel*)pDest)->GetCollRGB().b);
 	}
 
 	return false;

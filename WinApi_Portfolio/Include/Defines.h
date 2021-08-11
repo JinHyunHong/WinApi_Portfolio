@@ -32,6 +32,7 @@ public:\
 
 #define BASE_PATH "BasePath"
 #define TEXTURE_PATH "TexturePath"
+#define EFFECT_PATH "EffectPath"
 #define CHARACTER_PATH "CharacterPath"
 #define UI_PATH "UIPath"
 #define FONT_PATH "FontPath"

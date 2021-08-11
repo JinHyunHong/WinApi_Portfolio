@@ -173,6 +173,15 @@ typedef struct _tagPixel
 	unsigned int g;
 	unsigned int b;
 
+
+	_tagPixel(unsigned int _r,
+		unsigned int _g, unsigned int _b)
+	{
+		r = _r;
+		g = _g;
+		b = _b;
+	}
+
 	_tagPixel() :
 		r(0),
 		g(0),
@@ -225,6 +234,3 @@ typedef struct _tagUiTextInfo
 	{
 	}
 }UITEXTINFO, * PUITEXTINFO;
-
-
-

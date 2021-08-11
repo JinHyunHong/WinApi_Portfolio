@@ -28,6 +28,7 @@ bool CFileManager::Init()
 	}
 
 	CreatePath(TEXTURE_PATH, L"Texture\\");
+	CreatePath(EFFECT_PATH, L"Texture\\Effect\\");
 	CreatePath(UI_PATH, L"Texture\\UI\\");
 	CreatePath(FONT_PATH, L"Texture\\Font\\");
 	CreatePath(CHARACTER_PATH, L"Texture\\Character\\");

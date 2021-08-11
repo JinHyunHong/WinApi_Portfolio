@@ -32,15 +32,14 @@ bool CEnemy::Init()
 	pDefalutRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
 
 	CColliderRect* pLeftRC = AddCollider<CColliderRect>("LeftSight");
-	pLeftRC->SetInfo(pDefalutRC->GetInfo().l - m_tSize.x, pDefalutRC->GetInfo().t,
+	pLeftRC->SetInfo(pDefalutRC->GetInfo().l - (m_tSize.x / 3), pDefalutRC->GetInfo().t,
 		pDefalutRC->GetInfo().l, pDefalutRC->GetInfo().b);
-
 	CColliderRect* pRightRC = AddCollider<CColliderRect>("RightSight");
 	pRightRC->SetInfo(pDefalutRC->GetInfo().r, pDefalutRC->GetInfo().t, 
-		pDefalutRC->GetInfo().r + m_tSize.x, pDefalutRC->GetInfo().b);
+		pDefalutRC->GetInfo().r + (m_tSize.x / 3), pDefalutRC->GetInfo().b);
 
 
-	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(WCT_KYO)->Clone();
+	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(RT_KYO)->Clone();
 	m_pAnimation->SetObj(this);
 
 
@@ -75,32 +74,36 @@ void CEnemy::Input(float fDeltaTime)
 		{
 			bCollision = true;
 
-			CMoveObj* pDestObj = (CMoveObj*)(*iter)->CheckColliderList("PlayerBody")->GetObj();
+			CCollider* pPlayerBody = (*iter)->CheckColliderList("PlayerBody");
 
-			if ((*iter)->GetTag() == "LeftSight")
+			if (pPlayerBody)
 			{
-				m_eCharacterDir = CD_RIGHT;
+				CMoveObj* pDestObj = (CMoveObj*)pPlayerBody->GetObj();
 
-				if (pDestObj)
+				if ((*iter)->GetTag() == "LeftSight")
 				{
-					m_pAnimation->SetDefaultClip("RightIdle");
-					pDestObj->SetCharacterDir(CD_LEFT);
-					break;
+					m_eCharacterDir = CD_RIGHT;
+
+					if (pDestObj)
+					{
+						m_pAnimation->SetDefaultClip("RightIdle");
+						pDestObj->SetCharacterDir(CD_LEFT);
+						break;
+					}
+				}
+
+				else if ((*iter)->GetTag() == "RightSight")
+				{
+					m_eCharacterDir = CD_LEFT;
+
+					if (pDestObj)
+					{
+						m_pAnimation->SetDefaultClip("LeftIdle");
+						pDestObj->SetCharacterDir(CD_RIGHT);
+						break;
+					}
 				}
 			}
-			
-			else if ((*iter)->GetTag() == "RightSight")
-			{
-				m_eCharacterDir = CD_LEFT;
-
-				if (pDestObj)
-				{
-					m_pAnimation->SetDefaultClip("LeftIdle");
-					pDestObj->SetCharacterDir(CD_RIGHT);
-					break;
-				}
-			}
-
 		}
 	}
 

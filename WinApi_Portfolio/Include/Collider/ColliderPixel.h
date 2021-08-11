@@ -16,6 +16,7 @@ private:
 	vector<PIXEL> m_vecPixel;
 	int			  m_iWidth;
 	int			  m_iHeight;
+	PIXEL	      m_tCollRGB;
 
 private:
 	string		  m_strFileName;
@@ -37,9 +38,25 @@ public:
 		return m_iHeight;
 	}
 
+	PIXEL GetCollRGB()	const
+	{
+		return m_tCollRGB;
+	}
+
+	void SetCollRGB(PIXEL rgb)
+	{
+		m_tCollRGB = rgb;
+	}
+
+	void SetCollRGB(unsigned int r, unsigned int g, unsigned int b)
+	{
+		SetCollRGB(PIXEL(r, g, b));
+	}
+
 public:
 	bool SetPixelInfo(const char* pFileName,
 		const string& strPathKey = TEXTURE_PATH);
+	bool SetPixelInfo(const string& strFullPath);
 
 public:
 	virtual bool Init();

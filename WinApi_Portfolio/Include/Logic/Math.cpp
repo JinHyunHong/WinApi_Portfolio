@@ -96,43 +96,53 @@ bool CMath::SphereToPoint(const SPHERE& src, const POSITION& dest)
 	return Distance(src.tCenter, dest) <= src.fRadius;
 }
 
-bool CMath::RectToPixel(const RECTANGLE& src, const vector<PIXEL>& dest, int iWidth, int iHeight)
+bool CMath::RectToPixel(const RECTANGLE& src, const vector<PIXEL>& dest, 
+	int iWidth, int iHeight, unsigned int r, unsigned int g, unsigned int b)
 {
-	int iStartX, iEndX;
-	int iStartY, iEndY;
-
-	iStartX = src.l < 0 ? 0 : src.l;
-	iStartY = src.r >= iWidth ? iWidth - 1 : src.r;
-	iEndX = src.t < 0 ? 0 : src.t;
-	iEndY = src.b >= iHeight ? iHeight - 1 : src.b;
-
-	for (int i = iStartY; i <= iEndY; ++i)
+	if (!dest.empty())
 	{
-		for (int j = iStartX; j <= iEndX; ++j)
-		{
-			int idx = i * iWidth + j;
-			const PIXEL& pixel = dest[idx];
+		int iStartX, iEndX;
+		int iStartY, iEndY;
 
-			if (pixel.r == 40 && pixel.g == 60 && pixel.b == 1)
+		iStartX = src.l < 0 ? 0 : src.l;
+		iStartY = src.r >= iWidth ? iWidth - 1 : src.r;
+		iEndX = src.t < 0 ? 0 : src.t;
+		iEndY = src.b >= iHeight ? iHeight - 1 : src.b;
+
+		for (int i = iStartY; i <= iEndY; ++i)
+		{
+			for (int j = iStartX; j <= iEndX; ++j)
 			{
-				return true;
+				int idx = i * iWidth + j;
+
+				const PIXEL& pixel = dest[idx];
+
+				if (pixel.r == r && pixel.g == g && pixel.b == b)
+				{
+					return true;
+				}
 			}
 		}
 	}
 	return false;
 }
 
-bool CMath::PointToPixel(const POSITION& src, const vector<PIXEL>& dest, int iWidth, int iHeight)
+bool CMath::PointToPixel(const POSITION& src, const vector<PIXEL>& dest,
+	int iWidth, int iHeight, unsigned int r, unsigned int g, unsigned int b)
 {
-	if (src.y < 0 || src.x < 0 || src.x >= iWidth || src.y >= iHeight)
-		return false;
-
-	int idx = (int)src.y * iWidth + (int)src.x;
-	const PIXEL& pixel = dest[idx];
-
-	if (pixel.r == 40 && pixel.g == 60 && pixel.b == 1)
+	if (!dest.empty())
 	{
-		return true;
+		if (src.y < 0 || src.x < 0 || src.x >= iWidth || src.y >= iHeight)
+			return false;
+
+		int idx = (int)src.y * iWidth + (int)src.x;
+		const PIXEL& pixel = dest[idx];
+
+		if (pixel.r == r && pixel.g == g && pixel.b == b)
+		{
+			return true;
+		}
 	}
+
 	return false;
 }

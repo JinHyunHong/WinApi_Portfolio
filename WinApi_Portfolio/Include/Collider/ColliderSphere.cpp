@@ -4,6 +4,7 @@
 #include "ColliderPoint.h"
 #include "ColliderPixel.h"
 #include "ColliderRect.h"
+#include "../Logic/Camera.h"
 
 
 CColliderSphere::CColliderSphere()
@@ -65,5 +66,24 @@ int CColliderSphere::LateUpdate(float fDeltaTime)
 
 void CColliderSphere::Render(HDC hDC, float fDeltaTime)
 {
+#ifdef _DEBUG
 	CCollider::Render(hDC, fDeltaTime);
+
+	POSITION tPos = GET_SINGLE(CCamera)->GetPos();
+
+	SPHERE tSR = m_tWorldInfo;
+
+	tSR.tCenter -= tPos;
+
+	SelectObject(hDC, GetStockObject(WHITE_PEN));
+	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+	HBRUSH oldBrush = (HBRUSH)SelectObject(hDC, myBrush);
+
+	Ellipse(hDC, tSR.tCenter.x - tSR.fRadius, tSR.tCenter.y - tSR.fRadius,
+		tSR.tCenter.x + tSR.fRadius, tSR.tCenter.y + tSR.fRadius);
+
+	SelectObject(hDC, oldBrush);
+	DeleteObject(myBrush);
+
+#endif
 }

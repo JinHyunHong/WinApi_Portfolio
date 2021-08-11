@@ -83,6 +83,11 @@ int CGraphicObj::Update(float fDeltaTime)
 			continue;
 		}
 
+		if (!(*iter)->GetEnable())
+		{
+			continue;
+		}
+
 		(*iter)->Update(fDeltaTime);
 	}
 
@@ -113,6 +118,11 @@ int CGraphicObj::LateUpdate(float fDeltaTime)
 			continue;
 		}
 
+		if (!(*iter)->GetEnable())
+		{
+			continue;
+		}
+
 		(*iter)->LateUpdate(fDeltaTime);
 	}
 	return 0;
@@ -132,6 +142,11 @@ void CGraphicObj::Render(HDC hDC, float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ColliderList.erase(iter);
 			iterEnd = m_ColliderList.end();
+			continue;
+		}
+
+		if (!(*iter)->GetEnable())
+		{
 			continue;
 		}
 

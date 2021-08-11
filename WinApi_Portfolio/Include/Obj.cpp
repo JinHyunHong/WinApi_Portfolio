@@ -2,7 +2,8 @@
 
 
 CObj::CObj()	:
-	m_bLife(true)
+	m_bLife(true),
+	m_bEnable(true)
 {
 	DEFINITION_REFERENCE_COUNT();
 }

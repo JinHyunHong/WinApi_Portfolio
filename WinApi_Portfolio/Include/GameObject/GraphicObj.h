@@ -82,6 +82,14 @@ public:
 		m_tImageOffset.y = y;
 	}
 
+	class CAnimation* GetAnimation()	const
+	{
+		if (m_pAnimation)
+			return m_pAnimation;
+
+		return NULL;
+	}
+
 public:
 	void SetTexture(class CTexture* pTex);
 	void SetTexture(const string& strKey, const wchar_t* pFileName, const string& strPathKey = TEXTURE_PATH);

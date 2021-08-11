@@ -32,6 +32,16 @@ bool CColliderPixel::SetPixelInfo(const char* pFileName, const string& strPathKe
 		strFullPath = pPath;
 		strFullPath += m_strFileName;
 
+		return SetPixelInfo(strFullPath);
+	}
+
+	return false;
+}
+
+bool CColliderPixel::SetPixelInfo(const string& strFullPath)
+{
+	if (!strFullPath.empty())
+	{
 		FILE* pFile = NULL;
 
 		//c_str는 string을 const char*로 리턴한다.
@@ -52,7 +62,7 @@ bool CColliderPixel::SetPixelInfo(const char* pFileName, const string& strPathKe
 		m_vecPixel.clear();
 
 		m_vecPixel.resize(m_iWidth * m_iHeight);
-		
+
 		fread(&m_vecPixel[0], sizeof(PIXEL), m_vecPixel.size(), pFile);
 
 		PPIXEL pPixelArr = new PIXEL[m_iWidth];
@@ -72,6 +82,8 @@ bool CColliderPixel::SetPixelInfo(const char* pFileName, const string& strPathKe
 
 		return true;
 	}
+
+	return false;
 }
 
 bool CColliderPixel::Init()
@@ -97,9 +109,9 @@ bool CColliderPixel::Collision(CCollider* pDest)
 	switch (pDest->GetColliderType())
 	{
 	case CT_POINT:
-		return CMath::PointToPixel(((CColliderPoint*)pDest)->GetPos(), m_vecPixel, m_iWidth, m_iHeight);
+		return CMath::PointToPixel(((CColliderPoint*)pDest)->GetPos(), m_vecPixel, m_iWidth, m_iHeight, m_tCollRGB.r, m_tCollRGB.b, m_tCollRGB.b);
 	case CT_RECT:
-		return CMath::RectToPixel(((CColliderRect*)pDest)->GetWorldInfo(), m_vecPixel, m_iWidth, m_iHeight);
+		return CMath::RectToPixel(((CColliderRect*)pDest)->GetWorldInfo(), m_vecPixel, m_iWidth, m_iHeight, m_tCollRGB.r, m_tCollRGB.b, m_tCollRGB.b);
 	}
 
 	return false;

@@ -14,6 +14,7 @@ protected:
 protected:
 	string					m_strTag;
 	bool					m_bLife;
+	bool					m_bEnable;
 
 public:
 	string GetTag()		const
@@ -21,20 +22,31 @@ public:
 		return m_strTag;
 	}
 
-	void SetTag(const string& strTag)
-	{
-		m_strTag = strTag;
-	}
-
 	bool GetLife()	const
 	{
 		return m_bLife;
+	}	
+
+	bool GetEnable()	const
+	{
+		return m_bEnable;
+	}
+
+	void SetTag(const string& strTag)
+	{
+		m_strTag = strTag;
 	}
 
 	void Die()
 	{
 		m_bLife = false;
 	}
+
+	void SetEnable(bool bEnable)
+	{
+		m_bEnable = bEnable;
+	}
+
 
 public:
 	virtual bool Init();

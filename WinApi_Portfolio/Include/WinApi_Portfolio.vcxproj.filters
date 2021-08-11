@@ -79,6 +79,12 @@
     <Filter Include="02.Object\01.GameObj\01.MoveObj\02.Enemy">
       <UniqueIdentifier>{bdeed57b-369f-4ba3-87e8-be729c35d8a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Object\01.GameObj\02.StaticObj">
+      <UniqueIdentifier>{329ef19c-6a78-4360-b42d-b0721c1d0eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\01.GameObj\02.StaticObj\01.Effect">
+      <UniqueIdentifier>{1e562039-181e-4498-8747-7a2833e8791d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -170,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="GameObject\Enemy.cpp">
       <Filter>02.Object\01.GameObj\01.MoveObj\02.Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\StaticObj.cpp">
+      <Filter>02.Object\01.GameObj\02.StaticObj</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Effect.cpp">
+      <Filter>02.Object\01.GameObj\02.StaticObj\01.Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +286,12 @@
     </ClInclude>
     <ClInclude Include="GameObject\Enemy.h">
       <Filter>02.Object\01.GameObj\01.MoveObj\02.Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\StaticObj.h">
+      <Filter>02.Object\01.GameObj\02.StaticObj</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Effect.h">
+      <Filter>02.Object\01.GameObj\02.StaticObj\01.Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

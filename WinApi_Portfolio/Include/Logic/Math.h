@@ -11,7 +11,7 @@ public:
 	static bool RectToSphere(const RECTANGLE& src, const SPHERE& dest);
 	static bool SphereToSphere(const SPHERE& src, const SPHERE& dest);
 	static bool SphereToPoint(const SPHERE& src, const POSITION& dest);
-	static bool RectToPixel(const RECTANGLE& src, const vector<PIXEL>& dest, int iWidth, int iHeight);
-	static bool PointToPixel(const POSITION& src, const vector<PIXEL>& dest, int iWidth, int iHeight);
+	static bool RectToPixel(const RECTANGLE& src, const vector<PIXEL>& dest, int iWidth, int iHeight, unsigned int r, unsigned int g, unsigned int b);
+	static bool PointToPixel(const POSITION& src, const vector<PIXEL>& dest, int iWidth, int iHeight, unsigned int r, unsigned int g, unsigned int b);
 };
 

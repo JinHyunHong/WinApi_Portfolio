@@ -78,6 +78,8 @@ public:
 		return m_bCollision;
 	}
 
+
+
 	list<CCollider*>* GetColliderList()
 	{
 		return &m_ColliderList;

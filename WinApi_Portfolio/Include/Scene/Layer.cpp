@@ -65,6 +65,11 @@ void CLayer::Input(float fDeltaTime)
 			continue;
 		}
 
+		if (!(*iter)->GetEnable())
+		{
+			continue;
+		}
+
 		(*iter)->Input(fDeltaTime);
 	}
 }
@@ -81,6 +86,11 @@ int CLayer::Update(float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
+			continue;
+		}
+
+		if (!(*iter)->GetEnable())
+		{
 			continue;
 		}
 
@@ -105,6 +115,11 @@ int CLayer::LateUpdate(float fDeltaTime)
 			continue;
 		}
 
+		if (!(*iter)->GetEnable())
+		{
+			continue;
+		}
+
 		(*iter)->LateUpdate(fDeltaTime);
 	}
 	return 0;
@@ -125,6 +140,11 @@ void CLayer::Collision(float fDeltaTime)
 			continue;
 		}
 
+		if (!(*iter)->GetEnable())
+		{
+			continue;
+		}
+
 		else
 			GET_SINGLE(CColliderManager)->AddObj(*iter);
 	}
@@ -142,6 +162,11 @@ void CLayer::Render(HDC hDC, float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
+			continue;
+		}
+
+		if (!(*iter)->GetEnable())
+		{
 			continue;
 		}
 

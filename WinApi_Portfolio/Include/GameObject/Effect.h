@@ -4,8 +4,7 @@ class CEffect :
     public CStaticObj
 {
 private:
-	friend class CGameObj;
-	friend class CScene;
+	friend class CMoveObj;
 
 private:
 	CEffect();
@@ -14,11 +13,28 @@ private:
 
 private:
 	class CMoveObj* m_pObj;
+	int				m_iCount;
+	int				m_iLimitCount;
+	EFFECT_TYPE		m_eType;
+	string			m_strClipName;
 
 public:
 	void SetObj(CMoveObj* pObj)
 	{
 		m_pObj = pObj;
+	}
+
+	void SetType(EFFECT_TYPE eType);
+
+
+	void SetLimitCount(int iLimitCount)
+	{
+		m_iLimitCount = iLimitCount;
+	}
+
+	void AddCount(int iCount)
+	{
+		m_iCount += iCount;
 	}
 
 public:

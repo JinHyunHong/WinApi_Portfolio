@@ -62,7 +62,9 @@ void CLayer::Input(float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return;
 		}
 
 		if (!(*iter)->GetEnable())
@@ -86,7 +88,9 @@ int CLayer::Update(float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return 0;
 		}
 
 		if (!(*iter)->GetEnable())
@@ -112,7 +116,9 @@ int CLayer::LateUpdate(float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return 0;
 		}
 
 		if (!(*iter)->GetEnable())
@@ -137,7 +143,9 @@ void CLayer::Collision(float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
-			continue;
+			
+			if (iter == iterEnd)
+				return;
 		}
 
 		if (!(*iter)->GetEnable())
@@ -162,7 +170,9 @@ void CLayer::Render(HDC hDC, float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return;
 		}
 
 		if (!(*iter)->GetEnable())

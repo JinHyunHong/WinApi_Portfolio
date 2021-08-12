@@ -143,6 +143,8 @@ public:
 	{
 		T* pColl = new T;
 
+		pColl->SetObj(this);
+
 		if (!pColl->Init())
 		{
 			SAFE_RELEASE(pColl);
@@ -150,7 +152,6 @@ public:
 		}
 
 		pColl->SetTag(strTag);
-		pColl->SetObj(this);
 		m_ColliderList.push_back(pColl);
 
 		return pColl;

@@ -65,12 +65,13 @@ public:\
 
 #define KEYDOWN(key)	GET_SINGLE(CInputManager)->GetKeyDown(key)
 #define KEYPRESS(key)	GET_SINGLE(CInputManager)->GetKeyPress(key)
-#define KEYUP(key)	GET_SINGLE(CInputManager)->GetKeyUp(key)
+#define KEYUP(key)		GET_SINGLE(CInputManager)->GetKeyUp(key)
 
-#define WINDOWHANDLE GET_SINGLE(CLogic)->GetWindowHandle()
-#define WINDOWHEIGHT GET_SINGLE(CLogic)->GetClientRS().iHeight
-#define WINDOWWIDTH GET_SINGLE(CLogic)->GetClientRS().iWidth
-#define WORLDHEIGHT GET_SINGLE(CLogic)->GetWorldRS().iHeight
-#define WORLDWIDTH GET_SINGLE(CLogic)->GetWorldRS().iWidth
+#define WINDOWHANDLE	GET_SINGLE(CLogic)->GetWindowHandle()
+#define WINDOWHEIGHT	GET_SINGLE(CLogic)->GetClientRS().iHeight
+#define WINDOWWIDTH		GET_SINGLE(CLogic)->GetClientRS().iWidth
+#define WORLDHEIGHT		GET_SINGLE(CLogic)->GetWorldRS().iHeight
+#define WORLDWIDTH		GET_SINGLE(CLogic)->GetWorldRS().iWidth
+#define GAMEEND			GET_SINGLE(CLogic)->GameEnd()
 
 #define TIMER_MAX_PANEL 2

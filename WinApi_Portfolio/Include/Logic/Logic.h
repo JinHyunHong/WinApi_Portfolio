@@ -35,6 +35,11 @@ public:
 		return m_tWorldRS;
 	}
 
+	void GameEnd()
+	{
+		m_bLoop = false;
+	}
+
 private:
 	ATOM MyRegisterClass();
 	BOOL InitInstance();

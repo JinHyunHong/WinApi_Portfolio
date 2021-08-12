@@ -4,8 +4,7 @@
 #include "../Logic/Logic.h"
 #include "../Logic/ResourcesManager.h"
 
-CEnemy::CEnemy()	:
-	m_fHP(0.f)
+CEnemy::CEnemy()
 {
 }
 
@@ -28,8 +27,13 @@ bool CEnemy::Init()
 	m_eDir = DIR_FRONT;
 	m_eCharacterDir = CD_LEFT;
 
-	CColliderRect* pDefalutRC = AddCollider<CColliderRect>("Default");
+	CColliderRect* pDefalutRC = AddCollider<CColliderRect>("EnemyBody");
 	pDefalutRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
+	pDefalutRC->AddFunction(CS_ENTER, this, &CEnemy::Coll);
+
+	CColliderRect* pFloorRC = AddCollider<CColliderRect>("PlayerFloor");
+	pFloorRC->SetInfo(-m_tSize.x / 2, 130, m_tSize.x / 2, m_tSize.y / 2);
+	pFloorRC->AddFunction(CS_STAY, this, &CEnemy::FloorColl);
 
 	CColliderRect* pLeftRC = AddCollider<CColliderRect>("LeftSight");
 	pLeftRC->SetInfo(pDefalutRC->GetInfo().l - (m_tSize.x / 3), pDefalutRC->GetInfo().t,
@@ -72,12 +76,12 @@ void CEnemy::Input(float fDeltaTime)
 	{
 		if ((*iter)->GetCollision())
 		{
-			bCollision = true;
-
 			CCollider* pPlayerBody = (*iter)->CheckColliderList("PlayerBody");
 
+			
 			if (pPlayerBody)
 			{
+				bCollision = true;
 				CMoveObj* pDestObj = (CMoveObj*)pPlayerBody->GetObj();
 
 				if ((*iter)->GetTag() == "LeftSight")
@@ -103,6 +107,7 @@ void CEnemy::Input(float fDeltaTime)
 						break;
 					}
 				}
+
 			}
 		}
 	}
@@ -129,15 +134,11 @@ void CEnemy::Input(float fDeltaTime)
 
 	}
 
-
 }
 
 int CEnemy::Update(float fDeltaTime)
 {
 	CMoveObj::Update(fDeltaTime);
-
-
-
 
 	return 0;
 }
@@ -156,4 +157,54 @@ int CEnemy::LateUpdate(float fDeltaTime)
 void CEnemy::Render(HDC hDC, float fDeltaTime)
 {
 	CMoveObj::Render(hDC, fDeltaTime);
+}
+
+void CEnemy::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
+{
+	if (pCollDest->GetTag() == "Stage")
+	{
+		ClearGravity();
+		JumpEnd();
+	}
+
+
+	if (pCollDest->GetTag() == "AttackColl")
+	{
+		if (m_bSit)
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				m_pAnimation->ChangeClip("RightSitHurt");
+			}
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				m_pAnimation->ChangeClip("LeftSitHurt");
+			}
+		}
+
+		else
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				m_pAnimation->ChangeClip("RightUpHurt");
+				MoveToX(10.f);
+				AddHP(-10.f);
+			}
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				GetAnimation()->ChangeClip("LeftUpHurt");					
+				MoveToX(-10.f);
+				AddHP(-10.f);
+			}
+		}
+	}
+}
+
+void CEnemy::FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
+{
+	if (pCollDest->GetTag() == "Stage")
+	{
+		ClearGravity();
+		JumpEnd();
+	}
 }

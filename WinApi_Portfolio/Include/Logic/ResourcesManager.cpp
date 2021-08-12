@@ -62,8 +62,8 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip(RT_EFFECT, "SmallEffect", AT_FRAME, AO_LOOP, 0.8f, 11, 1, 0, 0, 11, 1, 0.f, "SmallEffect", vecFileName);
-	SetAniamtionColorKey(RT_EFFECT, "SmallEffect", 8, 16, 33);
+	AddAnimationClip(RT_EFFECT, "SmallHurtEffect", AT_FRAME, AO_LOOP, 0.8f, 11, 1, 0, 0, 11, 1, 0.f, "SmallHurtEffect", vecFileName, EFFECT_PATH);
+	SetAniamtionColorKey(RT_EFFECT, "SmallHurtEffect", 255, 255, 255);
 
 	vecFileName.clear();
 
@@ -74,8 +74,8 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip(RT_EFFECT, "MediumEffect", AT_FRAME, AO_LOOP, 0.5f, 10, 1, 0, 0, 10, 1, 0.f, "MediumEffect", vecFileName);
-	SetAniamtionColorKey(RT_EFFECT, "MediumEffect", 8, 16, 33);
+	AddAnimationClip(RT_EFFECT, "MediumHurtEffect", AT_FRAME, AO_LOOP, 0.5f, 10, 1, 0, 0, 10, 1, 0.f, "MediumHurtEffect", vecFileName, EFFECT_PATH);
+	SetAniamtionColorKey(RT_EFFECT, "MediumHurtEffect", 255, 255, 255);
 	
 	vecFileName.clear();
 
@@ -86,8 +86,8 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip(RT_EFFECT, "BigEffect", AT_FRAME, AO_LOOP, 0.5f, 15, 1, 0, 0, 15, 1, 0.f, "BigEffect", vecFileName);
-	SetAniamtionColorKey(RT_EFFECT, "BigEffect", 8, 16, 33);
+	AddAnimationClip(RT_EFFECT, "BigHurtEffect", AT_FRAME, AO_LOOP, 0.5f, 15, 1, 0, 0, 15, 1, 0.f, "BigHurtEffect", vecFileName, EFFECT_PATH);
+	SetAniamtionColorKey(RT_EFFECT, "BigHurtEffect", 255, 255, 255);
 
 	vecFileName.clear();
 
@@ -435,6 +435,18 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 
 	vecFileName.clear();
 
+	for (int i = 0; i <= 2; ++i)
+	{
+		wchar_t strFileName[MAX_PATH] = {};
+		wsprintf(strFileName, L"Right\\Hurt\\UpHurt\\%d.bmp", i);
+		vecFileName.push_back(strFileName);
+	}
+
+	AddAnimationClip(RT_KYO, "RightUpHurt", AT_FRAME, AO_ONCE_RETURN, 0.3f, 3, 1, 0, 0, 3, 1, 0.f, "EnemyRightUpHurt", vecFileName, KYO_PATH);
+	SetAniamtionColorKey(RT_KYO, "RightUpHurt", 8, 8, 66);
+
+	vecFileName.clear();
+
 	for (int i = 0; i <= 5; ++i)
 	{
 		wchar_t strFileName[MAX_PATH] = {};
@@ -456,6 +468,18 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 
 	AddAnimationClip(RT_KYO, "LeftWalkFront", AT_FRAME, AO_ONCE_RETURN, 0.3f, 3, 1, 0, 0, 3, 1, 0.f, "EnemyLeftWalkFront", vecFileName, KYO_PATH);
 	SetAniamtionColorKey(RT_KYO, "LeftWalkFront", 8, 8, 66);
+
+	vecFileName.clear();
+
+	for (int i = 0; i <= 2; ++i)
+	{
+		wchar_t strFileName[MAX_PATH] = {};
+		wsprintf(strFileName, L"Left\\Hurt\\UpHurt\\%d.bmp", i);
+		vecFileName.push_back(strFileName);
+	}
+
+	AddAnimationClip(RT_KYO, "LeftUpHurt", AT_FRAME, AO_ONCE_RETURN, 0.3f, 3, 1, 0, 0, 3, 1, 0.f, "EnemyLeftUpHurt", vecFileName, KYO_PATH);
+	SetAniamtionColorKey(RT_KYO, "LeftUpHurt", 8, 8, 66);
 
 	vecFileName.clear();
 

@@ -103,22 +103,28 @@ void CInputManager::Update(float fDeltaTime)
 			{
 				iter->second->bDown = true;
 				iter->second->bPress = false;
-				iter->second->bUp = false;
 			}
 
-			else if (iter->second->bDown && !iter->second->bPress)
+			else if (iter->second->bDown)
 			{
 				iter->second->bDown = false;
 				iter->second->bPress = true;
-				iter->second->bUp = false;
 			}
 		}
 
-		else if (!iter->second->bUp && iter->second->bPress)
+		else
 		{
-			iter->second->bDown = false;
-			iter->second->bPress = false;
-			iter->second->bUp = true;
+			if (iter->second->bPress)
+			{
+				iter->second->bDown = false;
+				iter->second->bPress = false;
+				iter->second->bUp = true;
+			}
+
+			else if (iter->second->bUp)
+			{
+				iter->second->bUp = false;
+			}
 		}
 	}
 }

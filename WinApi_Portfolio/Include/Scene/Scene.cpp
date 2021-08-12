@@ -52,7 +52,9 @@ void CScene::Input(float fDeltaTime)
 			SAFE_DELETE((*iter));
 			iter = m_LayerList.erase(iter);
 			iterEnd = m_LayerList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return;
 		}
 
 		(*iter)->Input(fDeltaTime);
@@ -71,7 +73,9 @@ int CScene::Update(float fDeltaTime)
 			SAFE_DELETE((*iter));
 			iter = m_LayerList.erase(iter);
 			iterEnd = m_LayerList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return 0;
 		}
 
 		(*iter)->Update(fDeltaTime);
@@ -91,7 +95,9 @@ int CScene::LateUpdate(float fDeltaTime)
 			SAFE_DELETE((*iter));
 			iter = m_LayerList.erase(iter);
 			iterEnd = m_LayerList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return 0;
 		}
 
 		(*iter)->LateUpdate(fDeltaTime);
@@ -111,7 +117,9 @@ void CScene::Collision(float fDeltaTime)
 			SAFE_DELETE((*iter));
 			iter = m_LayerList.erase(iter);
 			iterEnd = m_LayerList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return;
 		}
 
 		(*iter)->Collision(fDeltaTime);
@@ -130,7 +138,9 @@ void CScene::Render(HDC hDC, float fDeltaTime)
 			SAFE_DELETE((*iter));
 			iter = m_LayerList.erase(iter);
 			iterEnd = m_LayerList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return;
 		}
 
 		(*iter)->Render(hDC, fDeltaTime);

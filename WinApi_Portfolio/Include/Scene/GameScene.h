@@ -11,10 +11,14 @@ protected:
 	~CGameScene();
 
 private:
-	int	  m_iSecondLimit;
-	int	  m_iSecond;
-	float m_fDeltaSumTime;
+	int				m_iSecondLimit;
+	int				m_iSecond;
+	float			m_fDeltaSumTime;
 	class CUIPanel* m_pTimerPanel[TIMER_MAX_PANEL];
+	CUIPanel*		m_pPlayerRedHP;
+	CUIPanel*		m_pPlayerBlueHP;
+	class CPlayer*  m_pPlayer;
+	class CEnemy*	m_pEnemy;
 
 
 public:

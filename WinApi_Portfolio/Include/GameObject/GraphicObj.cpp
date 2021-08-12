@@ -59,6 +59,13 @@ void CGraphicObj::Input(float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ColliderList.erase(iter);
 			iterEnd = m_ColliderList.end();
+
+			if (iter == iterEnd)
+				return;
+		}
+
+		if (!(*iter)->GetEnable())
+		{
 			continue;
 		}
 
@@ -80,7 +87,9 @@ int CGraphicObj::Update(float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ColliderList.erase(iter);
 			iterEnd = m_ColliderList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return 0;
 		}
 
 		if (!(*iter)->GetEnable())
@@ -115,7 +124,9 @@ int CGraphicObj::LateUpdate(float fDeltaTime)
 			SAFE_RELEASE((*iter));
 			iter = m_ColliderList.erase(iter);
 			iterEnd = m_ColliderList.end();
-			continue;
+
+			if (iter == iterEnd)
+				return 0;
 		}
 
 		if (!(*iter)->GetEnable())
@@ -131,27 +142,6 @@ int CGraphicObj::LateUpdate(float fDeltaTime)
 void CGraphicObj::Render(HDC hDC, float fDeltaTime)
 {
 	CObj::Render(hDC, fDeltaTime);
-
-	list<CCollider*>::iterator iter;
-	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
-
-	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
-	{
-		if (!(*iter)->GetLife())
-		{
-			SAFE_RELEASE((*iter));
-			iter = m_ColliderList.erase(iter);
-			iterEnd = m_ColliderList.end();
-			continue;
-		}
-
-		if (!(*iter)->GetEnable())
-		{
-			continue;
-		}
-
-		(*iter)->Render(hDC, fDeltaTime);
-	}
 
 	if (m_pTexture)
 	{
@@ -169,6 +159,29 @@ void CGraphicObj::Render(HDC hDC, float fDeltaTime)
 			BitBlt(hDC, tPos.x, tPos.y, m_tSize.x,
 				m_tSize.y, m_pTexture->GetDC(), m_tImageOffset.x, m_tImageOffset.y, SRCCOPY);
 		}
+	}
+
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+	{
+		if (!(*iter)->GetLife())
+		{
+			SAFE_RELEASE((*iter));
+			iter = m_ColliderList.erase(iter);
+			iterEnd = m_ColliderList.end();
+
+			if (iter == iterEnd)
+				return;
+		}
+
+		if (!(*iter)->GetEnable())
+		{
+			continue;
+		}
+
+		(*iter)->Render(hDC, fDeltaTime);
 	}
 }
 

@@ -6,11 +6,16 @@
 #include "../UI/UIPanel.h"
 #include "../Logic/Camera.h"
 #include "../Logic/Logic.h"
+#include "../Collider/ColliderRect.h"
 
 CGameScene::CGameScene()	:
 	m_iSecondLimit(60),
 	m_iSecond(0),
-	m_fDeltaSumTime(0.f)
+	m_fDeltaSumTime(0.f),
+	m_pPlayer(NULL),
+	m_pEnemy(NULL),
+	m_pPlayerBlueHP(NULL),
+	m_pPlayerRedHP(NULL)
 {
 }
 
@@ -25,17 +30,17 @@ bool CGameScene::Init()
 	m_iSecond = m_iSecondLimit;
 
 	CLayer* pLayer = FindLayer("GameObject");
-	CPlayer* pObj = CGameObj::CreateGameObj<CPlayer>("PlayerObj", pLayer);
-	GET_SINGLE(CCamera)->SetTarget(pObj);
+	m_pPlayer = CGameObj::CreateGameObj<CPlayer>("PlayerObj", pLayer);
+	GET_SINGLE(CCamera)->SetTarget(m_pPlayer);
 
-	CEnemy* pEnemy = CGameObj::CreateGameObj<CEnemy>("EnemyObj", pLayer);
+	m_pEnemy = CGameObj::CreateGameObj<CEnemy>("EnemyObj", pLayer);
 
 	pLayer = FindLayer("UI");
-
+	 
 	CUIPanel* pUIPanel = CUI::CreateUIObj<CUIPanel>("StageTest", pLayer);
-	
-	vector<wstring> vecFileName;
 
+	vector<wstring> vecFileName;
+	
 	for (int i = 0; i <= 7; ++i)
 	{
 		wchar_t strFileName[MAX_PATH] = {};
@@ -46,46 +51,48 @@ bool CGameScene::Init()
 	pUIPanel->SetStageBack(true);
 	pUIPanel->CreateAnimation("Stage");
 	pUIPanel->AddAnimationClip("Stage1", AT_FRAME, AO_LOOP, 1.f, 8, 1, 0, 0, 8, 1, 0.f, "GameStage1", vecFileName);
+	CColliderRect* pRC = pUIPanel->AddCollider<CColliderRect>("Stage");
+	pRC->SetInfo(0, 620, WORLDWIDTH, 690);
 
-	CUIPanel* pPlyaerBackPanelBlue = CUI::CreateUIObj<CUIPanel>("PlyaerBackPanelBlue", pLayer);
-	pPlyaerBackPanelBlue->SetTexture("PlyaerBackPanelBlue", L"BlueTeam.bmp", UI_PATH);
-	pPlyaerBackPanelBlue->SetColorKey(0, 0, 0);
-	pPlyaerBackPanelBlue->SetPos(0.f, 0.f);
-	pPlyaerBackPanelBlue->SetSize(160.f, 120.f);
+	CUIPanel* pPlayerBackPanelBlue = CUI::CreateUIObj<CUIPanel>("PlyaerBackPanelBlue", pLayer);
+	pPlayerBackPanelBlue->SetTexture("PlyaerBackPanelBlue", L"BlueTeam.bmp", UI_PATH);
+	pPlayerBackPanelBlue->SetColorKey(0, 0, 0);
+	pPlayerBackPanelBlue->SetPos(0.f, 0.f);
+	pPlayerBackPanelBlue->SetSize(160.f, 120.f);
 
-	CUIPanel* pPlyaerBackPanelRed = CUI::CreateUIObj<CUIPanel>("PlyaerBackPanelRed", pLayer);
-	pPlyaerBackPanelRed->SetTexture("PlyaerBackPanelRed", L"RedTeam.bmp", UI_PATH);
-	pPlyaerBackPanelRed->SetColorKey(0, 0, 0);
-	pPlyaerBackPanelRed->SetSize(160.f, 120.f);
-	pPlyaerBackPanelRed->SetPos(WINDOWWIDTH - pPlyaerBackPanelRed->GetSize().x, 0.f);
+	CUIPanel* pPlayerBackPanelRed = CUI::CreateUIObj<CUIPanel>("PlyaerBackPanelRed", pLayer);
+	pPlayerBackPanelRed->SetTexture("PlyaerBackPanelRed", L"RedTeam.bmp", UI_PATH);
+	pPlayerBackPanelRed->SetColorKey(0, 0, 0);
+	pPlayerBackPanelRed->SetSize(160.f, 120.f);
+	pPlayerBackPanelRed->SetPos(WINDOWWIDTH - pPlayerBackPanelRed->GetSize().x, 0.f);
 
 	CUIPanel* pPlyaerBlueHPBack = CUI::CreateUIObj<CUIPanel>("PlyaerBlueHPBack", pLayer);
 	pPlyaerBlueHPBack->SetTexture("PlyaerHPBack", L"HPBack.bmp", UI_PATH);
 	pPlyaerBlueHPBack->SetColorKey(0, 0, 0);
-	pPlyaerBlueHPBack->SetSize(483.f, 36.f);
+	pPlyaerBlueHPBack->SetSize(401.f, 36.f);
 	pPlyaerBlueHPBack->SetPos(104.f, 37.f);
-	pPlyaerBlueHPBack->AddUIText("CHALLENGER !", -30.f, -15.f, "KOFMainFont23", 43, 74, 225);
+	pPlyaerBlueHPBack->AddUIText("CHALLENGER !", 0.f, -15.f, "KOFMainFont23", 43, 74, 225);
 	pPlyaerBlueHPBack->AddUIText("BENIMARU N.", 30.f, 30.f, "KOFMainFont17", 43, 74, 225, TRANSPARENT, DT_LEFT);
 
-	CUIPanel* pPlyaerBlueHP = CUI::CreateUIObj<CUIPanel>("PlyaerBlueHP", pLayer);
-	pPlyaerBlueHP->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
-	pPlyaerBlueHP->SetColorKey(0, 0, 0);
-	pPlyaerBlueHP->SetSize(483.f, 36.f);
-	pPlyaerBlueHP->SetPos(103.f, 37.f);
+	m_pPlayerBlueHP = CUI::CreateUIObj<CUIPanel>("PlyaerBlueHP", pLayer);
+	m_pPlayerBlueHP->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
+	m_pPlayerBlueHP->SetColorKey(0, 0, 0);
+	m_pPlayerBlueHP->SetSize(369.f, 15.f);
+	m_pPlayerBlueHP->SetPos(120.f, 45.f);
 
-	CUIPanel* pPlyaerRedHPBack = CUI::CreateUIObj<CUIPanel>("PlyaerRedHPBack", pLayer);
-	pPlyaerRedHPBack->SetTexture("PlyaerHPBack", L"HPBack.bmp", UI_PATH);
-	pPlyaerRedHPBack->SetColorKey(0, 0, 0);
-	pPlyaerRedHPBack->SetSize(483.f, 36.f);
-	pPlyaerRedHPBack->SetPos(WINDOWWIDTH - 20.f - pPlyaerRedHPBack->GetSize().x, 37.f);
-	pPlyaerRedHPBack->AddUIText("CHALLENGER !", -30.f, -15.f, "KOFMainFont23", 209, 27, 58);
-	pPlyaerRedHPBack->AddUIText("KYO", -110.f, 30.f, "KOFMainFont17", 209, 27, 58, TRANSPARENT, DT_RIGHT);
+	CUIPanel* pPlayerRedHPBack = CUI::CreateUIObj<CUIPanel>("PlyaerRedHPBack", pLayer);
+	pPlayerRedHPBack->SetTexture("PlyaerHPBack", L"HPBack.bmp", UI_PATH);
+	pPlayerRedHPBack->SetColorKey(0, 0, 0);
+	pPlayerRedHPBack->SetSize(401.f, 36.f);
+	pPlayerRedHPBack->SetPos(WINDOWWIDTH - pPlayerRedHPBack->GetSize().x - 90.f, 37.f);
+	pPlayerRedHPBack->AddUIText("CHALLENGER !", 0.f, -15.f, "KOFMainFont23", 209, 27, 58);
+	pPlayerRedHPBack->AddUIText("KYO", -30.f, 30.f, "KOFMainFont17", 209, 27, 58, TRANSPARENT, DT_RIGHT);
 
-	CUIPanel* pPlyaerRedHP = CUI::CreateUIObj<CUIPanel>("PlyaerRedHP", pLayer);
-	pPlyaerRedHP->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
-	pPlyaerRedHP->SetColorKey(0, 0, 0);
-	pPlyaerRedHP->SetSize(483.f, 36.f);
-	pPlyaerRedHP->SetPos(WINDOWWIDTH - 20.f - pPlyaerRedHP->GetSize().x, 37.f);
+	m_pPlayerRedHP = CUI::CreateUIObj<CUIPanel>("PlyaerRedHP", pLayer);
+	m_pPlayerRedHP->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
+	m_pPlayerRedHP->SetColorKey(0, 0, 0);
+	m_pPlayerRedHP->SetSize(369.f, 15.f);
+	m_pPlayerRedHP->SetPos(WINDOWWIDTH - m_pPlayerRedHP->GetSize().x - 105.f, 45.f);
 
 	CUIPanel* pPlyaerBlueFace = CUI::CreateUIObj<CUIPanel>("PlyaerBlueFace", pLayer);
 	pPlyaerBlueFace->SetTexture("PlyaerImage", L"PlayerImage.bmp", UI_PATH);
@@ -154,8 +161,88 @@ int CGameScene::Update(float fDeltaTime)
 
 		else
 		{
+			// 시간초가 다 될 경우
 			m_pTimerPanel[0]->SetImageOffset(13.f, 49.f);
 			m_pTimerPanel[1]->SetImageOffset(13.f, 49.f);
+
+			if (m_pPlayer->GetHP() > m_pEnemy->GetHP())
+			{
+				MessageBoxA(WINDOWHANDLE, "YOU WIN!", "YOU WIN!", MB_OK);
+				GAMEEND;
+			}
+
+			else if (m_pPlayer->GetHP() == m_pEnemy->GetHP())
+			{
+				MessageBoxA(WINDOWHANDLE, "DRAW!", "DRAW!", MB_OK);
+				GAMEEND;
+			}
+
+			else
+			{
+				MessageBoxA(WINDOWHANDLE, "YOU LOSE!", "YOU LOSE!", MB_OK);
+				GAMEEND;
+			}
+		}
+	}
+
+
+	if (m_pPlayer)
+	{
+		float fPlayerHP = m_pPlayer->GetHP();
+
+		if (m_pPlayerBlueHP)
+		{
+			_SIZE tSize = { 369.f, 15.f };
+
+			float fPer = tSize.x / 100.f;
+
+			m_pPlayerBlueHP->SetSize(fPer * fPlayerHP, tSize.y);
+		}
+	}
+
+
+	if (m_pEnemy)
+	{
+		float fEnemyHP = m_pEnemy->GetHP();
+
+		if (m_pPlayerRedHP)
+		{
+			_SIZE tOriginSize = { 369.f, 15.f };
+
+			POSITION tOriginPos = { WINDOWWIDTH - 459.f, 45.f };
+			float fPer = tOriginSize.x / 100.f;
+
+			float f = fPer * fEnemyHP;
+
+			float fOffsetX = tOriginPos.x + tOriginSize.x - f - 15.f;
+
+			m_pPlayerRedHP->SetSize(f, tOriginSize.y);
+			m_pPlayerRedHP->SetPos(fOffsetX, tOriginPos.y);
+
+		}
+	}
+
+	if (m_pPlayer && m_pEnemy)
+	{
+		float fPlayerHP = m_pPlayer->GetHP();
+		float fEnemyHP = m_pEnemy->GetHP();
+
+		if (fPlayerHP == 0 && fEnemyHP == 0)
+		{
+			MessageBoxA(WINDOWHANDLE, "DRAW!", "DRAW!", MB_OK);
+			GAMEEND;
+		}
+
+		else if (fPlayerHP == 0)
+		{
+			MessageBoxA(WINDOWHANDLE, "YOU LOSE!", "YOU LOSE!", MB_OK);
+			GAMEEND;
+		}
+
+		else if (fEnemyHP == 0)
+		{
+			MessageBoxA(WINDOWHANDLE, "YOU WIN!", "YOU WIN!", MB_OK);
+			GAMEEND;
 		}
 	}
 

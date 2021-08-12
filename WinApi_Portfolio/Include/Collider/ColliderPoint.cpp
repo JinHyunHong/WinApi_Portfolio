@@ -22,6 +22,14 @@ bool CColliderPoint::Init()
 {
 	m_eType = CT_POINT;
 
+
+	if (m_pObj)
+	{
+		POSITION tPos = m_pObj->GetPos();
+		m_tPos.x = tPos.x + m_tDist.x;
+		m_tPos.y = tPos.y + m_tDist.y;
+	}
+
 	return true;
 }
 

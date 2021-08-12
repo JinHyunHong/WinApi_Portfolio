@@ -24,6 +24,14 @@ bool CColliderSphere::Init()
 {
 	m_eType = CT_SPHERE;
 
+	if (m_pObj)
+	{
+		POSITION tPos = m_pObj->GetPos();
+		m_tWorldInfo.tCenter = tPos + m_tInfo.tCenter;
+		m_tWorldInfo.fRadius = m_tInfo.fRadius;
+	}
+
+
 	return true;
 }
 

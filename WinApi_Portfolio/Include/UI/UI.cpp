@@ -85,22 +85,6 @@ int CUI::LateUpdate(float fDeltaTime)
 
 void CUI::Render(HDC hDC, float fDeltaTime)
 {
-    list<CCollider*>::iterator iter;
-    list<CCollider*>::iterator iterEnd = m_ColliderList.end();
-
-    for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
-    {
-        if (!(*iter)->GetLife())
-        {
-            SAFE_RELEASE((*iter));
-            iter = m_ColliderList.erase(iter);
-            iterEnd = m_ColliderList.end();
-            continue;
-        }
-
-        (*iter)->Render(hDC, fDeltaTime);
-    }
-
     if (m_pTexture)
     {
         POSITION tPos = m_tPos - m_tSize * m_tPivot;
@@ -140,6 +124,21 @@ void CUI::Render(HDC hDC, float fDeltaTime)
             DrawTextA(hDC, (*iterText)->strText.c_str(), (*iterText)->strText.length(), &tRC, (*iterText)->iFormat);
         }
 
+    }
+
+    list<CCollider*>::iterator iter;
+    list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+    for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
+    {
+        if (!(*iter)->GetLife())
+        {
+            SAFE_RELEASE((*iter));
+            iter = m_ColliderList.erase(iter);
+            iterEnd = m_ColliderList.end();
+        }
+
+        (*iter)->Render(hDC, fDeltaTime);
     }
 }
 

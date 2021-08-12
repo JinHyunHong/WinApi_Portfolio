@@ -10,16 +10,51 @@ protected:
 	virtual ~CMoveObj();
 
 protected:
-	float         m_fSpeed;
-	float         m_fForce;
-	float         m_fForceOrigin;
-	bool          m_bJump;
-	bool          m_bFalling;
-	DIR			  m_eDir;
-	float		  m_fGravityTime;
-	bool		  m_bPhysics;
-	float		  m_fAngle;
-	CHARACTER_DIR m_eCharacterDir;
+	float			         m_fSpeed;
+	float			         m_fForce;
+	float			         m_fForceOrigin;
+	bool			         m_bJump;
+	bool			         m_bFalling;
+	DIR				         m_eDir;
+	float			         m_fGravityTime;
+	bool			         m_bPhysics;
+	float			         m_fAngle;
+	CHARACTER_DIR			 m_eCharacterDir;
+	list<class CEffect*>	 m_EffectList;
+	float					 m_fHP;
+	bool					 m_bSit;
+	bool					 m_bAttack;
+
+public:
+	float GetHP()	const
+	{
+		return m_fHP;
+	}
+
+	bool GetSit()	const
+	{
+		return m_bSit;
+	}
+
+	bool GetAttack()	const
+	{
+		return m_bAttack;
+	}
+
+	void AddHP(float fHP)
+	{
+		m_fHP += fHP;
+	}
+
+	void SetPhysics(bool bPhysics)
+	{
+		m_bPhysics = bPhysics;
+	}
+
+	void SetFalling(bool bFalling)
+	{
+		m_bFalling = bFalling;
+	}
 
 public:
 	void SetSpeed(float fSpeed)
@@ -41,6 +76,24 @@ public:
 	{
 		return m_eCharacterDir;
 	}
+
+	void ClearGravity()
+	{
+		m_fGravityTime = 0.f;
+	}
+
+	void JumpEnd()
+	{
+		m_bFalling = false;
+		m_fForce = 0;
+	}
+
+
+public:
+	CEffect* CreateEffect(const string& strTag, EFFECT_TYPE eType, int iLimitCount = 1);
+	bool EraseEffect(const string& strTag);
+	bool EraseEffect(CEffect* pEffect);
+	bool EraseEffect();
 
 protected:
 	void Jump();

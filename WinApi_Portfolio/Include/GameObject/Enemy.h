@@ -8,9 +8,6 @@ private:
 	friend class CScene;
 
 private:
-	float m_fHP;
-
-private:
 	CEnemy();
 	CEnemy(const CEnemy& enemy);
 	~CEnemy();
@@ -22,5 +19,9 @@ public:
 	virtual void Collision(float fDeltaTime);
 	virtual int  LateUpdate(float fDeltaTime);
 	virtual void Render(HDC hDC, float fDeltaTime);
+
+public:
+	void Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime);
+	void FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime);
 };
 

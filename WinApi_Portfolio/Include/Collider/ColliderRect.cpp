@@ -23,6 +23,16 @@ bool CColliderRect::Init()
 {
 	m_eType = CT_RECT;
 
+
+	if (m_pObj)
+	{
+		POSITION tPos = m_pObj->GetPos();
+		m_tWorldInfo.l = tPos.x + m_tInfo.l;
+		m_tWorldInfo.t = tPos.y + m_tInfo.t;
+		m_tWorldInfo.r = tPos.x + m_tInfo.r;
+		m_tWorldInfo.b = tPos.y + m_tInfo.b;
+	}
+
 	return true;
 }
 

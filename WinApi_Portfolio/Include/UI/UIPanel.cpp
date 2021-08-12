@@ -1,4 +1,7 @@
 #include "UIPanel.h"
+#include "../GameObject/Player.h"
+#include "../GameObject/Enemy.h"
+#include "../Collider/ColliderRect.h"
 
 CUIPanel::CUIPanel() :
 	m_bStageBack(false)

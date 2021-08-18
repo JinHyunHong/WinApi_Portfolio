@@ -7,6 +7,7 @@
 #include "../Texture/Texture.h"
 #include "ResourcesManager.h"
 #include "../Collider/ColliderManager.h"
+#include "SoundManager.h"
 
 DEFINITION_SINGLE(CLogic);
 
@@ -159,6 +160,9 @@ bool CLogic::Init(HINSTANCE hInst)
         return false;
 
     if (!GET_SINGLE(CResourcesManager)->Init(hInst, m_hDC))
+        return false;
+
+    if (!GET_SINGLE(CSoundManager)->Init())
         return false;
 
     if (!GET_SINGLE(CSceneManager)->Init())

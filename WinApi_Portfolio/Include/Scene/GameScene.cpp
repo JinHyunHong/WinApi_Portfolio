@@ -7,15 +7,14 @@
 #include "../Logic/Camera.h"
 #include "../Logic/Logic.h"
 #include "../Collider/ColliderRect.h"
+#include "../Logic/SoundManager.h"
 
 CGameScene::CGameScene()	:
 	m_iSecondLimit(60),
 	m_iSecond(0),
 	m_fDeltaSumTime(0.f),
 	m_pPlayer(NULL),
-	m_pEnemy(NULL),
-	m_pPlayerBlueHP(NULL),
-	m_pPlayerRedHP(NULL)
+	m_pEnemy(NULL)
 {
 }
 
@@ -26,6 +25,10 @@ CGameScene::~CGameScene()
 bool CGameScene::Init()
 {
 	CScene::Init();
+
+	GET_SINGLE(CSoundManager)->LoadSound("BlueMary", true, "BlueMary.mp3");
+	GET_SINGLE(CSoundManager)->Play("BlueMary");
+
 
 	m_iSecond = m_iSecondLimit;
 
@@ -74,11 +77,11 @@ bool CGameScene::Init()
 	pPlyaerBlueHPBack->AddUIText("CHALLENGER !", 0.f, -15.f, "KOFMainFont23", 43, 74, 225);
 	pPlyaerBlueHPBack->AddUIText("BENIMARU N.", 30.f, 30.f, "KOFMainFont17", 43, 74, 225, TRANSPARENT, DT_LEFT);
 
-	m_pPlayerBlueHP = CUI::CreateUIObj<CUIPanel>("PlyaerBlueHP", pLayer);
-	m_pPlayerBlueHP->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
-	m_pPlayerBlueHP->SetColorKey(0, 0, 0);
-	m_pPlayerBlueHP->SetSize(369.f, 15.f);
-	m_pPlayerBlueHP->SetPos(120.f, 45.f);
+	m_pPlayerHP[PT_BLUE] = CUI::CreateUIObj<CUIPanel>("PlyaerBlueHP", pLayer);
+	m_pPlayerHP[PT_BLUE]->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
+	m_pPlayerHP[PT_BLUE]->SetColorKey(0, 0, 0);
+	m_pPlayerHP[PT_BLUE]->SetSize(369.f, 15.f);
+	m_pPlayerHP[PT_BLUE]->SetPos(120.f, 45.f);
 
 	CUIPanel* pPlayerRedHPBack = CUI::CreateUIObj<CUIPanel>("PlyaerRedHPBack", pLayer);
 	pPlayerRedHPBack->SetTexture("PlyaerHPBack", L"HPBack.bmp", UI_PATH);
@@ -88,11 +91,11 @@ bool CGameScene::Init()
 	pPlayerRedHPBack->AddUIText("CHALLENGER !", 0.f, -15.f, "KOFMainFont23", 209, 27, 58);
 	pPlayerRedHPBack->AddUIText("KYO", -30.f, 30.f, "KOFMainFont17", 209, 27, 58, TRANSPARENT, DT_RIGHT);
 
-	m_pPlayerRedHP = CUI::CreateUIObj<CUIPanel>("PlyaerRedHP", pLayer);
-	m_pPlayerRedHP->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
-	m_pPlayerRedHP->SetColorKey(0, 0, 0);
-	m_pPlayerRedHP->SetSize(369.f, 15.f);
-	m_pPlayerRedHP->SetPos(WINDOWWIDTH - m_pPlayerRedHP->GetSize().x - 105.f, 45.f);
+	m_pPlayerHP[PT_RED] = CUI::CreateUIObj<CUIPanel>("PlyaerRedHP", pLayer);
+	m_pPlayerHP[PT_RED]->SetTexture("PlyaerHP", L"HP.bmp", UI_PATH);
+	m_pPlayerHP[PT_RED]->SetColorKey(0, 0, 0);
+	m_pPlayerHP[PT_RED]->SetSize(369.f, 15.f);
+	m_pPlayerHP[PT_RED]->SetPos(WINDOWWIDTH - m_pPlayerHP[PT_RED]->GetSize().x - 105.f, 45.f);
 
 	CUIPanel* pPlyaerBlueFace = CUI::CreateUIObj<CUIPanel>("PlyaerBlueFace", pLayer);
 	pPlyaerBlueFace->SetTexture("PlyaerImage", L"PlayerImage.bmp", UI_PATH);
@@ -108,16 +111,26 @@ bool CGameScene::Init()
 	pPlyaerRedFace->SetSize(90.f, 90.f);
 	pPlyaerRedFace->SetPos(WINDOWWIDTH - 120, 13);
 
-	CUIPanel* pPlyaerGuageBackBar = CUI::CreateUIObj<CUIPanel>("PlyaerGuageBackBar", pLayer);
-	pPlyaerGuageBackBar->SetTexture("PlyaerGuageBackBar", L"PlayerGuageBackBar.bmp", UI_PATH);
-	pPlyaerGuageBackBar->SetSize(247.f, 30.f);
-	pPlyaerGuageBackBar->SetPos(30.f, WINDOWHEIGHT - pPlyaerGuageBackBar->GetSize().y - 20);
+	CUIPanel* pBlueGuageBackBar = CUI::CreateUIObj<CUIPanel>("BlueGuageBackBar", pLayer);
+	pBlueGuageBackBar->SetTexture("BlueGuageBackBar", L"BlueGuageBackBar.bmp", UI_PATH);
+	pBlueGuageBackBar->SetSize(247.f, 30.f);
+	pBlueGuageBackBar->SetPos(30.f, WINDOWHEIGHT - pBlueGuageBackBar->GetSize().y - 20);
 
-	CUIPanel* pEnemyGuageBackBar = CUI::CreateUIObj<CUIPanel>("EnemyGuageBackBar", pLayer);
-	pEnemyGuageBackBar->SetTexture("EnemyGuageBackBar", L"EnemyGuageBackBar.bmp", UI_PATH);
-	pEnemyGuageBackBar->SetSize(266.f, 34.f);
-	pEnemyGuageBackBar->SetPos(WINDOWWIDTH - pEnemyGuageBackBar->GetSize().x - 30, 
-		WINDOWHEIGHT - pPlyaerGuageBackBar->GetSize().y - 20);
+	m_pPlayerGuage[PT_BLUE] = CUI::CreateUIObj<CUIPanel>("BlueGuage", pLayer);
+	m_pPlayerGuage[PT_BLUE]->SetTexture("BlueGuage", L"BlueGuage.bmp", UI_PATH);
+	m_pPlayerGuage[PT_BLUE]->SetSize(217.f, 22.f);
+	m_pPlayerGuage[PT_BLUE]->SetPos(pBlueGuageBackBar->GetPos().x + 22.f, pBlueGuageBackBar->GetPos().y + 3.5f);
+
+	CUIPanel* pRedGuageBackBar = CUI::CreateUIObj<CUIPanel>("RedGuageBackBar", pLayer);
+	pRedGuageBackBar->SetTexture("RedGuageBackBar", L"RedGuageBackBar.bmp", UI_PATH);
+	pRedGuageBackBar->SetSize(266.f, 34.f);
+	pRedGuageBackBar->SetPos(WINDOWWIDTH - (pRedGuageBackBar->GetSize().x + 30),
+		WINDOWHEIGHT - pRedGuageBackBar->GetSize().y - 20);
+
+	m_pPlayerGuage[PT_RED] = CUI::CreateUIObj<CUIPanel>("RedGuage", pLayer);
+	m_pPlayerGuage[PT_RED]->SetTexture("RedGuage", L"RedGuage.bmp", UI_PATH);
+	m_pPlayerGuage[PT_RED]->SetSize(175.f, 24.f);
+	m_pPlayerGuage[PT_RED]->SetPos(pRedGuageBackBar->GetPos().x + 66.f, pRedGuageBackBar->GetPos().y + 4.f);
 
 	m_pTimerPanel[0] = CUI::CreateUIObj<CUIPanel>("TimerLeft", pLayer);
 	m_pTimerPanel[0]->SetTexture("Timer", L"Timer.bmp", UI_PATH);
@@ -188,25 +201,53 @@ int CGameScene::Update(float fDeltaTime)
 
 	if (m_pPlayer)
 	{
-		float fPlayerHP = m_pPlayer->GetHP();
-
-		if (m_pPlayerBlueHP)
+		if (m_pPlayerGuage[PT_BLUE])
 		{
+			float fPlayerGuage = m_pPlayer->GetGuage();
+
+			_SIZE tSize = { 217.f, 22.f };
+
+			float fPer = tSize.x / 100.f;
+
+			m_pPlayerGuage[PT_BLUE]->SetSize(fPer * fPlayerGuage, tSize.y);
+		}
+
+		if (m_pPlayerHP[PT_BLUE])
+		{
+			float fPlayerHP = m_pPlayer->GetHP();
+
 			_SIZE tSize = { 369.f, 15.f };
 
 			float fPer = tSize.x / 100.f;
 
-			m_pPlayerBlueHP->SetSize(fPer * fPlayerHP, tSize.y);
+			m_pPlayerHP[PT_BLUE]->SetSize(fPer * fPlayerHP, tSize.y);
 		}
 	}
 
 
 	if (m_pEnemy)
 	{
-		float fEnemyHP = m_pEnemy->GetHP();
-
-		if (m_pPlayerRedHP)
+		if (m_pPlayerGuage[PT_RED])
 		{
+			float fEnemyGuage = m_pEnemy->GetGuage();
+
+			_SIZE tOriginSize = { 175.f, 24.f };
+
+			POSITION tOriginPos = { WINDOWWIDTH - 230.f, WINDOWHEIGHT - 50.f };
+			float fPer = tOriginSize.x / 100.f;
+
+			float f = fPer * fEnemyGuage;
+
+			float fOffsetX = tOriginPos.x + tOriginSize.x - f;
+
+			m_pPlayerGuage[PT_RED]->SetSize(f, tOriginSize.y);
+			m_pPlayerGuage[PT_RED]->SetPos(fOffsetX, tOriginPos.y);
+		}
+
+		if (m_pPlayerHP[PT_RED])
+		{
+			float fEnemyHP = m_pEnemy->GetHP();
+
 			_SIZE tOriginSize = { 369.f, 15.f };
 
 			POSITION tOriginPos = { WINDOWWIDTH - 459.f, 45.f };
@@ -216,8 +257,8 @@ int CGameScene::Update(float fDeltaTime)
 
 			float fOffsetX = tOriginPos.x + tOriginSize.x - f - 15.f;
 
-			m_pPlayerRedHP->SetSize(f, tOriginSize.y);
-			m_pPlayerRedHP->SetPos(fOffsetX, tOriginPos.y);
+			m_pPlayerHP[PT_RED]->SetSize(f, tOriginSize.y);
+			m_pPlayerHP[PT_RED]->SetPos(fOffsetX, tOriginPos.y);
 
 		}
 	}

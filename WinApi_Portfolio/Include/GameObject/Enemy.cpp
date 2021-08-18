@@ -3,6 +3,7 @@
 #include "../Animation/Animation.h"
 #include "../Logic/Logic.h"
 #include "../Logic/ResourcesManager.h"
+#include "Player.h"
 
 CEnemy::CEnemy()
 {
@@ -26,6 +27,10 @@ bool CEnemy::Init()
 	SetImageOffset(0.f, 0.f);
 	m_eDir = DIR_FRONT;
 	m_eCharacterDir = CD_LEFT;
+	SetPhysics(true);
+	SetForce(200.f);
+
+	m_fGuage = 30.f;
 
 	CColliderRect* pDefalutRC = AddCollider<CColliderRect>("EnemyBody");
 	pDefalutRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
@@ -167,8 +172,7 @@ void CEnemy::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 		JumpEnd();
 	}
 
-
-	if (pCollDest->GetTag() == "AttackColl")
+	if (pCollDest->GetTag() == "AttackColl" && m_bHit)
 	{
 		if (m_bSit)
 		{
@@ -188,15 +192,15 @@ void CEnemy::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 			{
 				m_pAnimation->ChangeClip("RightUpHurt");
 				MoveToX(10.f);
-				AddHP(-10.f);
 			}
 			else if (m_eCharacterDir == CD_LEFT)
 			{
 				GetAnimation()->ChangeClip("LeftUpHurt");					
 				MoveToX(-10.f);
-				AddHP(-10.f);
 			}
 		}
+
+		m_bHit = false;
 	}
 }
 

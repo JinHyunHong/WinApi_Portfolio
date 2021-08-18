@@ -41,6 +41,11 @@ void CColliderPoint::Input(float fDeltaTime)
 int CColliderPoint::Update(float fDeltaTime)
 {
 	CCollider::Update(fDeltaTime);
+
+	POSITION tPos = m_pObj->GetPos();
+	m_tPos.x = tPos.x + m_tDist.x;
+	m_tPos.y = tPos.y + m_tDist.y;
+
 	return 0;
 }
 
@@ -64,10 +69,6 @@ bool CColliderPoint::Collision(CCollider* pDest)
 int CColliderPoint::LateUpdate(float fDeltaTime)
 {
 	CCollider::LateUpdate(fDeltaTime);
-
-	POSITION tPos = m_pObj->GetPos();
-	m_tPos.x = tPos.x + m_tDist.x;
-	m_tPos.y = tPos.y + m_tDist.y;
 
 	return 0;
 }

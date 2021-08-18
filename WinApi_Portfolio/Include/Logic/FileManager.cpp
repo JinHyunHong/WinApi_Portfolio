@@ -28,6 +28,7 @@ bool CFileManager::Init()
 	}
 
 	CreatePath(TEXTURE_PATH, L"Texture\\");
+	CreatePath(SOUND_PATH, L"Sound\\");
 	CreatePath(EFFECT_PATH, L"Texture\\Effect\\");
 	CreatePath(UI_PATH, L"Texture\\UI\\");
 	CreatePath(FONT_PATH, L"Texture\\Font\\");
@@ -71,6 +72,8 @@ const char* CFileManager::FindPathMultiByte(const string& strKey)
 
 	if (!pPath)
 		return NULL;
+
+	memset(m_strPath, 0, sizeof(char) * MAX_PATH);
 
 	WideCharToMultiByte(CP_ACP, 0, pPath, -1, m_strPath,
 		lstrlen(pPath), 0, 0);

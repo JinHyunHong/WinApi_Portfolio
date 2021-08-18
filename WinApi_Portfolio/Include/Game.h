@@ -11,9 +11,12 @@
 #include <math.h>
 #include <functional>
 #include <time.h>
+#include "Sound/fmod.hpp"
 
 #pragma comment(lib, "msimg32")
+#pragma comment(lib, "fmod_vc")
 
+using namespace FMOD;
 using namespace std;
 
 

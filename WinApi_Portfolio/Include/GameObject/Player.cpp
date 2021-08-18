@@ -29,6 +29,7 @@ bool CPlayer::Init()
 	SetPivot(0.5f, 0.5f);
 	SetImageOffset(0.f, 0.f);
 	SetPhysics(true);
+	SetForce(700.f);
 
 	m_eDir = DIR_FRONT;
 	m_eCharacterDir = CD_RIGHT;
@@ -76,26 +77,6 @@ void CPlayer::Input(float fDeltaTime)
 	{
 		if (!m_bSit)
 		{
-			if (KEYPRESS("MoveLeft") && !(tPos.x <= 0))
-			{				
-				m_eDir = DIR_BACK;
-
-				if (m_eCharacterDir == CD_RIGHT)
-				{
-					MoveToXSpeed(fDeltaTime);
-					m_pAnimation->ChangeClip("RightWalkBack");
-					m_pAnimation->SetDefaultClip("RightIdle");
-				}
-
-				else if (m_eCharacterDir == CD_LEFT)
-				{
-					MoveToXSpeed(fDeltaTime);
-					m_pAnimation->ChangeClip("LeftWalkBack");
-					m_pAnimation->SetDefaultClip("LeftIdle");
-				}
-			}
-
-
 			if (KEYDOWN("MovingLeft") && !(tPos.x <= 0))
 			{
 				m_eDir = DIR_BACK;
@@ -110,6 +91,25 @@ void CPlayer::Input(float fDeltaTime)
 				{
 					MoveToX(-50.f);
 					m_pAnimation->ChangeClip("LeftMovingBack");
+					m_pAnimation->SetDefaultClip("LeftIdle");
+				}
+			}
+
+			else if (KEYPRESS("MoveLeft") && !(tPos.x <= 0))
+			{				
+				m_eDir = DIR_BACK;
+
+				if (m_eCharacterDir == CD_RIGHT)
+				{
+					MoveToXSpeed(fDeltaTime);
+					m_pAnimation->ChangeClip("RightWalkBack");
+					m_pAnimation->SetDefaultClip("RightIdle");
+				}
+
+				else if (m_eCharacterDir == CD_LEFT)
+				{
+					MoveToXSpeed(fDeltaTime);
+					m_pAnimation->ChangeClip("LeftWalkBack");
 					m_pAnimation->SetDefaultClip("LeftIdle");
 				}
 			}
@@ -154,10 +154,29 @@ void CPlayer::Input(float fDeltaTime)
 				}
 			}
 
+			if (KEYDOWN("Jump"))
+			{
+				if (m_eCharacterDir == CD_RIGHT)
+				{
+					m_pAnimation->ChangeClip("RightJump");
+					m_pAnimation->SetDefaultClip("RightJump");
+				}
+
+				else if (m_eCharacterDir == CD_LEFT)
+				{
+					m_pAnimation->ChangeClip("LeftJump");
+					m_pAnimation->SetDefaultClip("LeftJump");
+				}
+
+				m_tPos.y -= m_fJumpOffset;
+
+				Jump();
+			}
+
 			if (KEYDOWN("Attack1"))
 			{
 				m_bAttack = true;
-				pSR->SetEnable(true);
+
 				if (m_eCharacterDir == CD_RIGHT)
 				{
 					pSR->SetInfo(20.f, POSITION(-80, -80));
@@ -171,13 +190,16 @@ void CPlayer::Input(float fDeltaTime)
 					m_pAnimation->ChangeClip("LeftAttack1");
 					m_pAnimation->SetDefaultClip("LeftIdle");
 				}
+
+
+				pSR->SetEnable(true);
 			}
 
 
 			if (KEYDOWN("Attack2"))
 			{
 				m_bAttack = true;
-				pSR->SetEnable(true);
+
 				if (m_eCharacterDir == CD_RIGHT)
 				{
 					pSR->SetInfo(20.f, POSITION(-120, -80));
@@ -191,6 +213,9 @@ void CPlayer::Input(float fDeltaTime)
 					m_pAnimation->ChangeClip("LeftAttack2");
 					m_pAnimation->SetDefaultClip("LeftIdle");
 				}
+
+
+				pSR->SetEnable(true);
 			}
 
 
@@ -198,7 +223,7 @@ void CPlayer::Input(float fDeltaTime)
 			if (KEYDOWN("Attack3"))
 			{
 				m_bAttack = true;
-				pSR->SetEnable(true);
+
 				if (m_eCharacterDir == CD_RIGHT)
 				{
 					pSR->SetInfo(20.f, POSITION(-80, -80));
@@ -212,6 +237,9 @@ void CPlayer::Input(float fDeltaTime)
 					m_pAnimation->ChangeClip("LeftAttack3");
 					m_pAnimation->SetDefaultClip("LeftIdle");
 				}
+
+
+				pSR->SetEnable(true);
 			}
 
 
@@ -219,7 +247,7 @@ void CPlayer::Input(float fDeltaTime)
 			if (KEYDOWN("Attack4"))
 			{
 				m_bAttack = true;
-				pSR->SetEnable(true);
+
 				if (m_eCharacterDir == CD_RIGHT)
 				{
 					pSR->SetInfo(20.f, POSITION(-110, -80));
@@ -233,6 +261,8 @@ void CPlayer::Input(float fDeltaTime)
 					m_pAnimation->ChangeClip("LeftAttack4");
 					m_pAnimation->SetDefaultClip("LeftIdle");
 				}
+
+				pSR->SetEnable(true);
 			}
 
 		}
@@ -258,7 +288,6 @@ void CPlayer::Input(float fDeltaTime)
 		{
 			m_bSit = true;
 			m_bAttack = true;
-			pSR->SetEnable(true);
 
 			if (m_eCharacterDir == CD_RIGHT)
 			{
@@ -270,6 +299,9 @@ void CPlayer::Input(float fDeltaTime)
 				m_pAnimation->ChangeClip("LeftSitAttack1");
 				pSR->SetInfo(20.f, POSITION(90, 120));
 			}
+
+
+			pSR->SetEnable(true);
 		}
 
 
@@ -278,7 +310,6 @@ void CPlayer::Input(float fDeltaTime)
 		{
 			m_bSit = true;
 			m_bAttack = true;
-			pSR->SetEnable(true);
 
 			if (m_eCharacterDir == CD_RIGHT)
 			{
@@ -290,6 +321,9 @@ void CPlayer::Input(float fDeltaTime)
 				m_pAnimation->ChangeClip("LeftSitAttack2");
 				pSR->SetInfo(20.f, POSITION(75, 0));
 			}
+
+
+			pSR->SetEnable(true);
 		}
 	}
 
@@ -306,15 +340,6 @@ void CPlayer::Input(float fDeltaTime)
 			m_pAnimation->SetDefaultClip("LeftIdle");
 		}
 	}
-
-
-	if (m_pAnimation->GetMotionEnd() && m_bAttack)
-	{
-		m_bAttack = false;
-		pSR->SetEnable(false);
-		pSR->EraseCollider();
-	}
-
 }
 
 int CPlayer::Update(float fDeltaTime)
@@ -332,6 +357,21 @@ void CPlayer::Collision(float fDeltaTime)
 int CPlayer::LateUpdate(float fDeltaTime)
 {
 	CMoveObj::LateUpdate(fDeltaTime);
+
+	CColliderSphere* pSR = (CColliderSphere*)GetCollider("AttackColl");
+
+	if (m_pAnimation->GetMotionEnd())
+	{
+		m_pAnimation->ReturnClip();
+	}
+
+	if (m_pAnimation->GetMotionEnd() && m_bAttack)
+	{
+		pSR->SetEnable(false);
+		m_bAttack = false;
+	}
+
+
 	return 0;
 }
 
@@ -342,7 +382,10 @@ void CPlayer::Render(HDC hDC, float fDeltaTime)
 
 void CPlayer::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 {
-	if (pCollDest->GetTag() == "EnemyBody")
+	CEnemy* pEnemy = (CEnemy*)pCollDest->GetObj();
+
+	if (pCollDest->GetTag() == "EnemyBody"&&
+		m_bHit)
 	{
 		if (m_bSit)
 		{
@@ -367,34 +410,72 @@ void CPlayer::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 				m_pAnimation->ChangeClip("LeftUpHurt");
 			}
 		}
+
+		m_bHit = false;
 	}
 }
 
 void CPlayer::FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 {
+	POSITION tPos = m_tPos - m_tSize * m_tPivot;
+	CColliderRect* pRC = (CColliderRect*)pCollDest;
+
 	if (pCollDest->GetTag() == "Stage")
 	{
+		if (!m_bMove)
+		{
+			m_tPos.y = pRC->GetWorldInfo().t - m_tPivot.y * m_tSize.y;
+			m_fJumpOffset = 1.f;
+		}
+
+		else
+			m_fJumpOffset = tPos.y + m_tSize.y - pRC->GetWorldInfo().t + 1.f;
+
+		if (!m_bSit && m_bJump)
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+
+			m_pAnimation->ReturnClip();
+		}
+
+
+
 		ClearGravity();
+
 		JumpEnd();
 	}
 }
 
 void CPlayer::Attack(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 {
-	if (pCollSrc->GetTag() == "AttackColl")
+	CColliderSphere* pSR = (CColliderSphere*)pCollSrc;
+
+	if (pCollDest->GetTag() == "EnemyBody" && m_bAttack)
 	{
-		CColliderSphere* pSR = (CColliderSphere*)pCollSrc;
+		CEnemy* pEnemy = (CEnemy*)pCollDest->GetObj();
 
-		if (pCollDest->GetTag() == "EnemyBody")
+		if (pEnemy)
 		{
-			CEnemy* pEnemy = (CEnemy*)pCollDest->GetObj();
-
-			if (pEnemy)
-			{
-				CEffect* pEffect = pEnemy->CreateEffect("Attack", ET_HURT_BIG);
-				pEffect->SetPos(pSR->GetWorldInfo().tCenter.x - pSR->GetWorldInfo().fRadius, 
-					pSR->GetWorldInfo().tCenter.y - pSR->GetWorldInfo().fRadius);
-			}
+			CEffect* pEffect = pEnemy->CreateEffect("Attack", ET_HURT_BIG);
+			pEffect->SetPos(pSR->GetWorldInfo().tCenter.x - pSR->GetWorldInfo().fRadius, 
+				pSR->GetWorldInfo().tCenter.y - pSR->GetWorldInfo().fRadius);
+			AddGuage(10.f);
+			pEnemy->AddHP(-10.f);
+			pEnemy->SetHit(true);
+			SetWindowTextA(WINDOWHANDLE, to_string(pEnemy->GetHP()).c_str());
 		}
+
+		pCollSrc->SetEnable(false);
+		pCollSrc->EraseCollider(pCollDest);
+		pCollDest->EraseCollider(pCollSrc);
 	}
+
 }

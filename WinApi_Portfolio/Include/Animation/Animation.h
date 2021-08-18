@@ -26,6 +26,7 @@ public:
 	{
 		return m_bMotionEnd;
 	}
+
 public:
 	PANIMATIONCLIP GetCurrentClip() const
 	{

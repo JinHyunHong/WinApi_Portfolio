@@ -78,6 +78,11 @@ bool CColliderManager::Collision(CGraphicObj* pSrc, CGraphicObj* pDest, float fD
 	{
 		for (DestIter = DestList.begin(); DestIter != DestIterEnd; ++DestIter)
 		{
+			if(!(*SrcIter)->GetEnable())
+			{
+				continue;
+			}
+
 			if ((*SrcIter)->Collision(*DestIter))
 			{
 				(*SrcIter)->m_bCollision = true;

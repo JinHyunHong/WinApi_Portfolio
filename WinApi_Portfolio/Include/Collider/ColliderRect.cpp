@@ -44,6 +44,13 @@ void CColliderRect::Input(float fDeltaTime)
 int CColliderRect::Update(float fDeltaTime)
 {
 	CCollider::Update(fDeltaTime);
+
+	POSITION tPos = m_pObj->GetPos();
+	m_tWorldInfo.l = tPos.x + m_tInfo.l;
+	m_tWorldInfo.t = tPos.y + m_tInfo.t;
+	m_tWorldInfo.r = tPos.x + m_tInfo.r;
+	m_tWorldInfo.b = tPos.y + m_tInfo.b;
+
 	return 0;
 }
 
@@ -70,11 +77,6 @@ int CColliderRect::LateUpdate(float fDeltaTime)
 {
 	CCollider::LateUpdate(fDeltaTime);
 
-	POSITION tPos = m_pObj->GetPos();
-	m_tWorldInfo.l = tPos.x + m_tInfo.l;
-	m_tWorldInfo.t = tPos.y + m_tInfo.t;
-	m_tWorldInfo.r = tPos.x + m_tInfo.r;
-	m_tWorldInfo.b = tPos.y + m_tInfo.b;
 
 	return 0;
 }

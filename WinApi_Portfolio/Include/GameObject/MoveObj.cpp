@@ -6,14 +6,17 @@ CMoveObj::CMoveObj()	:
 	m_fForce(0.f),
 	m_fForceOrigin(0.f),
 	m_bJump(false),
-	m_bFalling(false),
 	m_eDir(DIR_NONE),
 	m_fAngle(0.f),
 	m_fGravityTime(0.f),
 	m_bPhysics(false),
 	m_fHP(100.f),
 	m_bSit(false),
-	m_bAttack(false)
+	m_bAttack(false),
+	m_bHit(false),
+	m_bMove(false),
+	m_fGuage(0.f),
+	m_fJumpOffset(0.f)
 {
 }
 
@@ -89,6 +92,7 @@ bool CMoveObj::EraseEffect(CEffect* pEffect)
 	return false;
 }
 
+
 bool CMoveObj::EraseEffect()
 {
 	Safe_Release_VecList(m_EffectList);
@@ -98,7 +102,7 @@ bool CMoveObj::EraseEffect()
 
 void CMoveObj::Jump()
 {
-	if (!m_bFalling)
+	if (!m_bJump)
 	{
 		m_bJump = true;
 		m_fForce = m_fForceOrigin;
@@ -108,37 +112,44 @@ void CMoveObj::Jump()
 void CMoveObj::MoveToX(float x)
 {
 	m_tPos.x += x;
+	m_bMove = true;
 }
 
 void CMoveObj::MoveToX(float x, float fDeltaTime)
 {
 	m_tPos.x += x * fDeltaTime;
+	m_bMove = true;
 }
 
 void CMoveObj::MoveToXSpeed(float fDeltaTime)
 {
 	m_tPos.x += m_fSpeed * fDeltaTime * m_eDir;
+	m_bMove = true;
 }
 
 void CMoveObj::MoveToAngle(float fDeltaTime)
 {
 	m_tPos.x += cosf(m_fAngle) * m_fSpeed * fDeltaTime; 
 	m_tPos.y += sinf(m_fAngle) * m_fSpeed * fDeltaTime;
+	m_bMove = true;
 }
 
 void CMoveObj::MoveToY(float y)
 {
 	m_tPos.y += y;
+	m_bMove = true;
 }
 
 void CMoveObj::MoveToY(float y, float fDeltaTime)
 {
 	m_tPos.y += y * fDeltaTime;
+	m_bMove = true;
 }
 
 void CMoveObj::MoveToYSpeed(float fDeltaTime)
 {
 	m_tPos.y += m_fSpeed * fDeltaTime * m_eDir;
+	m_bMove = true;
 }
 
 bool CMoveObj::Init()
@@ -271,6 +282,8 @@ int CMoveObj::LateUpdate(float fDeltaTime)
 		(*iter)->LateUpdate(fDeltaTime);
 	}
 
+
+	m_bMove = false;
 
 	return 0;
 }

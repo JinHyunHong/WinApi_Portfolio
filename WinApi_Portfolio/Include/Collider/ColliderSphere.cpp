@@ -43,6 +43,12 @@ void CColliderSphere::Input(float fDeltaTime)
 int CColliderSphere::Update(float fDeltaTime)
 {
 	CCollider::Update(fDeltaTime);
+
+	POSITION tPos = m_pObj->GetPos();
+	m_tWorldInfo.tCenter = tPos + m_tInfo.tCenter;
+	m_tWorldInfo.fRadius = m_tInfo.fRadius;
+
+
 	return 0;
 }
 
@@ -64,10 +70,6 @@ bool CColliderSphere::Collision(CCollider* pDest)
 int CColliderSphere::LateUpdate(float fDeltaTime)
 {
 	CCollider::LateUpdate(fDeltaTime);
-
-	POSITION tPos = m_pObj->GetPos();
-	m_tWorldInfo.tCenter = tPos + m_tInfo.tCenter;
-	m_tWorldInfo.fRadius = m_tInfo.fRadius;
 
 	return 0;
 }

@@ -85,6 +85,9 @@
     <Filter Include="02.Object\01.GameObj\02.StaticObj\01.Effect">
       <UniqueIdentifier>{1e562039-181e-4498-8747-7a2833e8791d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Logic\07.SoundManager">
+      <UniqueIdentifier>{c1c36487-e22d-44ff-b24b-7c1570a11ded}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -182,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="GameObject\Effect.cpp">
       <Filter>02.Object\01.GameObj\02.StaticObj\01.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Logic\SoundManager.cpp">
+      <Filter>01.Logic\07.SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\Effect.h">
       <Filter>02.Object\01.GameObj\02.StaticObj\01.Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Logic\SoundManager.h">
+      <Filter>01.Logic\07.SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

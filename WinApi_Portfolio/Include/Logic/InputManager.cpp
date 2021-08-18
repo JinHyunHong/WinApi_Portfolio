@@ -34,7 +34,9 @@ bool CInputManager::Init()
 {
 	CreateKey("MoveLeft", VK_LEFT);
 	CreateKey("MoveRight", VK_RIGHT);
-	CreateKey("Jump", VK_SPACE);
+	CreateKey("Jump", VK_UP);
+	CreateKey("MovingLeftJump", VK_UP, VK_LEFT);
+	CreateKey("MovingRightJump", VK_UP, VK_RIGHT);
 	//CreateKey("MouseLButton", VK_LBUTTON);
 	CreateKey('Z', "Attack1");
 	CreateKey('X', "Attack2");
@@ -64,37 +66,25 @@ void CInputManager::Update(float fDeltaTime)
 	unordered_map<string, PKEYINFO>::iterator iter;
 	unordered_map<string, PKEYINFO>::iterator iterEnd = m_mapKey.end();
 
-	int iUsedKey[MAX_PATH] = {0};
-	int iIndex = 0;
-
 	for (iter = m_mapKey.begin(); iter != iterEnd; ++iter)
 	{
 		int iCount = 0;
-		int iUsedCopy[MAX_PATH] = { 0 };
-		memcpy(iUsedCopy, iUsedKey, sizeof(iUsedKey));
 		for (size_t i = 0; i < iter->second->vecKey.size(); ++i)
 		{
-			if (GetAsyncKeyState(iter->second->vecKey[i]) && 0x8000)
+			if (iter->second->vecKey.size() > 1)
+			{
+				if (GetAsyncKeyState(iter->second->vecKey[i]) && 0x8000)
+				{
+					++iCount;
+
+				}
+
+			}
+
+			else if (GetAsyncKeyState(iter->second->vecKey[i]) && 0x8000)
 			{
 				++iCount;
-				
-				iUsedKey[iIndex] = iter->second->vecKey[i];
-				++iIndex;
-				
 			}
-
-			else
-			{
-				for (int j = 0; j <= iIndex; ++j)
-				{
-					if (iUsedCopy[j] == iter->second->vecKey[i])
-					{
-						++iCount;
-						iUsedCopy[j] = NULL;
-					}
-				}
-			}
-
 		}
 
 		if (iCount == iter->second->vecKey.size())
@@ -102,19 +92,18 @@ void CInputManager::Update(float fDeltaTime)
 			if (!iter->second->bDown && !iter->second->bPress)
 			{
 				iter->second->bDown = true;
-				iter->second->bPress = false;
+				iter->second->bPress = true;
 			}
 
 			else if (iter->second->bDown)
 			{
 				iter->second->bDown = false;
-				iter->second->bPress = true;
 			}
 		}
 
 		else
 		{
-			if (iter->second->bPress)
+			if (iter->second->bDown || iter->second->bPress)
 			{
 				iter->second->bDown = false;
 				iter->second->bPress = false;
@@ -123,6 +112,8 @@ void CInputManager::Update(float fDeltaTime)
 
 			else if (iter->second->bUp)
 			{
+				iter->second->bDown = false;
+				iter->second->bPress = false;
 				iter->second->bUp = false;
 			}
 		}

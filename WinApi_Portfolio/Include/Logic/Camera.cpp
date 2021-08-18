@@ -70,7 +70,7 @@ void CCamera::Update(float fDeltaTime)
 		m_tPos.x = tPos.x - m_tClientRS.iWidth * m_tPivot.x;
 
 	if (tPos.y < fTArea)
-		m_tPos.x = 0.f;
+		m_tPos.y = 0.f;
 
 	else if (tPos.y > m_tWorldRS.iHeight - fBArea)
 		m_tPos.y = m_tWorldRS.iHeight - m_tClientRS.iHeight;

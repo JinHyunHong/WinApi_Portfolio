@@ -14,7 +14,7 @@ protected:
 	float			         m_fForce;
 	float			         m_fForceOrigin;
 	bool			         m_bJump;
-	bool			         m_bFalling;
+	float					 m_fJumpOffset;
 	DIR				         m_eDir;
 	float			         m_fGravityTime;
 	bool			         m_bPhysics;
@@ -22,13 +22,21 @@ protected:
 	CHARACTER_DIR			 m_eCharacterDir;
 	list<class CEffect*>	 m_EffectList;
 	float					 m_fHP;
+	float					 m_fGuage;
 	bool					 m_bSit;
 	bool					 m_bAttack;
+	bool					 m_bHit;
+	bool					 m_bMove;
 
 public:
 	float GetHP()	const
 	{
 		return m_fHP;
+	}
+
+	float GetGuage()	const
+	{
+		return m_fGuage;
 	}
 
 	bool GetSit()	const
@@ -41,9 +49,19 @@ public:
 		return m_bAttack;
 	}
 
+	bool GetHit()	const
+	{
+		return m_bHit;
+	}
+
 	void AddHP(float fHP)
 	{
 		m_fHP += fHP;
+	}
+
+	void AddGuage(float fGuage)
+	{
+		m_fGuage += fGuage;
 	}
 
 	void SetPhysics(bool bPhysics)
@@ -51,9 +69,9 @@ public:
 		m_bPhysics = bPhysics;
 	}
 
-	void SetFalling(bool bFalling)
+	void SetHit(bool bHit)
 	{
-		m_bFalling = bFalling;
+		m_bHit = bHit;
 	}
 
 public:
@@ -84,8 +102,13 @@ public:
 
 	void JumpEnd()
 	{
-		m_bFalling = false;
+		m_bJump = false;
 		m_fForce = 0;
+	}
+
+	void SetForce(float fForce)
+	{
+		m_fForceOrigin = fForce;
 	}
 
 

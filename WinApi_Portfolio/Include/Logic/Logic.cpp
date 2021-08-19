@@ -30,6 +30,7 @@ CLogic::~CLogic()
     DESTROY_SINGLE(CInputManager);
     DESTROY_SINGLE(CFileManager);
     DESTROY_SINGLE(CResourcesManager);
+    DESTROY_SINGLE(CSoundManager);
 
     ReleaseDC(m_hWnd, m_hDC);
 }
@@ -144,6 +145,9 @@ bool CLogic::Init(HINSTANCE hInst)
 
     MyRegisterClass();
     InitInstance();
+
+    // 난수 타임 seed
+    srand((unsigned)time(0));
 
     m_hDC = GetDC(m_hWnd);
 

@@ -4,6 +4,8 @@
 #include "../Logic/Logic.h"
 #include "../Logic/ResourcesManager.h"
 #include "Player.h"
+#include "../Collider/ColliderPoint.h"
+#include "../Logic/SoundManager.h"
 
 CEnemy::CEnemy()
 {
@@ -20,8 +22,11 @@ CEnemy::~CEnemy()
 
 bool CEnemy::Init()
 {
+	CMoveObj::Init();
+
+	SetInfo(CNT_KYO);
 	SetSpeed(400.f);
-	SetSize(200.f, 300.f);
+	SetSize(150.f, 300.f);
 	SetPos(WORLDWIDTH - m_tSize.x - 200, 480.f);
 	SetPivot(0.5f, 0.5f);
 	SetImageOffset(0.f, 0.f);
@@ -30,11 +35,13 @@ bool CEnemy::Init()
 	SetPhysics(true);
 	SetForce(200.f);
 
-	m_fGuage = 30.f;
-
 	CColliderRect* pDefalutRC = AddCollider<CColliderRect>("EnemyBody");
 	pDefalutRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
 	pDefalutRC->AddFunction(CS_ENTER, this, &CEnemy::Coll);
+
+	CColliderPoint* pSmallBodyRC = AddCollider<CColliderPoint>("EnemyPhysicsBody");
+	pSmallBodyRC->SetPos(POSITION(m_tPos.x / 2, m_tPos.y / 2));
+	pSmallBodyRC->AddFunction(CS_STAY, this, &CEnemy::Physics);
 
 	CColliderRect* pFloorRC = AddCollider<CColliderRect>("PlayerFloor");
 	pFloorRC->SetInfo(-m_tSize.x / 2, 130, m_tSize.x / 2, m_tSize.y / 2);
@@ -51,6 +58,7 @@ bool CEnemy::Init()
 	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(RT_KYO)->Clone();
 	m_pAnimation->SetObj(this);
 
+	m_tInfo.tSoundCount.iDamage = GET_SINGLE(CSoundManager)->FindSoundCount("Damage", m_tInfo.eType);
 
 	return true;
 }
@@ -174,6 +182,11 @@ void CEnemy::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 
 	if (pCollDest->GetTag() == "AttackColl" && m_bHit)
 	{
+		int iRand = (rand() % m_tInfo.tSoundCount.iDamage) + 1;
+		char strSoundName[20] = { 0, };
+		sprintf_s(strSoundName, "Damage%d", iRand);
+		GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
+
 		if (m_bSit)
 		{
 			if (m_eCharacterDir == CD_RIGHT)
@@ -204,11 +217,56 @@ void CEnemy::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 	}
 }
 
+void CEnemy::Physics(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
+{
+	if (pCollDest->GetTag() == "PlayerBody")
+	{
+		if (m_eCharacterDir == CD_RIGHT)
+		{
+			MoveToX(3.f);
+		}
+		else if (m_eCharacterDir == CD_LEFT)
+		{
+			MoveToX(-3.f);
+		}
+	}
+}
+
 void CEnemy::FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 {
+	POSITION tPos = m_tPos - m_tSize * m_tPivot;
+	CColliderRect* pRC = (CColliderRect*)pCollDest;
+
 	if (pCollDest->GetTag() == "Stage")
 	{
+		if (!m_bMove)
+		{
+			m_tPos.y = pRC->GetWorldInfo().t - m_tPivot.y * m_tSize.y;
+			m_fJumpOffset = 1.f;
+		}
+
+		else
+			m_fJumpOffset = tPos.y + m_tSize.y - pRC->GetWorldInfo().t + 1.f;
+
+		if (!m_bSit && m_bJump)
+		{
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				m_pAnimation->SetDefaultClip("RightIdle");
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				m_pAnimation->SetDefaultClip("LeftIdle");
+			}
+
+			m_pAnimation->ReturnClip();
+		}
+
+
+
 		ClearGravity();
+
 		JumpEnd();
 	}
 }

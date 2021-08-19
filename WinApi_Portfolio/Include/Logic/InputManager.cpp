@@ -42,6 +42,7 @@ bool CInputManager::Init()
 	CreateKey('X', "Attack2");
 	CreateKey('C', "Attack3");
 	CreateKey('V', "Attack4");
+	CreateKey('X', VK_RIGHT, "SpecialAttack1");
 	CreateKey("SitAttack1", VK_DOWN, 'Z');
 	CreateKey('X', VK_DOWN, "SitAttack2");
 	CreateKey(VK_DOWN, 'C', "SitAttack3");

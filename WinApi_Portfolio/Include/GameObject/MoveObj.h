@@ -10,6 +10,7 @@ protected:
 	virtual ~CMoveObj();
 
 protected:
+	CHARACTERINFO			 m_tInfo;
 	float			         m_fSpeed;
 	float			         m_fForce;
 	float			         m_fForceOrigin;
@@ -21,8 +22,6 @@ protected:
 	float			         m_fAngle;
 	CHARACTER_DIR			 m_eCharacterDir;
 	list<class CEffect*>	 m_EffectList;
-	float					 m_fHP;
-	float					 m_fGuage;
 	bool					 m_bSit;
 	bool					 m_bAttack;
 	bool					 m_bHit;
@@ -31,12 +30,12 @@ protected:
 public:
 	float GetHP()	const
 	{
-		return m_fHP;
+		return m_tInfo.fHP;
 	}
 
 	float GetGuage()	const
 	{
-		return m_fGuage;
+		return m_tInfo.fGuage;
 	}
 
 	bool GetSit()	const
@@ -54,14 +53,23 @@ public:
 		return m_bHit;
 	}
 
-	void AddHP(float fHP)
+	void Damage(float _fDamage)
 	{
-		m_fHP += fHP;
+		// 캐릭터의 랜덤 방어값을 추출한다.
+		float fDefense = (rand() % (int)m_tInfo.fDefenseMax + (int)m_tInfo.fDefenseMin)
+			+ (float(rand()) / float(RAND_MAX));
+
+		float fDamage = _fDamage - fDefense;
+
+		if (fDamage > 0.f)
+		{
+			m_tInfo.fHP -= fDamage;
+		}
 	}
 
 	void AddGuage(float fGuage)
 	{
-		m_fGuage += fGuage;
+		m_tInfo.fGuage += fGuage;
 	}
 
 	void SetPhysics(bool bPhysics)
@@ -73,6 +81,13 @@ public:
 	{
 		m_bHit = bHit;
 	}
+
+	CHARACTERINFO GetInfo()	const
+	{
+		return m_tInfo;
+	}
+
+	void SetInfo(CHARACTER_NAME_TYPE eType);
 
 public:
 	void SetSpeed(float fSpeed)
@@ -113,7 +128,7 @@ public:
 
 
 public:
-	CEffect* CreateEffect(const string& strTag, EFFECT_TYPE eType, int iLimitCount = 1);
+	CEffect* CreateEffect(const string& strTag, EFFECT_TYPE eType);
 	bool EraseEffect(const string& strTag);
 	bool EraseEffect(CEffect* pEffect);
 	bool EraseEffect();

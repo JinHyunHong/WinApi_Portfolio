@@ -26,8 +26,9 @@ bool CGameScene::Init()
 {
 	CScene::Init();
 
-	GET_SINGLE(CSoundManager)->LoadSound("BlueMary", true, "BlueMary.mp3");
-	GET_SINGLE(CSoundManager)->Play("BlueMary");
+	
+	GET_SINGLE(CSoundManager)->Play("BlueMary", GST_BGM);
+	GET_SINGLE(CSoundManager)->Play("ReadyGo", GST_BGM);
 
 
 	m_iSecond = m_iSecondLimit;
@@ -178,6 +179,8 @@ int CGameScene::Update(float fDeltaTime)
 			m_pTimerPanel[0]->SetImageOffset(13.f, 49.f);
 			m_pTimerPanel[1]->SetImageOffset(13.f, 49.f);
 
+			GET_SINGLE(CSoundManager)->Play("TimesOut", GST_BGM);
+
 			if (m_pPlayer->GetHP() > m_pEnemy->GetHP())
 			{
 				MessageBoxA(WINDOWHANDLE, "YOU WIN!", "YOU WIN!", MB_OK);
@@ -268,20 +271,23 @@ int CGameScene::Update(float fDeltaTime)
 		float fPlayerHP = m_pPlayer->GetHP();
 		float fEnemyHP = m_pEnemy->GetHP();
 
-		if (fPlayerHP == 0 && fEnemyHP == 0)
+		if (fPlayerHP <= 0 && fEnemyHP <= 0)
 		{
+			GET_SINGLE(CSoundManager)->Play("Draw", GST_BGM);
 			MessageBoxA(WINDOWHANDLE, "DRAW!", "DRAW!", MB_OK);
 			GAMEEND;
 		}
 
-		else if (fPlayerHP == 0)
+		else if (fPlayerHP <= 0)
 		{
+			GET_SINGLE(CSoundManager)->Play("KO", GST_BGM);
 			MessageBoxA(WINDOWHANDLE, "YOU LOSE!", "YOU LOSE!", MB_OK);
 			GAMEEND;
 		}
 
-		else if (fEnemyHP == 0)
+		else if (fEnemyHP <= 0)
 		{
+			GET_SINGLE(CSoundManager)->Play("YouWin", GST_BGM);
 			MessageBoxA(WINDOWHANDLE, "YOU WIN!", "YOU WIN!", MB_OK);
 			GAMEEND;
 		}

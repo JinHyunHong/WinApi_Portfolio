@@ -28,7 +28,9 @@ bool CFileManager::Init()
 	}
 
 	CreatePath(TEXTURE_PATH, L"Texture\\");
-	CreatePath(SOUND_PATH, L"Sound\\");
+	CreatePath(SOUND_PATH, L"Sound\\");;
+	CreatePath(SOUND_BENIMARU_PATH, L"Sound\\Benimaru\\");
+	CreatePath(SOUND_KYO_PATH, L"Sound\\Kyo\\");
 	CreatePath(EFFECT_PATH, L"Texture\\Effect\\");
 	CreatePath(UI_PATH, L"Texture\\UI\\");
 	CreatePath(FONT_PATH, L"Texture\\Font\\");

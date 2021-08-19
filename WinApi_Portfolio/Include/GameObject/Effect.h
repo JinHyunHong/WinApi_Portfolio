@@ -12,30 +12,17 @@ private:
 	~CEffect();
 
 private:
-	class CMoveObj* m_pObj;
-	int				m_iCount;
-	int				m_iLimitCount;
-	EFFECT_TYPE		m_eType;
-	string			m_strClipName;
+	class CGraphicObj* m_pObj;
+	EFFECT_TYPE		  m_eType;
+	string			  m_strClipName;
 
 public:
-	void SetObj(CMoveObj* pObj)
+	void SetObj(CGraphicObj* pObj)
 	{
 		m_pObj = pObj;
 	}
 
 	void SetType(EFFECT_TYPE eType);
-
-
-	void SetLimitCount(int iLimitCount)
-	{
-		m_iLimitCount = iLimitCount;
-	}
-
-	void AddCount(int iCount)
-	{
-		m_iCount += iCount;
-	}
 
 public:
 	virtual bool Init();

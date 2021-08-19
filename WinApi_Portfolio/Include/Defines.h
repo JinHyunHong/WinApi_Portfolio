@@ -33,6 +33,8 @@ public:\
 #define BASE_PATH "BasePath"
 #define TEXTURE_PATH "TexturePath"
 #define SOUND_PATH "SoundPath"
+#define SOUND_BENIMARU_PATH "SoundBenimaruPath"
+#define SOUND_KYO_PATH "SoundKyoPath"
 #define EFFECT_PATH "EffectPath"
 #define CHARACTER_PATH "CharacterPath"
 #define UI_PATH "UIPath"

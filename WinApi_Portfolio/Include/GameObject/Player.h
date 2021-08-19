@@ -24,6 +24,7 @@ public:
 
 public:
 	void Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime);
+	void Physics(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime);
 	void FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime);
 	void Attack(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime);
 };

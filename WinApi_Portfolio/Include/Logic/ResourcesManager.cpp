@@ -62,7 +62,7 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip(RT_EFFECT, "SmallHurtEffect", AT_FRAME, AO_ONCE_RETURN, 0.8f, 11, 1, 0, 0, 11, 1, 0.f, "SmallHurtEffect", vecFileName, EFFECT_PATH);
+	AddAnimationClip(RT_EFFECT, "SmallHurtEffect", AT_FRAME, AO_ONCE_DESTROY, 0.8f, 11, 1, 0, 0, 11, 1, 0.f, "SmallHurtEffect", vecFileName, EFFECT_PATH);
 	SetAniamtionColorKey(RT_EFFECT, "SmallHurtEffect", 255, 255, 255);
 
 	vecFileName.clear();
@@ -74,7 +74,7 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip(RT_EFFECT, "MediumHurtEffect", AT_FRAME, AO_ONCE_RETURN, 0.5f, 10, 1, 0, 0, 10, 1, 0.f, "MediumHurtEffect", vecFileName, EFFECT_PATH);
+	AddAnimationClip(RT_EFFECT, "MediumHurtEffect", AT_FRAME, AO_ONCE_DESTROY, 0.5f, 10, 1, 0, 0, 10, 1, 0.f, "MediumHurtEffect", vecFileName, EFFECT_PATH);
 	SetAniamtionColorKey(RT_EFFECT, "MediumHurtEffect", 255, 255, 255);
 	
 	vecFileName.clear();
@@ -86,8 +86,13 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 		vecFileName.push_back(strFileName);
 	}
 
-	AddAnimationClip(RT_EFFECT, "BigHurtEffect", AT_FRAME, AO_ONCE_RETURN, 0.5f, 15, 1, 0, 0, 15, 1, 0.f, "BigHurtEffect", vecFileName, EFFECT_PATH);
+	AddAnimationClip(RT_EFFECT, "BigHurtEffect", AT_FRAME, AO_ONCE_DESTROY, 0.5f, 15, 1, 0, 0, 15, 1, 0.f, "BigHurtEffect", vecFileName, EFFECT_PATH);
 	SetAniamtionColorKey(RT_EFFECT, "BigHurtEffect", 255, 255, 255);
+
+	vecFileName.clear();
+
+	AddAnimationClip(RT_EFFECT, "BenimaruSpecialEffect1", AT_ATLAS, AO_ONCE_DESTROY, 10.f, 1, 1, 0, 0, 1, 1, 0.f, "BenimaruSpecialEffect1", L"Benimaru\\Noegwang.bmp", EFFECT_PATH);
+	SetAniamtionColorKey(RT_EFFECT, "BenimaruSpecialEffect1", 103, 167, 141);
 
 	vecFileName.clear();
 
@@ -271,6 +276,18 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 
 	vecFileName.clear();
 
+	for (int i = 0; i <= 4; ++i)
+	{
+		wchar_t strFileName[MAX_PATH] = {};
+		wsprintf(strFileName, L"Left\\Attack\\Noegwang\\%d.bmp", i);
+		vecFileName.push_back(strFileName);
+	}
+
+	AddAnimationClip(RT_BENIMARU, "LeftSpecialAttack1", AT_FRAME, AO_ONCE_RETURN, 0.7f, 5, 1, 0, 0, 5, 1, 0.f, "PlayeLeftSpecialAttack1", vecFileName, BENIMARU_PATH);
+	SetAniamtionColorKey(RT_BENIMARU, "LeftSpecialAttack1", 8, 16, 33);
+
+
+	vecFileName.clear();
 
 	//===================================================
 	// BENIMARU RIGHT
@@ -436,6 +453,19 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 
 	AddAnimationClip(RT_BENIMARU, "RightSitHurt", AT_FRAME, AO_ONCE_RETURN, 0.2f, 3, 1, 0, 0, 3, 1, 0.f, "PlayeRightSitHurt", vecFileName, BENIMARU_PATH);
 	SetAniamtionColorKey(RT_BENIMARU, "RightSitHurt", 8, 16, 33);
+
+
+	vecFileName.clear();
+
+	for (int i = 0; i <= 4; ++i)
+	{
+		wchar_t strFileName[MAX_PATH] = {};
+		wsprintf(strFileName, L"Right\\Attack\\Noegwang\\%d.bmp", i);
+		vecFileName.push_back(strFileName);
+	}
+
+	AddAnimationClip(RT_BENIMARU, "RightSpecialAttack1", AT_FRAME, AO_ONCE_RETURN, 0.7f, 5, 1, 0, 0, 5, 1, 0.f, "PlayeRightSpecialAttack1", vecFileName, BENIMARU_PATH);
+	SetAniamtionColorKey(RT_BENIMARU, "RightSpecialAttack1", 8, 16, 33);
 
 
 	vecFileName.clear();

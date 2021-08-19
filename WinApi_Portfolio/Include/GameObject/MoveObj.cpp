@@ -10,12 +10,10 @@ CMoveObj::CMoveObj()	:
 	m_fAngle(0.f),
 	m_fGravityTime(0.f),
 	m_bPhysics(false),
-	m_fHP(100.f),
 	m_bSit(false),
 	m_bAttack(false),
 	m_bHit(false),
 	m_bMove(false),
-	m_fGuage(0.f),
 	m_fJumpOffset(0.f)
 {
 }
@@ -33,7 +31,28 @@ CMoveObj::~CMoveObj()
 	EraseEffect();
 }
 
-CEffect* CMoveObj::CreateEffect(const string& strTag, EFFECT_TYPE eType, int iLimitCount)
+void CMoveObj::SetInfo(CHARACTER_NAME_TYPE eType)
+{
+	m_tInfo.eType = eType;
+
+	switch (eType)
+	{
+	case CNT_BENIMARU:
+		m_tInfo.fAttackMin = 4.1;
+		m_tInfo.fAttackMax = 7.2;
+		m_tInfo.fDefenseMin = 2.5;
+		m_tInfo.fDefenseMax = 3;
+		return;
+	case CNT_KYO:
+		m_tInfo.fAttackMin = 4.3;
+		m_tInfo.fAttackMax = 7.2;
+		m_tInfo.fDefenseMin = 2.5;
+		m_tInfo.fDefenseMax = 3;
+		return;
+	}
+}
+
+CEffect* CMoveObj::CreateEffect(const string& strTag, EFFECT_TYPE eType)
 {
 	CEffect* pEffect = new CEffect;
 
@@ -45,7 +64,6 @@ CEffect* CMoveObj::CreateEffect(const string& strTag, EFFECT_TYPE eType, int iLi
 
 	pEffect->SetTag(strTag);
 	pEffect->SetType(eType);
-	pEffect->SetLimitCount(iLimitCount);
 	pEffect->SetObj(this);
 	pEffect->AddRef();
 
@@ -154,6 +172,12 @@ void CMoveObj::MoveToYSpeed(float fDeltaTime)
 
 bool CMoveObj::Init()
 {
+#ifdef _DEBUG
+	AddGuage(100.f);
+#endif
+
+	m_tInfo.fHP = m_tInfo.fHPMax;
+
 	return true;
 }
 

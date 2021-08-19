@@ -234,3 +234,47 @@ typedef struct _tagUiTextInfo
 	{
 	}
 }UITEXTINFO, * PUITEXTINFO;
+
+
+typedef struct _tagSoundCount
+{
+	int			iDamage;
+	int			iHit;
+
+	_tagSoundCount() :
+		iDamage(0),
+		iHit(0)
+	{
+
+	}
+}SOUNDCOUNT, * PSOUNDCOUNT;
+
+
+typedef struct _tagCharacterInfo
+{
+	CHARACTER_NAME_TYPE eType;
+	float				fHP;
+	float				fHPMax;
+	float				fGuage;
+	float				fGuageMax;
+	float				fAttackMin;
+	float				fAttackMax;
+	float				fDefenseMin;
+	float				fDefenseMax;
+	SOUNDCOUNT			tSoundCount;
+
+	_tagCharacterInfo()	:
+		eType(CNT_NONE),
+		fHP(0.f),
+		fHPMax(100.f),
+		fGuage(0.f),
+		fGuageMax(100.f),
+		fAttackMin(0.f),
+		fAttackMax(0.f),
+		fDefenseMin(0.f),
+		fDefenseMax(0.f)
+	{
+
+	}
+
+}CHARACTERINFO, *PCHARACTERINFO;

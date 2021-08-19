@@ -143,21 +143,37 @@ void CGraphicObj::Render(HDC hDC, float fDeltaTime)
 {
 	CObj::Render(hDC, fDeltaTime);
 
+	POSITION tPos = m_tPos - m_tSize * m_tPivot;
+	tPos -= GET_SINGLE(CCamera)->GetPos();
+
 	if (m_pTexture)
 	{
-		POSITION tPos = m_tPos - m_tSize * m_tPivot;
-		tPos -= GET_SINGLE(CCamera)->GetPos();
+		POSITION tImagePos;
+
+		if (m_pAnimation)
+		{
+			PANIMATIONCLIP pClip = m_pAnimation->GetCurrentClip();
+
+			if (pClip->eType == AT_ATLAS)
+			{
+				tImagePos.x = pClip->iFrameX * pClip->tFrameSize.x;
+				tImagePos.y = pClip->iFrameY * pClip->tFrameSize.y;
+			}
+		}
+
+		tImagePos += m_tImageOffset;
+
 
 		if (m_pTexture->GetColorKeyEnable())
 		{
 			TransparentBlt(hDC, tPos.x, tPos.y, m_tSize.x, m_tSize.y,
-				m_pTexture->GetDC(), m_tImageOffset.x, m_tImageOffset.y, m_tSize.x, m_tSize.y, m_pTexture->GetColorKey());
+				m_pTexture->GetDC(), tImagePos.x, tImagePos.y, m_tSize.x, m_tSize.y, m_pTexture->GetColorKey());
 		}
 
 		else
 		{
 			BitBlt(hDC, tPos.x, tPos.y, m_tSize.x,
-				m_tSize.y, m_pTexture->GetDC(), m_tImageOffset.x, m_tImageOffset.y, SRCCOPY);
+				m_tSize.y, m_pTexture->GetDC(), tImagePos.x, tImagePos.y, SRCCOPY);
 		}
 	}
 

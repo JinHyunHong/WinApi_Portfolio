@@ -7,6 +7,8 @@
 #include "../Collider/ColliderSphere.h"
 #include "Effect.h"
 #include "Enemy.h"
+#include "../Collider/ColliderPoint.h"
+#include "../Logic/SoundManager.h"
 
 CPlayer::CPlayer()
 {
@@ -23,6 +25,9 @@ CPlayer::~CPlayer()
 
 bool CPlayer::Init()
 {
+	CMoveObj::Init();
+
+	SetInfo(CNT_BENIMARU);
 	SetPos(50.f, 480.f);
 	SetSpeed(400.f);
 	SetSize(166.f, 291.f);
@@ -38,6 +43,10 @@ bool CPlayer::Init()
 	pRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
 	pRC->AddFunction(CS_ENTER, this, &CPlayer::Coll);
 
+	CColliderPoint* pSmallBodyRC = AddCollider<CColliderPoint>("PlayerPhysicsBody");
+	pSmallBodyRC->SetPos(POSITION(m_tPos.x / 2, m_tPos.y / 2));
+	pSmallBodyRC->AddFunction(CS_STAY, this, &CPlayer::Physics);
+
 
 	CColliderRect* pFloorRC = AddCollider<CColliderRect>("PlayerFloor");
 	pFloorRC->SetInfo(-m_tSize.x / 2, 130, m_tSize.x / 2, m_tSize.y / 2);
@@ -50,6 +59,8 @@ bool CPlayer::Init()
 	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(RT_BENIMARU)->Clone();
 	m_pAnimation->SetObj(this);
 	m_pAnimation->SetCurrentClip("LeftIdle");
+
+	m_tInfo.tSoundCount.iHit = GET_SINGLE(CSoundManager)->FindSoundCount("Hit", m_tInfo.eType);
 
 	return true;
 }
@@ -175,6 +186,11 @@ void CPlayer::Input(float fDeltaTime)
 
 			if (KEYDOWN("Attack1"))
 			{
+				int iRand = (rand() % m_tInfo.tSoundCount.iHit) + 1;
+				char strSoundName[20] = { 0, };
+				sprintf_s(strSoundName, "Hit%d", iRand);
+				GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
+
 				m_bAttack = true;
 
 				if (m_eCharacterDir == CD_RIGHT)
@@ -198,6 +214,10 @@ void CPlayer::Input(float fDeltaTime)
 
 			if (KEYDOWN("Attack2"))
 			{
+				int iRand = (rand() % m_tInfo.tSoundCount.iHit) + 1;
+				char strSoundName[20] = { 0, };
+				sprintf_s(strSoundName, "Hit%d", iRand);
+				GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
 				m_bAttack = true;
 
 				if (m_eCharacterDir == CD_RIGHT)
@@ -222,6 +242,10 @@ void CPlayer::Input(float fDeltaTime)
 
 			if (KEYDOWN("Attack3"))
 			{
+				int iRand = (rand() % m_tInfo.tSoundCount.iHit) + 1;
+				char strSoundName[20] = { 0, };
+				sprintf_s(strSoundName, "Hit%d", iRand);
+				GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
 				m_bAttack = true;
 
 				if (m_eCharacterDir == CD_RIGHT)
@@ -246,6 +270,10 @@ void CPlayer::Input(float fDeltaTime)
 
 			if (KEYDOWN("Attack4"))
 			{
+				int iRand = (rand() % m_tInfo.tSoundCount.iHit) + 1;
+				char strSoundName[20] = { 0, };
+				sprintf_s(strSoundName, "Hit%d", iRand);
+				GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
 				m_bAttack = true;
 
 				if (m_eCharacterDir == CD_RIGHT)
@@ -263,6 +291,40 @@ void CPlayer::Input(float fDeltaTime)
 				}
 
 				pSR->SetEnable(true);
+			}
+
+			if (KEYDOWN("SpecialAttack1"))
+			{
+				if (GetGuage() >= 100.f)
+				{
+					m_bAttack = true;
+
+					GET_SINGLE(CSoundManager)->Play("SpecialAttack1", GST_PLAYERBGM, m_tInfo.eType);
+
+
+					if (m_eCharacterDir == CD_RIGHT)
+					{
+						pSR->SetInfo(20.f, POSITION(-110, -80));
+						CEffect* pEffect = CreateEffect("SpecialAttack1", ET_BENIMARU_SPECIAL1);
+						pEffect->SetPos(pSR->GetWorldInfo().tCenter.x - pSR->GetWorldInfo().fRadius,
+							pSR->GetWorldInfo().tCenter.y - pSR->GetWorldInfo().fRadius);
+						m_pAnimation->ChangeClip("RightSpecialAttack1");
+						m_pAnimation->SetDefaultClip("RightIdle");
+					}
+
+					else if (m_eCharacterDir == CD_LEFT)
+					{
+						pSR->SetInfo(20.f, POSITION(110, -80));
+						CEffect* pEffect = CreateEffect("SpecialAttack1", ET_BENIMARU_SPECIAL1);
+						pEffect->SetPos(pSR->GetWorldInfo().tCenter.x - pSR->GetWorldInfo().fRadius,
+							pSR->GetWorldInfo().tCenter.y - pSR->GetWorldInfo().fRadius);
+						m_pAnimation->ChangeClip("LeftSpecialAttack1");
+						m_pAnimation->SetDefaultClip("LeftIdle");
+					}
+
+					pSR->SetEnable(true);
+					//AddGuage(-m_tInfo.fGuage);
+				}
 			}
 
 		}
@@ -286,6 +348,10 @@ void CPlayer::Input(float fDeltaTime)
 
 		if (KEYDOWN("SitAttack1"))
 		{
+			int iRand = (rand() % m_tInfo.tSoundCount.iHit) + 1;
+			char strSoundName[20] = { 0, };
+			sprintf_s(strSoundName, "Hit%d", iRand);
+			GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
 			m_bSit = true;
 			m_bAttack = true;
 
@@ -308,6 +374,10 @@ void CPlayer::Input(float fDeltaTime)
 
 		if (KEYDOWN("SitAttack2"))
 		{
+			int iRand = (rand() % m_tInfo.tSoundCount.iHit) + 1;
+			char strSoundName[20] = { 0, };
+			sprintf_s(strSoundName, "Hit%d", iRand);
+			GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
 			m_bSit = true;
 			m_bAttack = true;
 
@@ -415,6 +485,21 @@ void CPlayer::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 	}
 }
 
+void CPlayer::Physics(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
+{
+	if (pCollDest->GetTag() == "EnemyBody")
+	{
+		if (m_eCharacterDir == CD_RIGHT)
+		{
+			MoveToX(3.f);
+		}
+		else if (m_eCharacterDir == CD_LEFT)
+		{
+			MoveToX(-3.f);
+		}
+	}
+}
+
 void CPlayer::FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 {
 	POSITION tPos = m_tPos - m_tSize * m_tPivot;
@@ -464,11 +549,11 @@ void CPlayer::Attack(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime
 
 		if (pEnemy)
 		{
-			CEffect* pEffect = pEnemy->CreateEffect("Attack", ET_HURT_BIG);
+			CEffect* pEffect = pEnemy->CreateEffect("Attack", (EFFECT_TYPE)(rand() % (int)ET_EFFECT_END));
 			pEffect->SetPos(pSR->GetWorldInfo().tCenter.x - pSR->GetWorldInfo().fRadius, 
 				pSR->GetWorldInfo().tCenter.y - pSR->GetWorldInfo().fRadius);
 			AddGuage(10.f);
-			pEnemy->AddHP(-10.f);
+			pEnemy->Damage(((rand() % (int)m_tInfo.fAttackMax) + (int)m_tInfo.fAttackMin) + (float(rand()) / float(RAND_MAX)));
 			pEnemy->SetHit(true);
 			SetWindowTextA(WINDOWHANDLE, to_string(pEnemy->GetHP()).c_str());
 		}

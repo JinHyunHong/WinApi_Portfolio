@@ -4,6 +4,7 @@
 #include "ColliderRect.h"
 #include "ColliderPixel.h"
 #include "ColliderSphere.h"
+#include "../Logic/Camera.h"
 
 CColliderPoint::CColliderPoint()
 {
@@ -76,4 +77,17 @@ int CColliderPoint::LateUpdate(float fDeltaTime)
 void CColliderPoint::Render(HDC hDC, float fDeltaTime)
 {
 	CCollider::Render(hDC, fDeltaTime);
+
+#ifdef _DEBUG
+	CCollider::Render(hDC, fDeltaTime);
+
+	POSITION tCamPos = GET_SINGLE(CCamera)->GetPos();
+
+	POSITION tPos = m_tPos;
+
+	tPos.x -= tCamPos.x;
+	tPos.y -= tCamPos.x;
+
+	SetPixel(hDC, tPos.x, tPos.y, RGB(255, 255, 255));
+#endif
 }

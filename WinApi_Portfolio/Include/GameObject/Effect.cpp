@@ -5,9 +5,7 @@
 
 CEffect::CEffect()	:
 	m_pObj(NULL),
-	m_iCount(0),
-	m_iLimitCount(1),
-	m_eType(ET_NONE)
+	m_eType(ET_HURT_SMALL)
 {
 }
 
@@ -36,17 +34,6 @@ void CEffect::Input(float fDeltaTime)
 int CEffect::Update(float fDeltaTime)
 {
 	CStaticObj::Update(fDeltaTime);
-
-	if (m_pAnimation->GetMotionEnd())
-	{
-		++m_iCount;
-	}
-
-	if (m_iCount >= m_iLimitCount)
-	{
-		m_iCount -= m_iLimitCount;
-		Die();
-	}
 
 	return 0;
 }
@@ -83,6 +70,10 @@ void CEffect::SetType(EFFECT_TYPE eType)
 	
 	case ET_HURT_BIG:
 		m_strClipName = "BigHurtEffect";
+		break;
+
+	case ET_BENIMARU_SPECIAL1:
+		m_strClipName = "BenimaruSpecialEffect1";
 		break;
 	}
 	

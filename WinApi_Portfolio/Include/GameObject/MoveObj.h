@@ -64,12 +64,21 @@ public:
 		if (fDamage > 0.f)
 		{
 			m_tInfo.fHP -= fDamage;
+
+			if (m_tInfo.fHP < 0.f)
+				m_tInfo.fHP = 0.f;
 		}
 	}
 
 	void AddGuage(float fGuage)
 	{
 		m_tInfo.fGuage += fGuage;
+
+		if (m_tInfo.fGuage >= 100.f)
+			m_tInfo.fGuage = 100.f;
+
+		else if (m_tInfo.fGuage < 0.f)
+			m_tInfo.fGuage = 0.f;
 	}
 
 	void SetPhysics(bool bPhysics)

@@ -25,9 +25,10 @@ CPlayer::~CPlayer()
 
 bool CPlayer::Init()
 {
+	SetInfo(CNT_BENIMARU);
+
 	CMoveObj::Init();
 
-	SetInfo(CNT_BENIMARU);
 	SetPos(50.f, 480.f);
 	SetSpeed(400.f);
 	SetSize(166.f, 291.f);
@@ -37,7 +38,6 @@ bool CPlayer::Init()
 	SetForce(700.f);
 
 	m_eDir = DIR_FRONT;
-	m_eCharacterDir = CD_RIGHT;
 
 	CColliderRect* pRC = AddCollider<CColliderRect>("PlayerBody");
 	pRC->SetInfo(-m_tSize.x / 2, -m_tSize.y / 2, m_tSize.x / 2, m_tSize.y / 2);
@@ -56,11 +56,10 @@ bool CPlayer::Init()
 	pSR->AddFunction(CS_ENTER, this, &CPlayer::Attack);
 	pSR->SetEnable(false);
 
+
 	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(RT_BENIMARU)->Clone();
 	m_pAnimation->SetObj(this);
 	m_pAnimation->SetCurrentClip("LeftIdle");
-
-	m_tInfo.tSoundCount.iHit = GET_SINGLE(CSoundManager)->FindSoundCount("Hit", m_tInfo.eType);
 
 	return true;
 }
@@ -72,16 +71,6 @@ void CPlayer::Input(float fDeltaTime)
 	CColliderSphere* pSR = (CColliderSphere*)GetCollider("AttackColl");
 
 	POSITION tPos = m_tPos - m_tSize * m_tPivot;
-
-	if (tPos.x >= WORLDWIDTH - m_tSize.x - 20)
-	{
-		m_eCharacterDir = CD_RIGHT;
-	}
-
-	else if (tPos.x <= 20)
-	{
-		m_eCharacterDir = CD_LEFT;
-	}
 	
 	
 	if (!m_bAttack)
@@ -302,27 +291,29 @@ void CPlayer::Input(float fDeltaTime)
 					GET_SINGLE(CSoundManager)->Play("SpecialAttack1", GST_PLAYERBGM, m_tInfo.eType);
 
 
+					CEffect* pEffect = CreateEffect("SpecialAttack1", ET_BENIMARU_SPECIAL1);
+					CEffect* pEffect1 = CreateEffect("SpecialAttack1_1", ET_BENIMARU_SPECIAL1_1);
+
 					if (m_eCharacterDir == CD_RIGHT)
 					{
-						pSR->SetInfo(20.f, POSITION(-110, -80));
-						CEffect* pEffect = CreateEffect("SpecialAttack1", ET_BENIMARU_SPECIAL1);
-						pEffect->SetPos(pSR->GetWorldInfo().tCenter.x - pSR->GetWorldInfo().fRadius,
-							pSR->GetWorldInfo().tCenter.y - pSR->GetWorldInfo().fRadius);
 						m_pAnimation->ChangeClip("RightSpecialAttack1");
+						pEffect->SetPos(m_tPos.x - 260.f, m_tPos.y - 110.f);
+						pEffect1->SetPos(m_tPos.x + 20.f, m_tPos.y - 350.f);
+						pSR->SetInfo(50.f, POSITION(-210, -80));
 						m_pAnimation->SetDefaultClip("RightIdle");
 					}
 
 					else if (m_eCharacterDir == CD_LEFT)
 					{
-						pSR->SetInfo(20.f, POSITION(110, -80));
-						CEffect* pEffect = CreateEffect("SpecialAttack1", ET_BENIMARU_SPECIAL1);
-						pEffect->SetPos(pSR->GetWorldInfo().tCenter.x - pSR->GetWorldInfo().fRadius,
-							pSR->GetWorldInfo().tCenter.y - pSR->GetWorldInfo().fRadius);
 						m_pAnimation->ChangeClip("LeftSpecialAttack1");
+						pEffect->SetPos(m_tPos.x + 130.f,  m_tPos.y - 110.f);
+						pEffect1->SetPos(m_tPos.x - 90.f, m_tPos.y - 350.f);
+						pSR->SetInfo(50.f, POSITION(180, -80));
 						m_pAnimation->SetDefaultClip("LeftIdle");
 					}
 
 					pSR->SetEnable(true);
+
 					//AddGuage(-m_tInfo.fGuage);
 				}
 			}
@@ -416,6 +407,20 @@ int CPlayer::Update(float fDeltaTime)
 {
 	CMoveObj::Update(fDeltaTime);
 
+	POSITION tPos = m_tPos - m_tSize * m_tPivot;
+
+	if (tPos.x >= WORLDWIDTH - m_tSize.x - 20.f)
+	{
+		m_eCharacterDir = CD_RIGHT;
+		m_tPos.x = WORLDWIDTH - m_tSize.x * m_tPivot.x;
+	}
+
+	else if (tPos.x <= 20.f)
+	{
+		m_eCharacterDir = CD_LEFT;
+		m_tPos.x = m_tSize.x * m_tPivot.x;
+	}
+
 	return 0;
 }
 
@@ -454,9 +459,14 @@ void CPlayer::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 {
 	CEnemy* pEnemy = (CEnemy*)pCollDest->GetObj();
 
-	if (pCollDest->GetTag() == "EnemyBody"&&
+	if (pCollDest->GetTag() == "EnemyAttackColl"&&
 		m_bHit)
 	{
+		int iRand = (rand() % m_tInfo.tSoundCount.iDamage) + 1;
+		char strSoundName[20] = { 0, };
+		sprintf_s(strSoundName, "Damage%d", iRand);
+		GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
+
 		if (m_bSit)
 		{
 			if (m_eCharacterDir == CD_RIGHT)
@@ -514,7 +524,7 @@ void CPlayer::FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaT
 		}
 
 		else
-			m_fJumpOffset = tPos.y + m_tSize.y - pRC->GetWorldInfo().t + 1.f;
+			m_fJumpOffset = tPos.y + m_tSize.y - pRC->GetWorldInfo().t;
 
 		if (!m_bSit && m_bJump)
 		{
@@ -557,10 +567,9 @@ void CPlayer::Attack(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime
 			pEnemy->SetHit(true);
 			SetWindowTextA(WINDOWHANDLE, to_string(pEnemy->GetHP()).c_str());
 		}
-
-		pCollSrc->SetEnable(false);
-		pCollSrc->EraseCollider(pCollDest);
-		pCollDest->EraseCollider(pCollSrc);
 	}
 
+	pCollSrc->SetEnable(false);
+	pCollSrc->EraseCollider(pCollDest);
+	pCollDest->EraseCollider(pCollSrc);
 }

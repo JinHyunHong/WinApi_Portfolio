@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "../Collider/ColliderPoint.h"
 #include "../Logic/SoundManager.h"
+#include "../Collider/ColliderSphere.h"
+#include "Effect.h"
 
 CEnemy::CEnemy()
 {
@@ -22,16 +24,16 @@ CEnemy::~CEnemy()
 
 bool CEnemy::Init()
 {
+	SetInfo(CNT_KYO);
+
 	CMoveObj::Init();
 
-	SetInfo(CNT_KYO);
 	SetSpeed(400.f);
 	SetSize(150.f, 300.f);
-	SetPos(WORLDWIDTH - m_tSize.x - 200, 480.f);
+	SetPos(WORLDWIDTH - m_tSize.x - 300, 450.f);
 	SetPivot(0.5f, 0.5f);
 	SetImageOffset(0.f, 0.f);
 	m_eDir = DIR_FRONT;
-	m_eCharacterDir = CD_LEFT;
 	SetPhysics(true);
 	SetForce(200.f);
 
@@ -50,9 +52,16 @@ bool CEnemy::Init()
 	CColliderRect* pLeftRC = AddCollider<CColliderRect>("LeftSight");
 	pLeftRC->SetInfo(pDefalutRC->GetInfo().l - (m_tSize.x / 3), pDefalutRC->GetInfo().t,
 		pDefalutRC->GetInfo().l, pDefalutRC->GetInfo().b);
+	pLeftRC->AddFunction(CS_STAY, this, &CEnemy::Attack);
+
 	CColliderRect* pRightRC = AddCollider<CColliderRect>("RightSight");
 	pRightRC->SetInfo(pDefalutRC->GetInfo().r, pDefalutRC->GetInfo().t, 
 		pDefalutRC->GetInfo().r + (m_tSize.x / 3), pDefalutRC->GetInfo().b);
+	pRightRC->AddFunction(CS_STAY, this, &CEnemy::Attack);
+
+	CColliderSphere* pSR = AddCollider<CColliderSphere>("EnemyAttackColl");
+	pSR->AddFunction(CS_ENTER, this, &CEnemy::Hit);
+	pSR->SetEnable(false);
 
 
 	m_pAnimation = GET_SINGLE(CResourcesManager)->GetAnimation(RT_KYO)->Clone();
@@ -67,20 +76,6 @@ void CEnemy::Input(float fDeltaTime)
 {
 	CMoveObj::Input(fDeltaTime);
 
-
-	POSITION tPos = m_tPos - m_tSize * m_tPivot;
-
-
-	if (tPos.x <= 0)
-	{
-		m_eCharacterDir = CD_LEFT;
-	}
-
-	else if (tPos.x >= WORLDWIDTH - m_tSize.x)
-	{
-		m_eCharacterDir = CD_RIGHT;
-	}
-
 	list<CCollider*>::iterator iter;
 	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
@@ -91,7 +86,6 @@ void CEnemy::Input(float fDeltaTime)
 		{
 			CCollider* pPlayerBody = (*iter)->CheckColliderList("PlayerBody");
 
-			
 			if (pPlayerBody)
 			{
 				bCollision = true;
@@ -153,6 +147,21 @@ int CEnemy::Update(float fDeltaTime)
 {
 	CMoveObj::Update(fDeltaTime);
 
+	POSITION tPos = m_tPos - m_tSize * m_tPivot;
+
+
+	if (tPos.x <= 0)
+	{
+		m_eCharacterDir = CD_LEFT;
+		m_tPos.x = m_tSize.x * m_tPivot.x;
+	}
+
+	else if (tPos.x >= WORLDWIDTH - m_tSize.x)
+	{
+		m_eCharacterDir = CD_RIGHT;
+		m_tPos.x = WORLDWIDTH - m_tSize.x * m_tPivot.x;
+	}
+
 	return 0;
 }
 
@@ -164,6 +173,7 @@ void CEnemy::Collision(float fDeltaTime)
 int CEnemy::LateUpdate(float fDeltaTime)
 {
 	CMoveObj::LateUpdate(fDeltaTime);
+
 	return 0;
 }
 
@@ -185,7 +195,7 @@ void CEnemy::Coll(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
 		int iRand = (rand() % m_tInfo.tSoundCount.iDamage) + 1;
 		char strSoundName[20] = { 0, };
 		sprintf_s(strSoundName, "Damage%d", iRand);
-		GET_SINGLE(CSoundManager)->Play(strSoundName, GST_PLAYERBGM, m_tInfo.eType);
+		GET_SINGLE(CSoundManager)->Play(strSoundName, GST_ENEMYBGM, m_tInfo.eType);
 
 		if (m_bSit)
 		{
@@ -246,7 +256,8 @@ void CEnemy::FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTi
 		}
 
 		else
-			m_fJumpOffset = tPos.y + m_tSize.y - pRC->GetWorldInfo().t + 1.f;
+			m_fJumpOffset = tPos.y + m_tSize.y - pRC->GetWorldInfo().t;
+
 
 		if (!m_bSit && m_bJump)
 		{
@@ -269,4 +280,92 @@ void CEnemy::FloorColl(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTi
 
 		JumpEnd();
 	}
+}
+
+void CEnemy::Attack(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
+{
+	if (m_pAnimation->GetMotionEnd() || m_bHit)
+	{
+		if (pCollDest->GetTag() == "PlayerBody")
+		{
+			CColliderSphere* pSR = (CColliderSphere*)GetCollider("EnemyAttackColl");
+
+			int iRand = 0;
+			char strName[20] = { 0, };
+			if (m_eCharacterDir == CD_RIGHT)
+			{
+				iRand = (rand() % 4) + 1;
+				sprintf_s(strName, "RightAttack%d", iRand);
+				GetAnimation()->ChangeClip(strName);
+				m_pAnimation->SetDefaultClip("RightIdle");
+
+				iRand = (rand() % m_tInfo.tSoundCount.iHit) + 1;
+				char strSoundName[20] = { 0, };
+				sprintf_s(strSoundName, "Hit%d", iRand);
+				GET_SINGLE(CSoundManager)->Play(strSoundName, GST_ENEMYBGM, m_tInfo.eType);
+
+				if (strcmp(strName, "RightAttack1") == 0)
+					pSR->SetInfo(30.f, POSITION(-90.f, -80.f));
+				else if (strcmp(strName, "RightAttack2") == 0)
+					pSR->SetInfo(35.f, POSITION(-90.f, 60.f));
+				else if (strcmp(strName, "RightAttack3") == 0)
+					pSR->SetInfo(30.f, POSITION(-90.f, -80.f));
+				else if (strcmp(strName, "RightAttack4") == 0)
+					pSR->SetInfo(30.f, POSITION(-90.f, -80.f));
+
+				m_bAttack = true;
+				pSR->SetEnable(true);
+			}
+
+			else if (m_eCharacterDir == CD_LEFT)
+			{
+				iRand = (rand() % 4) + 1;
+				sprintf_s(strName, "LeftAttack%d", iRand);
+				GetAnimation()->ChangeClip(strName);
+				m_pAnimation->SetDefaultClip("LeftIdle");
+
+				iRand = (rand() % m_tInfo.tSoundCount.iHit) + 1;
+				char strSoundName[20] = { 0, };
+				sprintf_s(strSoundName, "Hit%d", iRand);
+				GET_SINGLE(CSoundManager)->Play(strSoundName, GST_ENEMYBGM, m_tInfo.eType);
+
+				if (strcmp(strName, "LeftAttack1") == 0)
+					pSR->SetInfo(30.f, POSITION(90.f, -80.f));
+				else if (strcmp(strName, "LeftAttack2") == 0)
+					pSR->SetInfo(35.f, POSITION(90.f, 60.f));
+				else if (strcmp(strName, "LeftAttack3") == 0)
+					pSR->SetInfo(30.f, POSITION(90.f, -80.f));
+				else if (strcmp(strName, "LeftAttack4") == 0)
+					pSR->SetInfo(30.f, POSITION(90.f, -80.f));
+
+				m_bAttack = true;
+				pSR->SetEnable(true);
+			}
+		}
+	}
+}
+
+void CEnemy::Hit(CCollider* pCollSrc, CCollider* pCollDest, float fDeltaTime)
+{
+	CColliderSphere* pSR = (CColliderSphere*)pCollSrc;
+
+	if (pCollDest->GetTag() == "PlayerBody" && m_bAttack)
+	{
+		CPlayer* pPlayer = (CPlayer*)pCollDest->GetObj(); 
+
+		if (pPlayer)
+		{
+			CEffect* pEffect = pPlayer->CreateEffect("Attack", (EFFECT_TYPE)(rand() % (int)ET_EFFECT_END));
+			pEffect->SetPos(pSR->GetWorldInfo().tCenter.x - pSR->GetWorldInfo().fRadius,
+				pSR->GetWorldInfo().tCenter.y - pSR->GetWorldInfo().fRadius);
+			AddGuage(10.f);
+			pPlayer->Damage(((rand() % (int)m_tInfo.fAttackMax) + (int)m_tInfo.fAttackMin) + (float(rand()) / float(RAND_MAX)));
+			pPlayer->SetHit(true);
+		}
+		m_bAttack = false;
+	}
+
+	pCollSrc->SetEnable(false);
+	pCollSrc->EraseCollider(pCollDest);
+	pCollDest->EraseCollider(pCollSrc);
 }

@@ -78,3 +78,19 @@ public:\
 #define GAMEEND			GET_SINGLE(CLogic)->GameEnd()
 
 #define TIMER_MAX_PANEL 2
+
+
+//=============================================
+// BENIMARU
+#define BENIMARU_ATTACK_MIN 4.1f
+#define BENIMARU_ATTACK_MAX 7.2f
+#define BENIMARU_DEFENSE_MIN 2.5f
+#define BENIMARU_DEFENSE_MAX 3.f
+
+
+//=============================================
+// KYO
+#define KYO_ATTACK_MIN 4.3f
+#define KYO_ATTACK_MAX 7.2f
+#define KYO_DEFENSE_MIN 2.5f
+#define KYO_DEFENSE_MAX 3.f

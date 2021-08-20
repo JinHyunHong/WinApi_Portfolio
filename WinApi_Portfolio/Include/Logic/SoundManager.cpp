@@ -40,6 +40,9 @@ bool CSoundManager::Init()
 	LoadSound(CNT_NONE, "YouWin", false, "YouWin.wav");
 	LoadSound(CNT_NONE, "GameOver", false, "GameOver.wav");
 	LoadSound(CNT_NONE, "Draw", false, "Draw.wav");
+	
+	//=============================================
+	// BENIMARU SOUND
 	LoadSound(CNT_BENIMARU, "SpecialAttack1", false, "BenimaruSpecialAttack1.wav", SOUND_BENIMARU_PATH);
 	LoadSound(CNT_BENIMARU, "Hit1", false, "BenimaruHit1.wav", SOUND_BENIMARU_PATH);
 	LoadSound(CNT_BENIMARU, "Hit2", false, "BenimaruHit2.wav", SOUND_BENIMARU_PATH);
@@ -47,6 +50,17 @@ bool CSoundManager::Init()
 	LoadSound(CNT_BENIMARU, "Hit4", false, "BenimaruHit4.wav", SOUND_BENIMARU_PATH);
 	LoadSound(CNT_BENIMARU, "Hit5", false, "BenimaruHit5.wav", SOUND_BENIMARU_PATH);
 	LoadSound(CNT_BENIMARU, "Hit6", false, "BenimaruHit6.wav", SOUND_BENIMARU_PATH);
+	LoadSound(CNT_BENIMARU, "Damage1", false, "BenimaruDamage1.wav", SOUND_BENIMARU_PATH);
+	LoadSound(CNT_BENIMARU, "Damage2", false, "BenimaruDamage2.wav", SOUND_BENIMARU_PATH);
+	LoadSound(CNT_BENIMARU, "Damage3", false, "BenimaruDamage3.wav", SOUND_BENIMARU_PATH);
+	LoadSound(CNT_BENIMARU, "Damage4", false, "BenimaruDamage4.wav", SOUND_BENIMARU_PATH);
+	LoadSound(CNT_BENIMARU, "Damage5", false, "BenimaruDamage5.wav", SOUND_BENIMARU_PATH);
+
+	//=============================================
+	//KYO SOUND
+	LoadSound(CNT_KYO, "Hit1", false, "KyoHit1.wav", SOUND_KYO_PATH);
+	LoadSound(CNT_KYO, "Hit2", false, "KyoHit2.wav", SOUND_KYO_PATH);
+	LoadSound(CNT_KYO, "Hit3", false, "KyoHit3.wav", SOUND_KYO_PATH);
 	LoadSound(CNT_KYO, "Damage1", false, "KyoDamage1.wav", SOUND_KYO_PATH);
 	LoadSound(CNT_KYO, "Damage2", false, "KyoDamage2.wav", SOUND_KYO_PATH);
 	LoadSound(CNT_KYO, "Damage3", false, "KyoDamage3.wav", SOUND_KYO_PATH);

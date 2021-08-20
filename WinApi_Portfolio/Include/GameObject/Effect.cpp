@@ -75,6 +75,10 @@ void CEffect::SetType(EFFECT_TYPE eType)
 	case ET_BENIMARU_SPECIAL1:
 		m_strClipName = "BenimaruSpecialEffect1";
 		break;
+
+	case ET_BENIMARU_SPECIAL1_1:
+		m_strClipName = "BenimaruSpecialEffect1_1";
+		break;
 	}
 	
 	if (!m_strClipName.empty())

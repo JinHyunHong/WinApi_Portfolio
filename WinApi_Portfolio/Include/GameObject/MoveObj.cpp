@@ -1,5 +1,6 @@
 #include "MoveObj.h"
 #include "Effect.h"
+#include "../Logic/SoundManager.h"
 
 CMoveObj::CMoveObj()	:
 	m_fSpeed(200.f),
@@ -38,22 +39,24 @@ void CMoveObj::SetInfo(CHARACTER_NAME_TYPE eType)
 	switch (eType)
 	{
 	case CNT_BENIMARU:
-		m_tInfo.fAttackMin = 4.1;
-		m_tInfo.fAttackMax = 7.2;
-		m_tInfo.fDefenseMin = 2.5;
-		m_tInfo.fDefenseMax = 3;
+		m_tInfo.fAttackMin = BENIMARU_ATTACK_MIN;
+		m_tInfo.fAttackMax = BENIMARU_ATTACK_MAX;
+		m_tInfo.fDefenseMin = BENIMARU_DEFENSE_MIN;
+		m_tInfo.fDefenseMax = BENIMARU_DEFENSE_MAX;
 		return;
 	case CNT_KYO:
-		m_tInfo.fAttackMin = 4.3;
-		m_tInfo.fAttackMax = 7.2;
-		m_tInfo.fDefenseMin = 2.5;
-		m_tInfo.fDefenseMax = 3;
+		m_tInfo.fAttackMin = KYO_ATTACK_MIN;
+		m_tInfo.fAttackMax = KYO_ATTACK_MAX;
+		m_tInfo.fDefenseMin = KYO_DEFENSE_MIN;
+		m_tInfo.fDefenseMax = KYO_DEFENSE_MAX;
 		return;
 	}
 }
 
 CEffect* CMoveObj::CreateEffect(const string& strTag, EFFECT_TYPE eType)
 {
+	EraseEffect(strTag);
+
 	CEffect* pEffect = new CEffect;
 
 	if (!pEffect->Init())
@@ -177,6 +180,10 @@ bool CMoveObj::Init()
 #endif
 
 	m_tInfo.fHP = m_tInfo.fHPMax;
+
+	// 미리 각 캐릭터의 사운드 갯수를 찾는다.
+	m_tInfo.tSoundCount.iHit = GET_SINGLE(CSoundManager)->FindSoundCount("Hit", m_tInfo.eType);
+	m_tInfo.tSoundCount.iDamage = GET_SINGLE(CSoundManager)->FindSoundCount("Damage", m_tInfo.eType);
 
 	return true;
 }

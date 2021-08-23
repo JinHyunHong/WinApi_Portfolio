@@ -5,7 +5,8 @@
 
 list<CUI*> CUI::m_ObjList;
 
-CUI::CUI()
+CUI::CUI() :
+    m_hOldFont(NULL)
 {
 }
 

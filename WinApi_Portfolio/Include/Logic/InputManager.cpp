@@ -5,7 +5,8 @@
 DEFINITION_SINGLE(CInputManager);
 
 CInputManager::CInputManager()	:
-	m_pKeyInfo(NULL)
+	m_pKeyInfo(NULL),
+	m_pMouse(NULL)
 {
 }
 

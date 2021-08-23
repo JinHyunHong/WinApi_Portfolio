@@ -85,13 +85,13 @@
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)_Debug_x64</TargetName>
     <OutDir>../Bin/</OutDir>
-    <LibraryPath>../BIn;D:\VisialStudio2019\2019\Community\VC\Tools\MSVC\14.27.29110\lib\x86;D:\VisialStudio2019\2019\Community\VC\Tools\MSVC\14.27.29110\atlmfc\lib\x86;D:\VisialStudio2019\2019\Community\VC\Auxiliary\VS\lib\x86;C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\ucrt\x86;C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\lib\um\x86</LibraryPath>
+    <LibraryPath>../Bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>$(ProjectName)_x64</TargetName>
     <OutDir>../Bin/</OutDir>
-    <LibraryPath>../BIn;D:\VisialStudio2019\2019\Community\VC\Tools\MSVC\14.27.29110\lib\x86;D:\VisialStudio2019\2019\Community\VC\Tools\MSVC\14.27.29110\atlmfc\lib\x86;D:\VisialStudio2019\2019\Community\VC\Auxiliary\VS\lib\x86;C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\ucrt\x86;C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\lib\um\x86</LibraryPath>
+    <LibraryPath>../Bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

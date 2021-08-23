@@ -5,7 +5,8 @@
 
 CAnimation::CAnimation()	:
 	m_bMotionEnd(false),
-	m_pCurClip(NULL)
+	m_pCurClip(NULL),
+	m_pGraphicObj(NULL)
 {
 }
 

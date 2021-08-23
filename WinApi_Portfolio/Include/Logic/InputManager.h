@@ -9,9 +9,6 @@ typedef struct _tagKeyInfo
 	bool bPress;
 	bool bUp;
 	vector<DWORD> vecKey;
-	float fTime;
-	float fMaxTime;
-	bool  bUseKey;
 
 	_tagKeyInfo() :
 		bDown(false),

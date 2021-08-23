@@ -15,6 +15,7 @@
 
 #pragma comment(lib, "msimg32")
 #pragma comment(lib, "fmod_vc")
+//#pragma comment(lib, "fmod64_vc")
 
 using namespace FMOD;
 using namespace std;

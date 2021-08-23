@@ -29,7 +29,7 @@ bool CPlayer::Init()
 
 	CMoveObj::Init();
 
-	SetPos(50.f, 480.f);
+	SetPos(500.f, 480.f);
 	SetSpeed(400.f);
 	SetSize(166.f, 291.f);
 	SetPivot(0.5f, 0.5f);
@@ -77,7 +77,7 @@ void CPlayer::Input(float fDeltaTime)
 	{
 		if (!m_bSit)
 		{
-			if (KEYDOWN("MovingLeft") && !(tPos.x <= 0))
+			if (KEYDOWN("MovingLeft"))
 			{
 				m_eDir = DIR_BACK;
 
@@ -89,13 +89,13 @@ void CPlayer::Input(float fDeltaTime)
 
 				else if (m_eCharacterDir == CD_LEFT)
 				{
-					MoveToX(-50.f);
+					MoveToX(-200.f);
 					m_pAnimation->ChangeClip("LeftMovingBack");
 					m_pAnimation->SetDefaultClip("LeftIdle");
 				}
 			}
 
-			else if (KEYPRESS("MoveLeft") && !(tPos.x <= 0))
+			else if (KEYPRESS("MoveLeft"))
 			{				
 				m_eDir = DIR_BACK;
 
@@ -115,7 +115,7 @@ void CPlayer::Input(float fDeltaTime)
 			}
 
 
-			if (KEYPRESS("MoveRight") && !(tPos.x >= WORLDWIDTH - m_tSize.x))
+			if (KEYPRESS("MoveRight"))
 			{
 				m_eDir = DIR_FRONT;
 
@@ -136,7 +136,7 @@ void CPlayer::Input(float fDeltaTime)
 
 
 
-			if (KEYDOWN("MovingRight") && !(tPos.x >= WORLDWIDTH - m_tSize.x))
+			if (KEYDOWN("MovingRight"))
 			{
 				m_eDir = DIR_FRONT;
 
@@ -314,7 +314,7 @@ void CPlayer::Input(float fDeltaTime)
 
 					pSR->SetEnable(true);
 
-					//AddGuage(-m_tInfo.fGuage);
+					AddGuage(-m_tInfo.fGuage);
 				}
 			}
 
@@ -420,6 +420,7 @@ int CPlayer::Update(float fDeltaTime)
 		m_eCharacterDir = CD_LEFT;
 		m_tPos.x = m_tSize.x * m_tPivot.x;
 	}
+
 
 	return 0;
 }

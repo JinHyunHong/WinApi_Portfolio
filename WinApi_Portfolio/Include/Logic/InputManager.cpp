@@ -7,7 +7,6 @@ DEFINITION_SINGLE(CInputManager);
 CInputManager::CInputManager()	:
 	m_pKeyInfo(NULL)
 {
-
 }
 
 CInputManager::~CInputManager()
@@ -35,8 +34,6 @@ bool CInputManager::Init()
 	CreateKey("MoveLeft", VK_LEFT);
 	CreateKey("MoveRight", VK_RIGHT);
 	CreateKey("Jump", VK_UP);
-	CreateKey("MovingLeftJump", VK_UP, VK_LEFT);
-	CreateKey("MovingRightJump", VK_UP, VK_RIGHT);
 	//CreateKey("MouseLButton", VK_LBUTTON);
 	CreateKey('Z', "Attack1");
 	CreateKey('X', "Attack2");
@@ -48,8 +45,8 @@ bool CInputManager::Init()
 	CreateKey(VK_DOWN, 'C', "SitAttack3");
 	CreateKey(VK_DOWN, 'V', "SitAttack4");
 	CreateKey(VK_DOWN, "Sit");
-	CreateKey(VK_LEFT, VK_LEFT, "MovingLeft");
-	CreateKey(VK_RIGHT, VK_RIGHT, "MovingRight");
+	//CreateKey(VK_LEFT, VK_LEFT, "MovingLeft");
+	//CreateKey(VK_RIGHT, VK_RIGHT, "MovingRight");
 	
 	GetCursorPos(&m_tMousePos);
 
@@ -57,7 +54,6 @@ bool CInputManager::Init()
 	m_pMouse = CUI::CreateUIObj<CMouse>("Mouse");
 
 	m_pMouse->SetSize(45, 45);
-
 
 	return true;
 }
@@ -72,20 +68,10 @@ void CInputManager::Update(float fDeltaTime)
 		int iCount = 0;
 		for (size_t i = 0; i < iter->second->vecKey.size(); ++i)
 		{
-			if (iter->second->vecKey.size() > 1)
-			{
-				if (GetAsyncKeyState(iter->second->vecKey[i]) && 0x8000)
-				{
-					++iCount;
-
-				}
-
-			}
-
-			else if (GetAsyncKeyState(iter->second->vecKey[i]) && 0x8000)
+			if (GetAsyncKeyState(iter->second->vecKey[i]) && 0x8000)
 			{
 				++iCount;
-			}
+			}	
 		}
 
 		if (iCount == iter->second->vecKey.size())
